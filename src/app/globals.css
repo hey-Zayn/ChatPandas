@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap'); */
+
+
+@font-face {
+  font-family: 'PPNeueMachina'; 
+  src: url('../fonts/660bace5102a0fd4b7cf151f_PPNeueMachina-PlainBold.ttf') format('truetype'); /* Path to your font file */
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'samsungsharpsans'; 
+  src: url('../fonts/660bace533b3c65b4b6e2f57_samsungsharpsans.otf') format('truetype'); /* Path to your font file */
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'PPNeueMachina-PlainSemibold'; 
+  src: url('../fonts/660bace544b9468ed530c7e5_PPNeueMachina-PlainSemibold.ttf') format('truetype'); /* Path to your font file */
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'PPNeueMachina-PlainMedium'; 
+  src: url('../fonts/660bace59a18dca6d291b917_PPNeueMachina-PlainMedium.ttf') format('truetype'); /* Path to your font file */
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'PPNeueMachina-PlainLight'; 
+  src: url('../fonts/660bace5c434256e0adb2e47_PPNeueMachina-PlainLight.ttf') format('truetype'); /* Path to your font file */
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'samsungsharpsans-bold'; 
+  src: url('../fonts/660bace5ed884dfc4add12ff_samsungsharpsans-bold.otf') format('truetype'); /* Path to your font file */
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'samsungsharpsans-medium'; 
+  src: url('../fonts/660bace9e29efc201cddf51f_samsungsharpsans-medium.otf') format('truetype'); /* Path to your font file */
+  font-weight: normal;
+  font-style: normal;
+}
+
+*{
+  font-family: 'PPNeueMachina-PlainLight' ;
+}
