@@ -1,10 +1,194 @@
-import React from "react";
+"use client";
+import WhyChooseus from "@/components/WhyChooseus";
+import React, { useEffect, useRef } from "react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import BusinessOperations from "@/components/Business-operations";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { NotepadText } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import Review from "@/components/Review";
 
 const SearchEngineOptimization = () => {
+  const sectionRef = useRef(null);
+  const headingRef = useRef(null);
+  const textRef = useRef(null);
+  const ctaRef = useRef(null);
+
+  useEffect(() => {
+    // Register ScrollTrigger plugin
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Create animation timeline
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 80%",
+        end: "bottom 20%",
+        toggleActions: "play none none reverse",
+      },
+    });
+
+    // Add animations to timeline
+    tl.from(headingRef.current, {
+      y: 50,
+      opacity: 0,
+      duration: 0.8,
+      ease: "power3.out",
+    })
+      .from(
+        textRef.current,
+        {
+          y: 30,
+          opacity: 0,
+          duration: 0.8,
+          ease: "power3.out",
+        },
+        "-=0.4"
+      )
+      .from(
+        ctaRef.current,
+        {
+          y: 20,
+          opacity: 0,
+          duration: 0.8,
+          ease: "power3.out",
+        },
+        "-=0.4"
+      );
+
+    // Cleanup function
+    return () => {
+      if (tl.scrollTrigger) {
+        tl.scrollTrigger.kill();
+      }
+      tl.kill();
+    };
+  }, []);
+
+  const SeoCards = [
+    {
+      title: "SEO Audits",
+      dis: "In the fast-paced digital marketplace, visibility is everything. Corecentrix Business Solutions stands at the forefront of SEO excellence, empowering businesses across the USA to dominate search engine rankings",
+      act1: "Troubleshooting & Maintenance",
+      acdis1:
+        "Quickly resolve technical issues to keep systems running smoothly.",
+      act2: "Troubleshooting & Maintenance",
+      acdis2:
+        "Quickly resolve technical issues to keep systems running smoothly.",
+      act3: "Troubleshooting & Maintenance",
+      acdis3:
+        "Quickly resolve technical issues to keep systems running smoothly.",
+      vid: "https://cdn.prod.website-files.com/660b9ff56cc1437adb553c40%2F677e54df9f00f216d88f0bf5_Chat%20Pandas%202-transcode.mp4",
+    },
+    {
+      title: "On-Page Technical SEO",
+
+      dis: "In the fast-paced digital marketplace, visibility is everything. Corecentrix Business Solutions stands at the forefront of SEO excellence, empowering businesses across the USA to dominate search engine rankings",
+      act1: "Troubleshooting & Maintenance",
+      acdis1:
+        "Quickly resolve technical issues to keep systems running smoothly.",
+      act2: "Troubleshooting & Maintenance",
+      acdis2:
+        "Quickly resolve technical issues to keep systems running smoothly.",
+      act3: "Troubleshooting & Maintenance",
+      acdis3:
+        "Quickly resolve technical issues to keep systems running smoothly.",
+      vid: "https://cdn.prod.website-files.com/660b9ff56cc1437adb553c40%2F677e54df9f00f216d88f0bf5_Chat%20Pandas%202-transcode.mp4",
+    },
+    {
+      title: "Off-Page SEO",
+      dis: "In the fast-paced digital marketplace, visibility is everything. Corecentrix Business Solutions stands at the forefront of SEO excellence, empowering businesses across the USA to dominate search engine rankings",
+      act1: "Troubleshooting & Maintenance",
+      acdis1:
+        "Quickly resolve technical issues to keep systems running smoothly.",
+      act2: "Troubleshooting & Maintenance",
+      acdis2:
+        "Quickly resolve technical issues to keep systems running smoothly.",
+      act3: "Troubleshooting & Maintenance",
+      acdis3:
+        "Quickly resolve technical issues to keep systems running smoothly.",
+      vid: "https://cdn.prod.website-files.com/660b9ff56cc1437adb553c40%2F677e54df9f00f216d88f0bf5_Chat%20Pandas%202-transcode.mp4",
+    },
+    {
+      title: "Keyword Research",
+      dis: "In the fast-paced digital marketplace, visibility is everything. Corecentrix Business Solutions stands at the forefront of SEO excellence, empowering businesses across the USA to dominate search engine rankings",
+      act1: "Troubleshooting & Maintenance",
+      acdis1:
+        "Quickly resolve technical issues to keep systems running smoothly.",
+      act2: "Troubleshooting & Maintenance",
+      acdis2:
+        "Quickly resolve technical issues to keep systems running smoothly.",
+      act3: "Troubleshooting & Maintenance",
+      acdis3:
+        "Quickly resolve technical issues to keep systems running smoothly.",
+      vid: "https://cdn.prod.website-files.com/660b9ff56cc1437adb553c40%2F677e54df9f00f216d88f0bf5_Chat%20Pandas%202-transcode.mp4",
+    },
+    {
+      title: "Content Creation & Optimization",
+      dis: "In the fast-paced digital marketplace, visibility is everything. Corecentrix Business Solutions stands at the forefront of SEO excellence, empowering businesses across the USA to dominate search engine rankings",
+      act1: "Troubleshooting & Maintenance",
+      acdis1:
+        "Quickly resolve technical issues to keep systems running smoothly.",
+      act2: "Troubleshooting & Maintenance",
+      acdis2:
+        "Quickly resolve technical issues to keep systems running smoothly.",
+      act3: "Troubleshooting & Maintenance",
+      acdis3:
+        "Quickly resolve technical issues to keep systems running smoothly.",
+      vid: "https://cdn.prod.website-files.com/660b9ff56cc1437adb553c40%2F677e54df9f00f216d88f0bf5_Chat%20Pandas%202-transcode.mp4",
+    },
+    {
+      title: "Link Building",
+      dis: "In the fast-paced digital marketplace, visibility is everything. Corecentrix Business Solutions stands at the forefront of SEO excellence, empowering businesses across the USA to dominate search engine rankings",
+      act1: "Troubleshooting & Maintenance",
+      acdis1:
+        "Quickly resolve technical issues to keep systems running smoothly.",
+      act2: "Troubleshooting & Maintenance",
+      acdis2:
+        "Quickly resolve technical issues to keep systems running smoothly.",
+      act3: "Troubleshooting & Maintenance",
+      acdis3:
+        "Quickly resolve technical issues to keep systems running smoothly.",
+      vid: "https://cdn.prod.website-files.com/660b9ff56cc1437adb553c40%2F677e54df9f00f216d88f0bf5_Chat%20Pandas%202-transcode.mp4",
+    },
+  ];
+
+  const seoServices = [
+    {
+      img: <NotepadText />,
+      title: "SEO Audits",
+    },
+    {
+      img: <NotepadText />,
+      title: "SEO Audits",
+    },
+    {
+      img: <NotepadText />,
+      title: "SEO Audits",
+    },
+    {
+      img: <NotepadText />,
+      title: "SEO Audits",
+    },
+    {
+      img: <NotepadText />,
+      title: "SEO Audits",
+    },
+    {
+      img: <NotepadText />,
+      title: "SEO Audits",
+    },
+  ];
+
   return (
     <>
-      <div className="w-full h-full bg-[#191919]">
-
+      <div ref={sectionRef} className="w-full h-full bg-[#191919]">
         <div className="w-full h-full">
           <div
             id="seo-hero"
@@ -18,7 +202,7 @@ const SearchEngineOptimization = () => {
         </div>
 
         <section className="w-full text-white body-font">
-          <div className="container mx-auto flex gap-10 max-sm:gap-10 px-5 py-24 md:flex-row flex-col items-center">
+          <div className="container mx-auto flex gap-10 max-sm:gap-10 px-5 max-sm:px-2  py-24 md:flex-row flex-col items-center">
             <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
               <video
                 src="https://cdn.prod.website-files.com/660b9ff56cc1437adb553c40%2F66a3956e49d8a96e28ec7e12_111-transcode.mp4"
@@ -36,7 +220,13 @@ const SearchEngineOptimization = () => {
                 With Targeted Revenue Growth
               </h1>
               <p className="mb-8 leading-relaxed">
-                In the fast-paced digital marketplace, visibility is everything. Corecentrix Business Solutions stands at the forefront of SEO excellence, empowering businesses across the USA to dominate search engine rankings and achieve unparalleled revenue growth. Our expert SEO strategies are not just about climbing to the top page—they're about driving measurable results that translate into tangible profits for your business.
+                In the fast-paced digital marketplace, visibility is everything.
+                Corecentrix Business Solutions stands at the forefront of SEO
+                excellence, empowering businesses across the USA to dominate
+                search engine rankings and achieve unparalleled revenue growth.
+                Our expert SEO strategies are not just about climbing to the top
+                page—they're about driving measurable results that translate
+                into tangible profits for your business.
               </p>
               <div className="flex justify-center">
                 <button className="inline-flex text-white border border-white px-6 py-3 rounded-lg text-lg hover:bg-white hover:text-black transition-colors duration-300">
@@ -47,11 +237,8 @@ const SearchEngineOptimization = () => {
           </div>
         </section>
 
-
-
-
         <section className="w-full text-white body-font">
-          <div className="container mx-auto flex  max-sm:flex-col-reverse gap-10 max-sm:gap-10  px-5 py-15 md:flex-row flex-col items-center">
+          <div className="container mx-auto flex  max-sm:flex-col-reverse gap-10 max-sm:gap-10  px-5 max-sm:px-2 py-15 md:flex-row flex-col items-center">
             <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center max-sm:text-left max-sm:px-8">
               <h1 className=" max-sm:text-2xl text-3xl mb-4 font-bold text-white">
                 Get to the Top Page of Search Engines:
@@ -59,13 +246,18 @@ const SearchEngineOptimization = () => {
                 With targeted Revenue growth
               </h1>
               <p className="mb-8 leading-relaxed">
-                In the fast-paced digital marketplace, visibility is everything. Corecentrix Business Solutions stands at the forefront of SEO excellence, empowering businesses across the USA to dominate search engine rankings and achieve unparalleled revenue growth. Our expert SEO strategies are not just about climbing to the top page—they’re about driving measurable results that translate into tangible profits for your business.
+                In the fast-paced digital marketplace, visibility is everything.
+                Corecentrix Business Solutions stands at the forefront of SEO
+                excellence, empowering businesses across the USA to dominate
+                search engine rankings and achieve unparalleled revenue growth.
+                Our expert SEO strategies are not just about climbing to the top
+                page—they’re about driving measurable results that translate
+                into tangible profits for your business.
               </p>
               <div className="flex justify-center">
-                <button className="inline-flex text-white border border-white px-5 py-3 rounded text-lg">
-                  Connect now
+                <button className="inline-flex text-white border border-white px-6 py-3 rounded-lg text-lg hover:bg-white hover:text-black transition-colors duration-300">
+                  Connect Now
                 </button>
-
               </div>
             </div>
             <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
@@ -78,42 +270,105 @@ const SearchEngineOptimization = () => {
                 playsInline
               ></video>
             </div>
-
-
           </div>
         </section>
 
-        <section className="w-full text-white body-font">
-          <div className="container mx-auto flex gap-10 max-sm:gap-10 px-5 py-24 md:flex-row flex-col items-center">
-            <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
-              <video
-                src="https://cdn.prod.website-files.com/660b9ff56cc1437adb553c40%2F66a3956e49d8a96e28ec7e12_111-transcode.mp4"
-                className="object-cover object-center rounded w-full h-full"
-                muted
-                autoPlay
-                loop
-                playsInline
-              />
-            </div>
-            
-            <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center max-sm:text-left   max-sm:px-8">
-              <h1 className="max-sm:text-2xl text-3xl mb-4 font-bold text-white">
-                Get to the Top Page of Search Engines
-                {/* <br className="hidden lg:inline-block" /> */}
-                With Targeted Revenue Growth
-              </h1>
-              <p className="mb-8 leading-relaxed">
-                In the fast-paced digital marketplace, visibility is everything. Corecentrix Business Solutions stands at the forefront of SEO excellence, empowering businesses across the USA to dominate search engine rankings and achieve unparalleled revenue growth. Our expert SEO strategies are not just about climbing to the top page—they're about driving measurable results that translate into tangible profits for your business.
-              </p>
-              
+        <section className="w-full h-full flex flex-col gap-20 justify-center items-center py-20">
+          <h1 className="text-white font-bold text-5xl max-sm:text-3xl text-center"> Our Core BPO Services</h1>
+          <div className="w-[95%] h-[70vh] max-sm:h-full relative flex flex-col justify-center items-center bg-gradient-to-b from-[#191919] via-[#520ADE] to-[#520ADE] overflow-hidden">
+            <span className="size-200 absolute top-50 -right-10  rounded-full bg-[radial-gradient(circle_at_center,#a8288f_20%,transparent_70%)] blur-[90px]"></span>
+            <span className="size-200 absolute top-20 -right-60 rounded-full bg-[radial-gradient(circle_at_center,#a8288f_20%,transparent_70%)] blur-[90px]"></span>
+            <div className="w-full h-full flex items-center justify-center">
+              <div className="max-w-7xl w-full flex flex-wrap justify-center z-10">
+                {seoServices?.map((card, index) => (
+                  <div
+                    key={index}
+                    className="xl:w-1/3 md:w-1/2 p-4 flex flex-col items-center text-center"
+                  >
+                    <div className="w-20 h-20 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 mb-4 text-3xl">
+                      {card.img}
+                    </div>
+                    <h1 className="text-white text-2xl  font-bold">
+                      {card.title}
+                    </h1>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
 
+        <section className="container mx-auto w-full py-12 px-8 md:px-6">
+          <h1 className="text-center text-white text-4xl sm:text-5xl lg:text-6xl font-bold py-20 mb-10 max-sm:py-6  ">
+            Our Core SEO Services
+          </h1>
 
+          {SeoCards?.map((card, idx) => (
+            <div
+              className="w-full text-white body-font mb-16 md:mb-24"
+              key={idx}
+            >
+              <div
+                className={`flex flex-col ${
+                  idx % 2 === 0 ? "lg:flex-row-reverse" : "lg:flex-row"
+                } gap-8 md:gap-12 lg:gap-20 items-center`}
+              >
+                <div className="w-full lg:w-1/2">
+                  <video
+                    src={card.vid}
+                    className="object-cover object-center rounded w-full h-full"
+                    muted
+                    autoPlay
+                    loop
+                    playsInline
+                  />
+                </div>
 
+                <div className="w-full lg:w-1/2 flex flex-col items-start text-left">
+                  <h2 className="text-2xl md:text-3xl lg:text-4xl mb-4 font-bold text-white">
+                    {card.title}
+                  </h2>
+                  <p className="mb-6 md:mb-8 leading-relaxed">{card.dis}</p>
 
+                  <Accordion
+                    type="single"
+                    collapsible
+                    className="w-full space-y-5"
+                  >
+                    <AccordionItem value="item-1">
+                      <AccordionTrigger className="text-xl md:text-2xl lg:text-3xl hover:no-underline">
+                        {card.act1}
+                      </AccordionTrigger>
+                      <AccordionContent className="text-base md:text-lg">
+                        {card.acdis1}
+                      </AccordionContent>
+                    </AccordionItem>
 
+                    <AccordionItem value="item-2">
+                      <AccordionTrigger className="text-xl md:text-2xl lg:text-3xl hover:no-underline">
+                        {card.act2}
+                      </AccordionTrigger>
+                      <AccordionContent className="text-base md:text-lg">
+                        {card.acdis2}
+                      </AccordionContent>
+                    </AccordionItem>
+
+                    <AccordionItem value="item-3">
+                      <AccordionTrigger className="text-xl md:text-2xl lg:text-3xl hover:no-underline">
+                        {card.act3}
+                      </AccordionTrigger>
+                      <AccordionContent className="text-base md:text-lg">
+                        {card.acdis3}
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                </div>
+              </div>
+            </div>
+          ))}
+        </section>
+       
+        <BusinessOperations />
       </div>
     </>
   );
