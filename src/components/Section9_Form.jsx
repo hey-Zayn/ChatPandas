@@ -4,7 +4,7 @@ import { CircleAlert } from "lucide-react";
 const Section9_Form = () => {
   return (
     <>
-      <div className="text-white w-full h-full pb-[2%] overflow-hidden bg-[rgb(28,28,28)]">
+      <div className="text-white w-full h-full pb-[2%] overflow-hidden bg-[#181818]">
         <h1 className="text-center p-8 pb-0 mt-16 mb-[2%] text-4xl sm:text-5xl 2xl:text-9xl md:text-6xl lg:text-7xl font-bold ">
           Lets's Talk
         </h1>

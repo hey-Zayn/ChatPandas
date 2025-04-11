@@ -11,20 +11,44 @@ import BusinessOperations from "@/components/Business-operations";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { NotepadText } from "lucide-react";
-import { Card } from "@/components/ui/card";
-import Review from "@/components/Review";
+
+import { useGSAP } from "@gsap/react";
 
 const SearchEngineOptimization = () => {
   const sectionRef = useRef(null);
+  const mainHeading = useRef(null);
   const headingRef = useRef(null);
   const textRef = useRef(null);
   const ctaRef = useRef(null);
+
+  useGSAP(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.from(mainHeading.current, {
+      y: 50,
+      opacity: 0,
+      duration: 1,
+      ease: "power2.inOut",
+      scrollTrigger: {
+        trigger: mainHeading.current,
+        start: "top 60%", // More precise start point
+        toggleActions: "play none none none", // More interactive toggle actions
+       
+      }
+    });
+  }, { scope: sectionRef }); 
+
+
+
 
   useEffect(() => {
     // Register ScrollTrigger plugin
     gsap.registerPlugin(ScrollTrigger);
 
     // Create animation timeline
+
+    
+    
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
@@ -33,6 +57,7 @@ const SearchEngineOptimization = () => {
         toggleActions: "play none none reverse",
       },
     });
+    
 
     // Add animations to timeline
     tl.from(headingRef.current, {
@@ -70,6 +95,8 @@ const SearchEngineOptimization = () => {
       tl.kill();
     };
   }, []);
+
+  
 
   const SeoCards = [
     {
@@ -195,7 +222,7 @@ const SearchEngineOptimization = () => {
             className="w-full h-screen relative flex flex-col justify-center items-center bg-gradient-to-b from-[#520ADE] via-[#520ADE] to-[#191919] overflow-hidden"
           >
             <span className="size-200 absolute -top-50 -left-50  rounded-full bg-[radial-gradient(circle_at_center,#a8288f_20%,transparent_70%)] blur-[90px]"></span>
-            <h1 className="text-white text-center text-8xl max-sm:text-4xl font-bold z-10">
+            <h1 ref={mainHeading} className="text-white text-center text-8xl max-sm:text-4xl font-bold z-10">
               Search Engine Optimization
             </h1>
           </div>
@@ -203,7 +230,7 @@ const SearchEngineOptimization = () => {
 
         <section className="w-full text-white body-font">
           <div className="container mx-auto flex gap-10 max-sm:gap-10 px-5 max-sm:px-2  py-24 md:flex-row flex-col items-center">
-            <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
+            <div  className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
               <video
                 src="https://cdn.prod.website-files.com/660b9ff56cc1437adb553c40%2F66a3956e49d8a96e28ec7e12_111-transcode.mp4"
                 className="object-cover object-center rounded w-full h-full"
@@ -274,7 +301,10 @@ const SearchEngineOptimization = () => {
         </section>
 
         <section className="w-full h-full flex flex-col gap-20 justify-center items-center py-20">
-          <h1 className="text-white font-bold text-5xl max-sm:text-3xl text-center"> Our Core BPO Services</h1>
+          <h1 className="text-white font-bold text-5xl max-sm:text-3xl text-center">
+            {" "}
+            Our Core BPO Services
+          </h1>
           <div className="w-[95%] h-[70vh] max-sm:h-full relative flex flex-col justify-center items-center bg-gradient-to-b from-[#191919] via-[#520ADE] to-[#520ADE] overflow-hidden">
             <span className="size-200 absolute top-50 -right-10  rounded-full bg-[radial-gradient(circle_at_center,#a8288f_20%,transparent_70%)] blur-[90px]"></span>
             <span className="size-200 absolute top-20 -right-60 rounded-full bg-[radial-gradient(circle_at_center,#a8288f_20%,transparent_70%)] blur-[90px]"></span>
@@ -367,7 +397,9 @@ const SearchEngineOptimization = () => {
             </div>
           ))}
         </section>
+
        
+
         <BusinessOperations />
       </div>
     </>
@@ -376,4 +408,4 @@ const SearchEngineOptimization = () => {
 
 export default SearchEngineOptimization;
 
-// https://cdn.prod.website-files.com/660b9ff56cc1437adb553c40%2F66a3956e49d8a96e28ec7e12_111-transcode.mp4
+
