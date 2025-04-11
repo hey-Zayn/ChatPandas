@@ -53,7 +53,7 @@ export default function PandaScroll() {
 
   return (
     <>
-      <div className="bg-[rgb(28,28,28)]">
+      <div className="bg-[#181818]">
         <div
           ref={containerRef}
           className="relative w-full h-[60vh] sm:h-[120vh] md:h-[150vh] overflow-hidden  "

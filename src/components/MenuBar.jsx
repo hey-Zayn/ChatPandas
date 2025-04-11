@@ -3,6 +3,7 @@ import React, { useLayoutEffect, useRef, useState, useEffect } from "react";
 import NavbarContent from "./NavbarContent";
 import { Menu, X } from "lucide-react";
 import gsap from "gsap";
+import Link from "next/link";
 
 const MenuBar = () => {
   const menuBtnRef = useRef(null);
@@ -71,7 +72,7 @@ const MenuBar = () => {
         scale: 0.8,
         zIndex: 10,
       });
-  
+
       gsap.to(circleRef.current, {
         scale: responsiveScale,
         borderRadius: "10px",
@@ -81,7 +82,7 @@ const MenuBar = () => {
         duration: 0.4,
         ease: "power2.out",
       });
-  
+
       if (ulRef.current) {
         gsap.to(ulRef.current.children, {
           opacity: 1,
@@ -91,7 +92,7 @@ const MenuBar = () => {
           ease: "power2.out",
         });
       }
-  
+
       gsap.to(".close", {
         opacity: 1,
         scale: 1,
@@ -104,12 +105,12 @@ const MenuBar = () => {
 
   return (
     <div className="w-full top-0 left-0 absolute flex justify-between items-center px-4 py-4 sm:px-8 sm:py-6 md:px-12 md:py-8 text-white z-50">
-      <img
+      <Link href="/"><img
         src="/images/660e8ed8eb1804501de1d733_Group 1.svg"
         alt="Logo"
         className="w-[120px] sm:w-[150px] md:w-[180px]"
-      />
-      
+      /></Link>
+
       <div className="flex items-center gap-4 sm:gap-6 md:gap-10">
         <button className="px-4 py-2 sm:px-6 sm:py-3 text-sm sm:text-lg font-semibold text-white bg-[#E73C5F] border-none rounded-md hidden sm:block">
           Book a Demo
@@ -131,7 +132,7 @@ const MenuBar = () => {
 
         {isVisible && (
           <div className="fixed inset-0 flex justify-end items-start z-[1000] p- sm:p-10 pointer-events-auto">
-            <div className="relative w-full sm:w-[90%] md:w-[70%] lg:w-[40%] xl:w-[28%]">
+            <div className="relative  sm:w-[90%] md:w-[70%] lg:w-[40%] xl:w-[28%]">
               <button
                 className="absolute top-0 right-0 sm:-mt-2 sm:-mr-2 p-3 sm:p-4 text-sm sm:text-md font-bold text-white bg-[#111111] border-none cursor-pointer rounded-full close"
                 onClick={closeMenu}
@@ -139,7 +140,7 @@ const MenuBar = () => {
               >
                 <X size={20} className="sm:size-[25px]" />
               </button>
-              <NavbarContent ulRef={ulRef}/>
+              <NavbarContent ulRef={ulRef} />
             </div>
           </div>
         )}

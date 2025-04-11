@@ -42,7 +42,7 @@ const NavbarContent = ({ ulRef }) => {
               </motion.span>
             ))}
           </div>
-          <div className="absolute inset-0">
+          <div className="absolute inset-0 text-wrap">
             {children.split("").map((l, i) => (
               <motion.span
                 variants={{
@@ -72,22 +72,22 @@ const NavbarContent = ({ ulRef }) => {
 
   return (
     <>
-      <ul ref={ulRef} className="px-5  z-12 uppercase space-y-3 mt-12 grid gap-2 text-black">
-      <li className="opacity-0 transform scale-0.8 ">
-        <FlipLink to="/seo">SEO & Lead Generation</FlipLink>
+      <ul ref={ulRef} className="px-5   z-12 uppercase space-y-3 mt-12 grid gap-2 text-black overflow-hidden">
+      <li className="opacity-0 transform scale-0.8  ">
+        <FlipLink to="/Search-Engine-Optimization">SEO</FlipLink>
       </li>
       
       <li className="opacity-0 transform scale-0.8">
-        <FlipLink to="/voice_support">Paid Marketing Media & CRO</FlipLink>
+        <FlipLink to="/Local-Search-Optimization">LSO</FlipLink>
       </li>
       <li className="opacity-0 transform scale-0.8">
-        <FlipLink to="/email_support">IT & Development Technology</FlipLink>
+        <FlipLink to="/Landing Page Optimization">LPO</FlipLink>
       </li>
       <li className="opacity-0 transform scale-0.8">
-        <FlipLink to="/lead_generation">Business Servicing & Management</FlipLink>
+        <FlipLink to="/SEO for Leads">SEO for Leads</FlipLink>
       </li>
       <li className="opacity-0 transform scale-0.8">
-        <FlipLink to="/benchmarks">Who We Are</FlipLink>
+        <FlipLink to="/Enterprise Level Reach">ELR</FlipLink>
       </li>
     </ul>
     x``
