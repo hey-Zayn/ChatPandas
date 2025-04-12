@@ -42,7 +42,7 @@ const Footer = () => {
     //     [Left Hand] starts off-screen left → slides in → pauses → slides back out left
     //     [Right Hand] starts off-screen right → slides in → pauses → slides back out right   
   return (
-    <div id="footer"  className="footer relative w-full h-screen bg-[#181818] pt-20 max-sm:pt-10 overflow-hidden ">
+    <div id="footer"  className="footer relative w-full h-full bg-[#181818] pt-20 max-sm:pt-10 overflow-hidden ">
     <div className="w-full flex items-center pl-30">
       <div className="w-full py-5">
         <h2 className="text-white text-5xl font-semibold">Let's</h2>
