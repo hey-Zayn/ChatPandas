@@ -11,17 +11,25 @@ import Section7 from '@/components/Section7'
 import Section8 from '@/components/Section8'
 import Section9_Form from '@/components/Section9_Form'
 import Section4 from '@/components/Section4'
+import Section3D from '@/components/Section3D'
+import Section6Test from '@/components/Section6Test'
+
+
 
 const Index = () => {
+
   return (
     <>
       {/* <Navbar /> */}
-      <Hero/>
+      <Hero />
       <Section2 />
       <Section3 />
-    
-     {/* <Section4/> */}
-   
+      <div>
+        <Section3D />
+      </div>
+        
+      {/* <Section6Test/> */}
+
       <Section7 />
       <Section8 />
       <Section9_Form />

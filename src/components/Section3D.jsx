@@ -1,53 +1,113 @@
-import React from 'react'
+"use client";
+import React, { Suspense } from 'react'
+import { Canvas } from "@react-three/fiber";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useEffect } from "react";
+import { useState } from "react";
+import { useRef } from "react";
+import Scene from "./Scene";
 
 const Section3D = () => {
+    gsap.registerPlugin(ScrollTrigger);
+    const mainRef = useRef(null);
+    const sceneRef = useRef(null);
+    const modelRef = useRef(null)
+    const [progress, setProgress] = useState(0);
+    
+    useEffect(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: mainRef.current,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 1,
+          onUpdate: (self) => {
+            setProgress(Math.min(self.progress, 1));
+          },
+        },
+      })
+      .to(sceneRef.current,{
+        ease:"none",
+        x:'-25vw',
+        y:"100vh",
+        onUpdate: () => {
+          const animate = (t = 0) => {
+            requestAnimationFrame(animate);
+            // Add more complex animation logic here
+            const rotationSpeed = 0.001;
+            modelRef.current.rotation.y = t * rotationSpeed;
+            // const scaleFactor = 2 + Math.sin(t * 0.001) * 1;
+            // modelRef.current.scale.set(scaleFactor, scaleFactor, scaleFactor);
+          };
+          animate();
+        },
+      })
+      .to(sceneRef.current,{
+        ease:"none",
+        x:'25vw',
+        y:"200vh",
+        
+      })
+      .to(sceneRef.current,{
+        ease:"none",
+        x:'-25vw',
+        y:"300vh",
+      });
+
+      return () => tl.kill(); // Cleanup animation
+    }, []);
+
   return (
     <>
-        <div ref={mainRef} className="w-full h-full overflow-hidden">
-      <section className="w-full h-screen">
-        <div className="absolute top-40 w-full text-center">
-          <h1 className="text-2xl font-bold">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat,
-            numquam.
-          </h1>
-        </div>
-        <div ref={sceneRef} className="w-full h-full">
-          <Canvas>
-            <Scene progress={progress}/>
-          </Canvas>
-        </div>
-        <div className="absolute bottom-20 w-full text-center">
-          <h1 className="text-2xl font-bold">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat,
-            numquam.
-          </h1>
-        </div>
-      </section>
-      <section className=" relative flex items-center justify-evenly h-screen">
-        <p className="w-[50%] border-0 border-red-700"></p>
+      <div ref={mainRef} className="w-full h-full overflow-hidden bg-[#30087D]">
+        
+        <section className="relative w-full h-screen">
+          <div className="absolute top-[30%] w-full h-full text-center z-10">
+            <h1 className="text-8xl text-white  font-bold">
+            Bridging  <br />
+            Cultural Gaps
+            </h1>
+            <h3 className='text-white text-2xl'>As the top BPO agency, we bridge cultural <br /> gaps, making every interaction feel native.</h3>
+          </div>
+          <div ref={sceneRef} className="w-full h-full">
+            <Canvas style={{ width: '100%', height: '100%' }}>
+              <Scene progress={progress} modelRef={modelRef}/>
+            </Canvas>
+          </div>
+         
+        </section>
+        
+        <section className=" relative flex items-center justify-evenly h-screen">
+          <div className="  absolute top-[30%] w-full z-10  px-10">
+            <h1 className="text-8xl text-white text-left font-bold">
+            Bridging  <br />
+            Cultural Gaps
+            </h1>
+            <h3 className='text-white text-2xl'>As the top BPO agency, we bridge cultural <br /> gaps, making every interaction feel native.</h3>
+          </div>
+        </section>
 
-        <p className=" w-[50%] text-center px-4 text-4xl font-semibold">
-          Effortlessly scroll, zoom, and navigate with the re-engineered Digital
-          Crown, now more precise than ever.
-        </p>
-      </section>
-
-      <section className=" relative flex items-center justify-evenly h-screen">
-        <p className=" order-1 w-[50%] text-center px-4 text-4xl font-semibold">
-          Built for adventure, the rugged straps are as tough as you are, ready
-          for any challenge.
-        </p>
-        <p className="w-[50%] order-2"></p>
-      </section>
-      <section className=" relative flex items-center justify-evenly h-[100vh]">
-        <p className="w-[50%] border-0 border-red-700"></p>
-
-        <p className=" w-[50%] text-center px-4 text-4xl font-semibold">
-          The brightest display ever on an Apple Watch, so you can see it
-          clearly even under the harshest sun.
-        </p>
-      </section>
-    </div>
+        <section className=" relative flex items-center justify-evenly h-screen">
+          <div className=" w-full  h-full z-10  px-10">
+            <h1 className="text-8xl text-white text-right font-bold">
+            Bridging  <br />
+            Cultural Gaps
+            </h1>
+            <h3 className='text-white text-right text-2xl'>As the top BPO agency, we bridge cultural <br /> gaps, making every interaction feel native.</h3>
+          </div>
+        </section>
+        
+        <section className=" w-full  flex items-center justify-center h-screen">
+        <div className="w-full h-full text-center z-10">
+            <h1 className="text-8xl text-white  font-bold">
+            Bridging  <br />
+            Cultural Gaps
+            </h1>
+            <h3 className='text-white text-2xl'>As the top BPO agency, we bridge cultural <br /> gaps, making every interaction feel native.</h3>
+          </div>
+        </section>
+      </div>
     </>
   )
 }
