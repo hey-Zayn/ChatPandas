@@ -13,6 +13,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { NotepadText } from "lucide-react";
 
 import { useGSAP } from "@gsap/react";
+import StaggerText from "@/components/StaggerText";
 
 const page = () => {
   const sectionRef = useRef(null);
@@ -40,145 +41,8 @@ const page = () => {
     { scope: sectionRef }
   );
 
-  useEffect(() => {
-    // Register ScrollTrigger plugin
-    gsap.registerPlugin(ScrollTrigger);
 
-    // Create animation timeline
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top 80%",
-        end: "bottom 20%",
-        toggleActions: "play none none reverse",
-      },
-    });
-
-    // Add animations to timeline
-    tl.from(headingRef.current, {
-      y: 50,
-      opacity: 0,
-      duration: 0.8,
-      ease: "power3.out",
-    })
-      .from(
-        textRef.current,
-        {
-          y: 30,
-          opacity: 0,
-          duration: 0.8,
-          ease: "power3.out",
-        },
-        "-=0.4"
-      )
-      .from(
-        ctaRef.current,
-        {
-          y: 20,
-          opacity: 0,
-          duration: 0.8,
-          ease: "power3.out",
-        },
-        "-=0.4"
-      );
-
-    // Cleanup function
-    return () => {
-      if (tl.scrollTrigger) {
-        tl.scrollTrigger.kill();
-      }
-      tl.kill();
-    };
-  }, []);
-
-  const SeoCards = [
-    {
-      title: "SEO Audits",
-      dis: "In the fast-paced digital marketplace, visibility is everything. Corecentrix Business Solutions stands at the forefront of SEO excellence, empowering businesses across the USA to dominate search engine rankings",
-      act1: "Troubleshooting & Maintenance",
-      acdis1:
-        "Quickly resolve technical issues to keep systems running smoothly.",
-      act2: "Troubleshooting & Maintenance",
-      acdis2:
-        "Quickly resolve technical issues to keep systems running smoothly.",
-      act3: "Troubleshooting & Maintenance",
-      acdis3:
-        "Quickly resolve technical issues to keep systems running smoothly.",
-      vid: "https://cdn.prod.website-files.com/660b9ff56cc1437adb553c40%2F677e54df9f00f216d88f0bf5_Chat%20Pandas%202-transcode.mp4",
-    },
-    {
-      title: "On-Page Technical SEO",
-
-      dis: "In the fast-paced digital marketplace, visibility is everything. Corecentrix Business Solutions stands at the forefront of SEO excellence, empowering businesses across the USA to dominate search engine rankings",
-      act1: "Troubleshooting & Maintenance",
-      acdis1:
-        "Quickly resolve technical issues to keep systems running smoothly.",
-      act2: "Troubleshooting & Maintenance",
-      acdis2:
-        "Quickly resolve technical issues to keep systems running smoothly.",
-      act3: "Troubleshooting & Maintenance",
-      acdis3:
-        "Quickly resolve technical issues to keep systems running smoothly.",
-      vid: "https://cdn.prod.website-files.com/660b9ff56cc1437adb553c40%2F677e54df9f00f216d88f0bf5_Chat%20Pandas%202-transcode.mp4",
-    },
-    {
-      title: "Off-Page SEO",
-      dis: "In the fast-paced digital marketplace, visibility is everything. Corecentrix Business Solutions stands at the forefront of SEO excellence, empowering businesses across the USA to dominate search engine rankings",
-      act1: "Troubleshooting & Maintenance",
-      acdis1:
-        "Quickly resolve technical issues to keep systems running smoothly.",
-      act2: "Troubleshooting & Maintenance",
-      acdis2:
-        "Quickly resolve technical issues to keep systems running smoothly.",
-      act3: "Troubleshooting & Maintenance",
-      acdis3:
-        "Quickly resolve technical issues to keep systems running smoothly.",
-      vid: "https://cdn.prod.website-files.com/660b9ff56cc1437adb553c40%2F677e54df9f00f216d88f0bf5_Chat%20Pandas%202-transcode.mp4",
-    },
-    {
-      title: "Keyword Research",
-      dis: "In the fast-paced digital marketplace, visibility is everything. Corecentrix Business Solutions stands at the forefront of SEO excellence, empowering businesses across the USA to dominate search engine rankings",
-      act1: "Troubleshooting & Maintenance",
-      acdis1:
-        "Quickly resolve technical issues to keep systems running smoothly.",
-      act2: "Troubleshooting & Maintenance",
-      acdis2:
-        "Quickly resolve technical issues to keep systems running smoothly.",
-      act3: "Troubleshooting & Maintenance",
-      acdis3:
-        "Quickly resolve technical issues to keep systems running smoothly.",
-      vid: "https://cdn.prod.website-files.com/660b9ff56cc1437adb553c40%2F677e54df9f00f216d88f0bf5_Chat%20Pandas%202-transcode.mp4",
-    },
-    {
-      title: "Content Creation & Optimization",
-      dis: "In the fast-paced digital marketplace, visibility is everything. Corecentrix Business Solutions stands at the forefront of SEO excellence, empowering businesses across the USA to dominate search engine rankings",
-      act1: "Troubleshooting & Maintenance",
-      acdis1:
-        "Quickly resolve technical issues to keep systems running smoothly.",
-      act2: "Troubleshooting & Maintenance",
-      acdis2:
-        "Quickly resolve technical issues to keep systems running smoothly.",
-      act3: "Troubleshooting & Maintenance",
-      acdis3:
-        "Quickly resolve technical issues to keep systems running smoothly.",
-      vid: "https://cdn.prod.website-files.com/660b9ff56cc1437adb553c40%2F677e54df9f00f216d88f0bf5_Chat%20Pandas%202-transcode.mp4",
-    },
-    {
-      title: "Link Building",
-      dis: "In the fast-paced digital marketplace, visibility is everything. Corecentrix Business Solutions stands at the forefront of SEO excellence, empowering businesses across the USA to dominate search engine rankings",
-      act1: "Troubleshooting & Maintenance",
-      acdis1:
-        "Quickly resolve technical issues to keep systems running smoothly.",
-      act2: "Troubleshooting & Maintenance",
-      acdis2:
-        "Quickly resolve technical issues to keep systems running smoothly.",
-      act3: "Troubleshooting & Maintenance",
-      acdis3:
-        "Quickly resolve technical issues to keep systems running smoothly.",
-      vid: "https://cdn.prod.website-files.com/660b9ff56cc1437adb553c40%2F677e54df9f00f216d88f0bf5_Chat%20Pandas%202-transcode.mp4",
-    },
-  ];
 
 
   const SEOTpyes = [
@@ -335,7 +199,7 @@ const page = () => {
                 With Targeted Revenue Growth
               </h1>
               <p className="mb-8 leading-relaxed">
-                In the fast-paced digital marketplace, visibility is everything.
+              In the fast-paced digital marketplace, visibility is everything.
                 Corecentrix Business Solutions stands at the forefront of SEO
                 excellence, empowering businesses across the USA to dominate
                 search engine rankings and achieve unparalleled revenue growth.
@@ -343,6 +207,8 @@ const page = () => {
                 page—they're about driving measurable results that translate
                 into tangible profits for your business.
               </p>
+                
+              
               <div className="flex justify-center">
                 <button className="inline-flex text-white border border-white px-6 py-3 rounded-lg text-lg hover:bg-white hover:text-black transition-colors duration-300">
                   Connect Now
@@ -474,76 +340,6 @@ const page = () => {
           </div>
         </section>
 
-        {/* <section className="container mx-auto w-full py-12 px-8 md:px-6">
-          <h1 className="text-center text-white text-4xl sm:text-5xl lg:text-6xl font-bold py-20 mb-10 max-sm:py-6  ">
-            Our Core SEO Services
-          </h1>
-
-          {SeoCards?.map((card, idx) => (
-            <div
-              className="w-full text-white body-font mb-16 md:mb-24"
-              key={idx}
-            >
-              <div
-                className={`flex flex-col ${
-                  idx % 2 === 0 ? "lg:flex-row-reverse" : "lg:flex-row"
-                } gap-8 md:gap-12 lg:gap-20 items-center`}
-              >
-                <div className="w-full lg:w-1/2">
-                  <video
-                    src={card.vid}
-                    className="object-cover object-center rounded w-full h-full"
-                    muted
-                    autoPlay
-                    loop
-                    playsInline
-                  />
-                </div>
-
-                <div className="w-full lg:w-1/2 flex flex-col items-start text-left">
-                  <h2 className="text-2xl md:text-3xl lg:text-4xl mb-4 font-bold text-white">
-                    {card.title}
-                  </h2>
-                  <p className="mb-6 md:mb-8 leading-relaxed">{card.dis}</p>
-
-                  <Accordion
-                    type="single"
-                    collapsible
-                    className="w-full space-y-5"
-                  >
-                    <AccordionItem value="item-1">
-                      <AccordionTrigger className="text-xl md:text-2xl lg:text-3xl hover:no-underline">
-                        {card.act1}
-                      </AccordionTrigger>
-                      <AccordionContent className="text-base md:text-lg">
-                        {card.acdis1}
-                      </AccordionContent>
-                    </AccordionItem>
-
-                    <AccordionItem value="item-2">
-                      <AccordionTrigger className="text-xl md:text-2xl lg:text-3xl hover:no-underline">
-                        {card.act2}
-                      </AccordionTrigger>
-                      <AccordionContent className="text-base md:text-lg">
-                        {card.acdis2}
-                      </AccordionContent>
-                    </AccordionItem>
-
-                    <AccordionItem value="item-3">
-                      <AccordionTrigger className="text-xl md:text-2xl lg:text-3xl hover:no-underline">
-                        {card.act3}
-                      </AccordionTrigger>
-                      <AccordionContent className="text-base md:text-lg">
-                        {card.acdis3}
-                      </AccordionContent>
-                    </AccordionItem>
-                  </Accordion>
-                </div>
-              </div>
-            </div>
-          ))}
-        </section> */}
-
         <section className="py-12 px-4 sm:px-6 lg:px-8 bg-[#191919]">
           <div className="max-w-7xl mx-auto">
             <h1 className="text-3xl font-bold text-center mb-12 text-white">
@@ -621,7 +417,7 @@ const page = () => {
                   className="w-full space-y-5"
                 >
                   <AccordionItem value={`item-${index}` } className={``}>
-                    <AccordionTrigger className=" text-white md:text-2xl lg:text-2xl hover:no-underline">
+                    <AccordionTrigger className=" text-white md:text-2xl lg:text-2xl cursor-pointer hover:text-[#D9345E] hover:no-underline">
                       {card.title}
                     </AccordionTrigger>
                     <AccordionContent className="text-base text-white md:text-lg">
@@ -635,6 +431,9 @@ const page = () => {
         </section>
 
         <BusinessOperations />
+
+              
+
       </div>
     </>
   );

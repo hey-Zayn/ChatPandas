@@ -18,6 +18,9 @@ const Section3 = () => {
     const mobileCard4Ref = useRef(null);
     const mobileCard5Ref = useRef(null);
     const mobileCard6Ref = useRef(null);
+
+    const TextRef = useRef(null);
+    const Text2Ref = useRef(null);
   
     // Store all ScrollTrigger instances created by this component
     const scrollTriggersRef = useRef([]);
@@ -28,7 +31,28 @@ const Section3 = () => {
       // Clear only this component's ScrollTrigger instances
       scrollTriggersRef.current.forEach((st) => st.kill());
       scrollTriggersRef.current = [];
-  
+        
+        const texttl = gsap.timeline({
+            scrollTrigger: {
+                trigger: section3Ref.current,
+                start: "top 80%",
+                end: "bottom bottom",
+                toggleActions: "play none none none"
+              }
+        })
+        texttl.from(TextRef.current,{
+            y:-100,
+            opacity: 0,
+            duration: 0.3,
+            ease: "power2.out"
+          })
+        texttl.from(Text2Ref.current,{
+            y:-100,
+            opacity: 0,
+            duration: 0.3,
+            ease: "power2.out"
+          })
+
       // Function to create and store ScrollTrigger instances
       const createCardAnimation = (cardRef, rotation) => {
         if (!cardRef.current) return null;
@@ -77,58 +101,7 @@ const Section3 = () => {
       createCardAnimation(card4Ref, 15);
       createCardAnimation(card5Ref, -15);
       createCardAnimation(card6Ref, 15);
-  
-    //  Mobile
-     
-    //   const createMobileAnimation = (mobileCardRef, isEven) => {
-    //     if (!mobileCardRef.current) return null;
-  
-    //     const tl = gsap.timeline({
-    //       defaults: {
-    //         duration: 0.5,
-    //         ease: "power3.out",
-    //       },
-    //     });
-  
-    //     const st = ScrollTrigger.create({
-    //       trigger: mobileCardRef.current,
-    //       start: "top 80%",
-    //       end: "bottom 20%",
-    //       scrub: 1,
-    //       // markers: true,
-    //       toggleActions: "play none none reverse",
-    //       animation: tl.fromTo(
-    //         mobileCardRef.current,
-    //         {
-    //           x: isEven ? -100 : 100,
-    //           y: 50,
-    //           opacity: 0,
-    //           scale: 0.8,
-    //         },
-    //         {
-    //           x: 0,
-    //           y: 0,
-    //           opacity: 1,
-    //           scale: 1,
-    //           duration: 1,
-    //           ease: "power2.out",
-    //         }
-    //       ),
-    //     });
-  
-    //     scrollTriggersRef.current.push(st);
-    //     return st;
-    //   };
-  
-    //   // Mobile - Animation
-    //   // Odd numbered cards come from right
-    //   createMobileAnimation(mobileCard1Ref, false);
-    //   // Even numbered cards come from left
-    //   createMobileAnimation(mobileCard2Ref, true);
-    //   createMobileAnimation(mobileCard3Ref, false);
-    //   createMobileAnimation(mobileCard4Ref, true);
-    //   createMobileAnimation(mobileCard5Ref, false);
-    //   createMobileAnimation(mobileCard6Ref, true);
+   
 
     const createMobileAnimation = (mobileCardRef, isEven) => {
         if (!mobileCardRef.current) return null;
@@ -194,8 +167,8 @@ const Section3 = () => {
             >
                 <div className="px-2">
                     <div className="sticky top-[40%] flex flex-col justify-center z-20">
-                        <h2 className="text-center text-6xl">BPO OUTSOURCING?</h2>
-                        <h2 className="text-center text-6xl font-bold uppercase">
+                        <h2 ref={TextRef} className="text-center text-6xl">BPO OUTSOURCING?</h2>
+                        <h2 ref={Text2Ref} className="text-center text-6xl font-bold uppercase">
                             Let's tackle your challenges
                         </h2>
                     </div>

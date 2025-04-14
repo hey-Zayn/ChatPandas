@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Button } from "./ui/button";
+import { useGSAP } from "@gsap/react";
 
 export default function BusinessOperations() {
   const sectionRef = useRef(null);
@@ -11,60 +12,38 @@ export default function BusinessOperations() {
   const textRef = useRef(null);
   const ctaRef = useRef(null);
 
-  useEffect(() => {
-    // Register ScrollTrigger plugin
-    gsap.registerPlugin(ScrollTrigger);
-
-    // Create animation timeline
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top 80%",
-        end: "bottom 20%",
-        toggleActions: "play none none reverse",
-      },
-    });
-
-    // Add animations to timeline
-    tl.from(headingRef.current, {
-      y: 50,
+ useGSAP(()=>{
+  gsap.registerPlugin(ScrollTrigger);
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: sectionRef.current,
+      start: "top top%",
+      end: "bottom bottom",
+      toggleActions: "play none none none"
+    }
+  });
+  tl.from(headingRef.current,{
+    y: 100,
       opacity: 0,
-      duration: 0.8,
-      ease: "power3.out",
-    })
-      .from(
-        textRef.current,
-        {
-          y: 30,
-          opacity: 0,
-          duration: 0.8,
-          ease: "power3.out",
-        },
-        "-=0.4"
-      )
-      .from(
-        ctaRef.current,
-        {
-          y: 20,
-          opacity: 0,
-          duration: 0.8,
-          ease: "power3.out",
-          stagger: 0.2,
-        },
-        "-=0.4"
-      );
-
-    // Cleanup function
-    return () => {
-      if (tl.scrollTrigger) {
-        tl.scrollTrigger.kill();
-      }
-      tl.kill();
-    };
-  }, []);
+      duration: 0.5,
+      ease: "power2.out"
+  })
+  tl.from(textRef.current,{
+    y: 100,
+      opacity: 0,
+      duration: 0.5,
+      ease: "power2.out"
+  })
+  tl.from(ctaRef.current,{
+    y: 100,
+      opacity: 0,
+      duration: 0.5,
+      ease: "power2.out"
+  })
+ },[])
 
   return (
-    <div className="w-full h-full flex justify-center px-4 ">
+    <div ref={sectionRef} className="w-full h-full flex justify-center px-4 ">
       <div className="w-[95%] h-[70vh] max-sm:h-full relative flex flex-col  items-center bg-gradient-to-b from-[#191919] via-[#520ADE] to-[#520ADE] overflow-hidden py-20">
         <span className="size-200 absolute top-50 -right-10  rounded-full bg-[radial-gradient(circle_at_center,#a8288f_20%,transparent_70%)] blur-[90px]"></span>
         <span className="size-200 absolute top-20 -right-60 rounded-full bg-[radial-gradient(circle_at_center,#a8288f_20%,transparent_70%)] blur-[90px]"></span>
@@ -76,7 +55,7 @@ export default function BusinessOperations() {
             Why Choose Corecentrix?
           </h1>
           <div className="w-full flex justify-center items-center ">
-            <p className=" text-white/80 text-center w-[80%]">
+            <p ref={textRef} className=" text-white/80 text-center w-[80%]">
               Choosing Corecentrix Business Solutions for your SEO needs means
               investing in a comprehensive, results-driven strategy tailored to
               your business. Whether you’re a small business looking to

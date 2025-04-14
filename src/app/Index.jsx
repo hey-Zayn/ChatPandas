@@ -16,21 +16,23 @@ import Section6Test from '@/components/Section6Test'
 
 
 
+
+
 const Index = () => {
 
   return (
     <>
-      {/* <Navbar /> */}
+
       <Hero />
       <Section2 />
       <Section3 />
       <div>
         <Section3D />
       </div>
-        
-      {/* <Section6Test/> */}
 
+      <Section6Test />
       <Section7 />
+
       <Section8 />
       <Section9_Form />
       <PandaScroll />
