@@ -621,7 +621,7 @@ const page = () => {
                   className="w-full space-y-5"
                 >
                   <AccordionItem value={`item-${index}` } className={``}>
-                    <AccordionTrigger className=" text-white md:text-2xl lg:text-2xl hover:no-underline">
+                    <AccordionTrigger className=" text-white md:text-2xl lg:text-2xl cursor-pointer hover:no-underline">
                       {card.title}
                     </AccordionTrigger>
                     <AccordionContent className="text-base text-white md:text-lg">

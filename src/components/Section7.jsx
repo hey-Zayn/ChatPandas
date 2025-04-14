@@ -115,8 +115,8 @@ const Section7 = () => {
     
           const st = ScrollTrigger.create({
             trigger: mobileCardRef.current,
-            start: "top 80%",
-            end: "bottom 20%",
+            start: "top 80% ",
+            end: "bottom bottom",
             // markers: true,
             toggleActions: "play none none reverse",
             animation: tl.fromTo(
