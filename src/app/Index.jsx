@@ -26,10 +26,8 @@ const Index = () => {
       <Hero />
       <Section2 />
       <Section3 />
-      <div>
-        {/* <Section3D /> */}
-      </div>
-
+      
+      {/* <Section4/> */}
       <Section6Test />
       <Section7 />
 

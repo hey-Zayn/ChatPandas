@@ -44,7 +44,7 @@ export default function BusinessOperations() {
 
   return (
     <div ref={sectionRef} className="w-full h-full flex justify-center px-4 ">
-      <div className="w-[95%] h-[70vh] max-sm:h-full relative flex flex-col  items-center bg-gradient-to-b from-[#191919] via-[#520ADE] to-[#520ADE] overflow-hidden py-20">
+      <div className="w-[95%] h-[70vh] max-sm:h-full relative flex flex-col  items-center bg-gradient-to-b from-[#191919] via-[#520ADE] to-[#520ADE] overflow-hidden py-20 rounded-2xl">
         <span className="size-200 absolute top-50 -right-10  rounded-full bg-[radial-gradient(circle_at_center,#a8288f_20%,transparent_70%)] blur-[90px]"></span>
         <span className="size-200 absolute top-20 -right-60 rounded-full bg-[radial-gradient(circle_at_center,#a8288f_20%,transparent_70%)] blur-[90px]"></span>
         <div className="w-full h-full flex flex-col justify-center gap-8 max-sm:gap-4 px-4 max-sm:py-5 z-10">
@@ -68,9 +68,9 @@ export default function BusinessOperations() {
             </p>
           </div>
           <div ref={ctaRef} className="w-full text-center">
-            <Button className="inline z-10   bg-white text-black font-bold  hover:text-white hover:bg-black">
+            <button className="inline z-10   bg-white text-black font-bold  px-4 py-3 rounded-xl transition-all duration-300  hover:text-white hover:bg-black cursor-pointer ">
               Contact us Today
-            </Button>
+            </button>
           </div>
         </div>
       </div>
