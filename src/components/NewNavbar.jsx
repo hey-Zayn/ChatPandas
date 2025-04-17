@@ -56,12 +56,12 @@ const NewNavbar = () => {
                       <AccordionContent className={`text-white`}>
                         <div className="">
                           <ul className="flex flex-col gap-2 max-sm:gap-4 hover:text-white">
-                            <li className="text-xl max-sm:text-base font-medium  text-white/50 cursor-pointer hover:text-white">
+                            <Link href="/Search-Engine-Optimization"> <li className="text-xl max-sm:text-base font-medium  text-white/50 cursor-pointer hover:text-white">
                               {" "}
-                              <Link href="/Search-Engine-Optimization">
-                                Search Engine Optimization
-                              </Link>{" "}
-                            </li>
+
+                              Search Engine Optimization
+                              {" "}
+                            </li></Link>
                             <li className="text-xl max-sm:text-base font-medium  text-white/50 cursor-pointer hover:text-white">
                               {" "}
                               <Link href="/Local-Search-Optimization">
@@ -108,12 +108,9 @@ const NewNavbar = () => {
                       <AccordionContent className={`text-white`}>
                         <div className="">
                           <ul className="flex flex-col gap-2 max-sm:gap-4 hover:text-white">
-                            <li className="text-xl max-sm:text-base font-medium  text-white/50 cursor-pointer hover:text-white">
-                              {" "}
-                              <Link href="/Search-Engine-Optimization">
-                                PPC & Ads
-                              </Link>{" "}
-                            </li>
+                            <Link href="/Search-Engine-Optimization"> <li className="text-xl max-sm:text-base font-medium  text-white/50 cursor-pointer hover:text-white">
+                              PPC & Ads
+                            </li></Link>
                             <li className="text-xl max-sm:text-base font-medium  text-white/50 cursor-pointer hover:text-white">
                               {" "}
                               <Link href="/Local-Search-Optimization">
@@ -302,23 +299,23 @@ const NewNavbar = () => {
                     </AccordionItem>
                   </Accordion> */}
 
-                  <SheetTitle
+                  <Link href={`/How-It-Works`}>  <SheetTitle
                     className={`text-white text-xl font-bold max-sm:text-lg mb-5 mt-4`}
                   >
-                    <Link href={`/How-It-Works`}>How It Works</Link>
-                  </SheetTitle>
+                    How It Works
+                  </SheetTitle></Link>
 
-                  <SheetTitle
+                  <Link href={`/Who-We-Are`}> <SheetTitle
                     className={`text-white text-xl font-bold max-sm:text-lg mb-5`}
                   >
-                    <Link href={`/Who-We-Are`}>Who We Are</Link>
-                  </SheetTitle>
+                    Who We Are
+                  </SheetTitle></Link>
 
-                  <SheetTitle
+                  <Link href={`/Contact`}> <SheetTitle
                     className={`text-white text-xl font-bold max-sm:text-lg mb-4`}
                   >
-                    <Link href={`/Contact`}>Contact</Link>
-                  </SheetTitle>
+                    Contact
+                  </SheetTitle></Link>
                 </SheetDescription>
               </SheetHeader>
             </div>

@@ -8,8 +8,8 @@ const Section6 = () => {
   gsap.registerPlugin(ScrollTrigger);
 
   useEffect(() => {
-    const imgs = document.querySelectorAll(".card img");
-    const cards = document.querySelectorAll(".card");
+    const imgs = document.querySelectorAll(".Scard img");
+    const cards = document.querySelectorAll(".Scard");
 
     const cardSticky = document.querySelectorAll(".card_sticky");
     const stickytitle = document.getElementById("sticky");
@@ -103,7 +103,7 @@ const Section6 = () => {
   return (
     <>
       <div className="pb-[3%] w-full pt-[10%] overflow-hidden bg-[rgb(238,228,210)]">
-        <div className=" flex flex-col  sm:flex-row md:flex-row xl:flex-row  lg:flex-row  gap-[2%]">
+        <div className=" flex flex-col  sm:flex-col md:flex-row xl:flex-row  lg:flex-row  gap-[2%] max-sm:gap-4">
           <div className="w-[30%] h-20 m-[4%] mr-0">
             <h1
               id="sticky"
@@ -115,32 +115,10 @@ const Section6 = () => {
             </h1>
           </div>
           <div className="flex flex-col h-full w-[80%] m-[4%]  text-black">
-            <div className="card flex-grow-1 card_sticky border-solid border-[1px] bg-[rgb(238,228,210)] border-black rounded-lg m-6 w-full max-sm:w-[50%]  h-full z-[1]">
-              <div className="flex justify-between">
-                <div className="w-full">
-                  <h6 className="p-6 pb-1">01</h6>
-                  <h1 className="pt-0 w-full p-6 max-sm:pr-0 max-sm:pb-3 text-3xl sm:text-3xl 2xl:text-5xl md:text-3xl lg:text-3xl font-medium">
-                    VOICE SUPPORT
-                  </h1>
-                </div>
-                <div className="w-[60%]">
-                  <Image
-                    src="/images/headphones.svg"
-                    alt="headphones"
-                    width={150}
-                    height={150}
-                    className="-mt-[20%] will-change-transform opacity-0"
-                  />
-                </div>
-              </div>
-              <p className="p-6 pt-5 max-sm:pt-0 pb-3 text-justify text-sm sm:text-base md:text-lg lg:text-1xl xl:text-1xl 2xl:text-4xl text-wrap">
-                Help your clients understand their problems and provide
-                effective solutions. problems and provide effective solutions.
-              </p>
-            </div>
-
-            <div className="card flex-grow-1 card_sticky border-solid border-[1px] bg-[rgb(238,228,210)] border-black rounded-lg m-6 w-[100%] h-full sm:w-[95%] md:w-[95%] lg:w-[95%] xl:w-[95%] 
-            2xl:w-[95%]">
+          
+            {/* Card 1 */}
+            <div className="Scard flex-grow-1 card_sticky border-solid border-[1px] bg-[rgb(238,228,210)] border-black rounded-lg m-6 w-[100%] h-full sm:w-[95%] md:w-[95%] lg:w-[95%] xl:w-[95%] 
+            2xl:w-[95%] z-[1]">
               <div className="flex justify-between">
                 <div className="w-full">
                   <h6 className="p-6 pb-1">01</h6>
@@ -163,108 +141,118 @@ const Section6 = () => {
                 effective solutions. problems and provide effective solutions.
               </p>
             </div>
-
-            <div className="card flex-grow-1 card_sticky border-solid border-[1px] bg-[rgb(238,228,210)] border-black rounded-lg m-6 w-[100%] h-full sm:w-[95%] md:w-[95%] lg:w-[95%] xl:w-[95%] 
-            2xl:w-[95%]">
+            {/* Card 2 */}
+            <div className="Scard flex-grow-1 card_sticky border-solid border-[1px] bg-[rgb(238,228,210)] border-black rounded-lg m-6 w-[100%] h-full sm:w-[95%] md:w-[95%] lg:w-[95%] xl:w-[95%] 
+            2xl:w-[95%] z-[1]">
               <div className="flex justify-between">
-                <div className="w-[100%]">
-                  <h6 className="p-6 pb-1">02</h6>
+                <div className="w-full">
+                  <h6 className="p-6 pb-1">01</h6>
                   <h1 className="pt-0 w-full p-6 max-sm:pr-0 max-sm:pb-3 text-3xl sm:text-3xl 2xl:text-5xl md:text-3xl lg:text-3xl font-medium">
-                    CHAT SUPPORT
+                  CHAT SUPPORT
                   </h1>
                 </div>
                 <div className="w-[60%]">
                   <Image
-                    src="/images/message.svg"
+                    src="/images/headphones.svg"
                     alt="headphones"
-                    width={130}
-                    height={130}
-                    className="mt-[15%] will-change-transform opacity-0"
+                    width={150}
+                    height={150}
+                    className="-mt-[20%] will-change-transform opacity-0"
                   />
                 </div>
               </div>
               <p className="p-6 pt-5 max-sm:pt-0 pb-3 text-justify text-sm sm:text-base md:text-lg lg:text-1xl xl:text-1xl 2xl:text-4xl">
-                Simplify complaint resolution, boost customer support, generate
-                leads , and enhance sales through our live chat assistance.
+              Simplify complaint resolution, boost customer support, generate
+              leads , and enhance sales through our live chat assistance.
               </p>
             </div>
 
-            <div className="card flex-grow-1 card_sticky border-solid border-[1px] bg-[rgb(238,228,210)] border-black rounded-lg m-6 w-[100%] h-full sm:w-[95%] md:w-[95%] lg:w-[95%] xl:w-[95%] 
-            2xl:w-[95%]">
+           
+               {/* Card 3 */}
+            <div className="Scard flex-grow-1 card_sticky border-solid border-[1px] bg-[rgb(238,228,210)] border-black rounded-lg m-6 w-[100%] h-full sm:w-[95%] md:w-[95%] lg:w-[95%] xl:w-[95%] 
+            2xl:w-[95%] z-[1]">
               <div className="flex justify-between">
-                <div className="w-[100%]">
-                  <h6 className="p-6 pb-1">03</h6>
+                <div className="w-full">
+                  <h6 className="p-6 pb-1">01</h6>
                   <h1 className="pt-0 w-full p-6 max-sm:pr-0 max-sm:pb-3 text-3xl sm:text-3xl 2xl:text-5xl md:text-3xl lg:text-3xl font-medium">
-                    EMAIL & TICKETING
+                  EMAIL & TICKETING
                   </h1>
                 </div>
                 <div className="w-[60%]">
                   <Image
-                    src="/images/sms.svg"
+                    src="/images/headphones.svg"
                     alt="headphones"
-                    width={100}
-                    height={100}
-                    className="mt-[15%] ml-[15%] will-change-transform opacity-0"
+                    width={150}
+                    height={150}
+                    className="-mt-[20%] will-change-transform opacity-0"
                   />
                 </div>
               </div>
-              <p className="p-6 pb-3 pt-0 text-justify text-sm sm:text-base md:text-lg lg:text-1xl xl:text-1xl 2xl:text-4xl">
-                Help your clients understand their problems and provide
+              <p className="p-6 pt-5 max-sm:pt-0 pb-3 text-justify text-sm sm:text-base md:text-lg lg:text-1xl xl:text-1xl 2xl:text-4xl">
+              Help your clients understand their problems and provide
                 effective solutions. problems and provide effective solutions.
               </p>
             </div>
 
-            <div className="card flex-grow-1 card_sticky border-solid border-[1px] bg-[rgb(238,228,210)] border-black rounded-lg m-6 w-[100%] h-full sm:w-[95%] md:w-[95%] lg:w-[95%] xl:w-[95%] 
-            2xl:w-[95%]">
+            
+            
+            {/* Card 4 */}
+            <div className="Scard flex-grow-1 card_sticky border-solid border-[1px] bg-[rgb(238,228,210)] border-black rounded-lg m-6 w-[100%] h-full sm:w-[95%] md:w-[95%] lg:w-[95%] xl:w-[95%] 
+            2xl:w-[95%] z-[1]">
               <div className="flex justify-between">
-                <div className="w-[100%]">
-                  <h6 className="p-6 pb-1">04</h6>
+                <div className="w-full">
+                  <h6 className="p-6 pb-1">01</h6>
                   <h1 className="pt-0 w-full p-6 max-sm:pr-0 max-sm:pb-3 text-3xl sm:text-3xl 2xl:text-5xl md:text-3xl lg:text-3xl font-medium">
-                    TECHNICAL SUPPORT
+                  TECHNICAL SUPPORT
                   </h1>
                 </div>
                 <div className="w-[60%]">
                   <Image
-                    src="/images/gear2.svg"
+                    src="/images/headphones.svg"
                     alt="headphones"
-                    width={120}
-                    height={120}
-                    className="mt-[2%] ml-[15%] will-change-transform opacity-0"
+                    width={150}
+                    height={150}
+                    className="-mt-[20%] will-change-transform opacity-0"
                   />
                 </div>
               </div>
-              <p className="p-6 pb-3 pt-5 text-justify text-sm sm:text-base md:text-lg lg:text-1xl xl:text-1xl 2xl:text-4xl">
-                Our top tier technical expertise in BPO outsourcing helps you
+              <p className="p-6 pt-5 max-sm:pt-0 pb-3 text-justify text-sm sm:text-base md:text-lg lg:text-1xl xl:text-1xl 2xl:text-4xl">
+              Our top tier technical expertise in BPO outsourcing helps you
                 tackle tough problems, improve efficiency and expand customer
                 base.
               </p>
             </div>
 
-            <div className="card flex-grow-1 card_sticky border-solid border-[1px] bg-[rgb(238,228,210)] border-black rounded-lg m-6 w-[100%] h-full sm:w-[95%] md:w-[95%] lg:w-[95%] xl:w-[95%] 
-            2xl:w-[95%]">
+            
+
+             {/* Card 5 */}
+             <div className="Scard flex-grow-1 card_sticky border-solid border-[1px] bg-[rgb(238,228,210)] border-black rounded-lg m-6 w-[100%] h-full sm:w-[95%] md:w-[95%] lg:w-[95%] xl:w-[95%] 
+            2xl:w-[95%] z-[1]">
               <div className="flex justify-between">
-                <div className="w-[100%]">
-                  <h6 className="p-6 pb-1">05</h6>
+                <div className="w-full">
+                  <h6 className="p-6 pb-1">01</h6>
                   <h1 className="pt-0 w-full p-6 max-sm:pr-0 max-sm:pb-3 text-3xl sm:text-3xl 2xl:text-5xl md:text-3xl lg:text-3xl font-medium">
-                    LEAD GENERATION
+                  LEAD GENERATION
                   </h1>
                 </div>
                 <div className="w-[60%]">
                   <Image
-                    src="/images/dollar.avif"
+                    src="/images/headphones.svg"
                     alt="headphones"
-                    width={100}
-                    height={100}
-                    className="mt-[1%] ml-[15%] will-change-transform opacity-0"
+                    width={150}
+                    height={150}
+                    className="-mt-[20%] will-change-transform opacity-0"
                   />
                 </div>
               </div>
-              <p className="p-6 pb-3 pt-0 text-justify text-sm sm:text-base md:text-lg lg:text-1xl xl:text-1xl 2xl:text-4xl">
-                Drive business growth by expanding your customer base through
+              <p className="p-6 pt-5 max-sm:pt-0 pb-3 text-justify text-sm sm:text-base md:text-lg lg:text-1xl xl:text-1xl 2xl:text-4xl">
+              Drive business growth by expanding your customer base through
                 targeted strategies that effectively connect you with
                 potentional clients, unloacking new opportunities for success.
               </p>
             </div>
+
+           
           </div>
         </div>
       </div>

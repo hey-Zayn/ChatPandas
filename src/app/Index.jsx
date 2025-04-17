@@ -13,6 +13,7 @@ import Section9_Form from '@/components/Section9_Form'
 import Section4 from '@/components/Section4'
 import Section3D from '@/components/Section3D'
 import Section6Test from '@/components/Section6Test'
+import Section6 from '@/components/Section6'
 
 
 
@@ -26,9 +27,10 @@ const Index = () => {
       <Hero />
       <Section2 />
       <Section3 />
-      
+      <Section3D/>
       {/* <Section4/> */}
-      <Section6Test />
+      <Section6 />
+      {/* <Section6Test /> */}
       <Section7 />
 
       <Section8 />
