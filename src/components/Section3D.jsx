@@ -67,7 +67,7 @@ const Section3D = () => {
 
   return (
     <>
-      <div ref={mainRef} className="w-full h-full overflow-hidden bg-[#30087D] max-sm:hidden lg:block">
+      <div ref={mainRef} className="w-full h-full overflow-hidden bg-[#30087D] max-sm:hidden  lg:block">
         
         <section className="relative w-full  h-screen ">
           <div className="absolute top-[50%] w-full  text-center z-10">
@@ -116,7 +116,7 @@ const Section3D = () => {
         </section>
       </div>
       
-      <div  className="w-full h-full overflow-hidden bg-[#30087D] max-sm:block lg:hidden">
+      <div  className="w-full h-full overflow-hidden bg-[#30087D] sm:block md:hidden max-lg:hidden">
         
         <section className="relative w-full  h-[60vh]   ">
           <div className=" absolute top-[50%] w-full  text-center z-10">

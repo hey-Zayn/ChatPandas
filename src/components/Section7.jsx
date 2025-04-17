@@ -163,7 +163,7 @@ const Section7 = () => {
     <>
         <div
         ref={section7Ref}
-        className="w-full h-[120vh] py-20 max-sm:hidden overflow-hidden"
+        className="w-full lg:h-[120vh] md:h-[70vh] py-20 max-sm:hidden overflow-hidden"
       >
         <div className="w-full sticky top-20">
           <h1
@@ -244,7 +244,7 @@ const Section7 = () => {
       </div>
 
       {/* Mobile view */}
-      <div className="w-full h-full overflow-hidden lg:hidden max-sm:block">
+      <div className="w-full h-full overflow-hidden lg:hidden md:hidden max-sm:block">
         <div className="h-full w-full py-4 px-4  overflow-hidden ">
           <div className="flex flex-col justify-center gap-6">
             <div className="w-full flex flex-col justify-center mb-8">

@@ -21,149 +21,149 @@ const Section3 = () => {
 
     const TextRef = useRef(null);
     const Text2Ref = useRef(null);
-  
+
     // Store all ScrollTrigger instances created by this component
     const scrollTriggersRef = useRef([]);
-  
+
     useGSAP(() => {
-      gsap.registerPlugin(ScrollTrigger);
-  
-      // Clear only this component's ScrollTrigger instances
-      scrollTriggersRef.current.forEach((st) => st.kill());
-      scrollTriggersRef.current = [];
-        
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Clear only this component's ScrollTrigger instances
+        scrollTriggersRef.current.forEach((st) => st.kill());
+        scrollTriggersRef.current = [];
+
         const texttl = gsap.timeline({
             scrollTrigger: {
                 trigger: section3Ref.current,
                 start: "top 80%",
                 end: "bottom bottom",
                 toggleActions: "play none none none"
-              }
+            }
         })
-        texttl.from(TextRef.current,{
-            y:-100,
+        texttl.from(TextRef.current, {
+            y: -100,
             opacity: 0,
             duration: 0.3,
             ease: "power2.out"
-          })
-        texttl.from(Text2Ref.current,{
-            y:-100,
+        })
+        texttl.from(Text2Ref.current, {
+            y: -100,
             opacity: 0,
             duration: 0.3,
             ease: "power2.out"
-          })
+        })
 
-      // Function to create and store ScrollTrigger instances
-      const createCardAnimation = (cardRef, rotation) => {
-        if (!cardRef.current) return null;
-  
-        const tl = gsap.timeline({
-          defaults: {
-            duration: 1,
-            ease: "power3.out",
-          },
-        });
-  
-        const st = ScrollTrigger.create({
-          trigger: cardRef.current,
-          start: "top 60%",
-          // end: "top 20%",
-          scrub: 2,
-          // markers:true,
-          toggleActions: "play none none reverse",
-          animation: tl.fromTo(
-            cardRef.current,
-            {
-              rotationX: -25,
-              rotationY: -10,
-              rotationZ: rotation,
-              translateY: 100,
-              // opacity: 0.5,
-            },
-            {
-              rotationX: 0,
-              rotationY: 0,
-              rotationZ: -rotation,
-              translateY: 50,
-              // opacity: 1,
-            }
-          ),
-        });
-  
-        // Store the ScrollTrigger instance
-        scrollTriggersRef.current.push(st);
-        return st;
-      };
-      // Create animations for each card with alternating rotations
-      createCardAnimation(card1Ref, -15);
-      createCardAnimation(card2Ref, 15);
-      createCardAnimation(card3Ref, -15);
-      createCardAnimation(card4Ref, 15);
-      createCardAnimation(card5Ref, -15);
-      createCardAnimation(card6Ref, 15);
-   
+        // Function to create and store ScrollTrigger instances
+        const createCardAnimation = (cardRef, rotation) => {
+            if (!cardRef.current) return null;
 
-    const createMobileAnimation = (mobileCardRef, isEven) => {
-        if (!mobileCardRef.current) return null;
-  
-        const tl = gsap.timeline({
-          defaults: {
-            duration: 1,
-            ease: "power3.out",
-          },
-        });
-  
-        const st = ScrollTrigger.create({
-          trigger: mobileCardRef.current,
-          start: "top 60%",
-        //   end: "bottom 20%",
-          // markers: true,
-          toggleActions: "play none none reverse",
-          animation: tl.fromTo(
-            mobileCardRef.current,
-            {
-              x: isEven ? -200 : 200,
-              y: 100,
-              opacity: 0,
-              scale: 0.5,
-              rotation: isEven ? -30 : 30,
-            },
-            {
-              x: 0,
-              y: 0,
-              opacity: 1,
-              scale: 1,
-              rotation: 0,
-              duration: 1.5,
-              ease: "elastic.out(1, 0.3)",
-            }
-          ),
-        });
-  
-        scrollTriggersRef.current.push(st);
-        return st;
-      };
-  
-      // Mobile - Animation with staggered timing
-      createMobileAnimation(mobileCard1Ref, false);
-      // Even numbered cards come from left
-      createMobileAnimation(mobileCard2Ref, true);
-      createMobileAnimation(mobileCard3Ref, false);
-      createMobileAnimation(mobileCard4Ref, true);
-      createMobileAnimation(mobileCard5Ref, false);
-      createMobileAnimation(mobileCard6Ref, true);
-  
-      // Clean up on component unmount
-      return () => {
-        scrollTriggersRef.current.forEach((st) => st.kill());
-        scrollTriggersRef.current = [];
-      };
+            const tl = gsap.timeline({
+                defaults: {
+                    duration: 1,
+                    ease: "power3.out",
+                },
+            });
+
+            const st = ScrollTrigger.create({
+                trigger: cardRef.current,
+                start: "top 60%",
+                // end: "top 20%",
+                scrub: 2,
+                // markers:true,
+                toggleActions: "play none none reverse",
+                animation: tl.fromTo(
+                    cardRef.current,
+                    {
+                        rotationX: -25,
+                        rotationY: -10,
+                        rotationZ: rotation,
+                        translateY: 100,
+                        // opacity: 0.5,
+                    },
+                    {
+                        rotationX: 0,
+                        rotationY: 0,
+                        rotationZ: -rotation,
+                        translateY: 50,
+                        // opacity: 1,
+                    }
+                ),
+            });
+
+            // Store the ScrollTrigger instance
+            scrollTriggersRef.current.push(st);
+            return st;
+        };
+        // Create animations for each card with alternating rotations
+        createCardAnimation(card1Ref, -15);
+        createCardAnimation(card2Ref, 15);
+        createCardAnimation(card3Ref, -15);
+        createCardAnimation(card4Ref, 15);
+        createCardAnimation(card5Ref, -15);
+        createCardAnimation(card6Ref, 15);
+
+
+        const createMobileAnimation = (mobileCardRef, isEven) => {
+            if (!mobileCardRef.current) return null;
+
+            const tl = gsap.timeline({
+                defaults: {
+                    duration: 1,
+                    ease: "power3.out",
+                },
+            });
+
+            const st = ScrollTrigger.create({
+                trigger: mobileCardRef.current,
+                start: "top 60%",
+                //   end: "bottom 20%",
+                // markers: true,
+                toggleActions: "play none none reverse",
+                animation: tl.fromTo(
+                    mobileCardRef.current,
+                    {
+                        x: isEven ? -200 : 200,
+                        y: 100,
+                        opacity: 0,
+                        scale: 0.5,
+                        rotation: isEven ? -30 : 30,
+                    },
+                    {
+                        x: 0,
+                        y: 0,
+                        opacity: 1,
+                        scale: 1,
+                        rotation: 0,
+                        duration: 1.5,
+                        ease: "elastic.out(1, 0.3)",
+                    }
+                ),
+            });
+
+            scrollTriggersRef.current.push(st);
+            return st;
+        };
+
+        // Mobile - Animation with staggered timing
+        createMobileAnimation(mobileCard1Ref, false);
+        // Even numbered cards come from left
+        createMobileAnimation(mobileCard2Ref, true);
+        createMobileAnimation(mobileCard3Ref, false);
+        createMobileAnimation(mobileCard4Ref, true);
+        createMobileAnimation(mobileCard5Ref, false);
+        createMobileAnimation(mobileCard6Ref, true);
+
+        // Clean up on component unmount
+        return () => {
+            scrollTriggersRef.current.forEach((st) => st.kill());
+            scrollTriggersRef.current = [];
+        };
     }, []);
     return (
         <>
             <div
                 ref={section3Ref}
-                className="h-full w-full py-[100px] px-[70px] max-sm:hidden"
+                className="h-full w-full py-[100px] px-[70px] max-sm:hidden lg:block"
             >
                 <div className="px-2">
                     <div className="sticky top-[40%] flex flex-col justify-center z-20">
@@ -195,7 +195,7 @@ const Section3 = () => {
                     >
                         <div className="card w-80">
                             <img
-                               src="/images/card2.svg "
+                                src="/images/card2.svg "
                                 alt="BPO Challenge Card 2"
                                 className="w-full h-auto"
                             />
@@ -223,7 +223,7 @@ const Section3 = () => {
                     >
                         <div className="card w-80">
                             <img
-                              src="/images/card4.svg "
+                                src="/images/card4.svg "
                                 alt="BPO Challenge Card 4"
                                 className="w-full h-auto"
                             />
@@ -237,7 +237,7 @@ const Section3 = () => {
                     >
                         <div className="card w-80">
                             <img
-                               src="/images/card6.svg "
+                                src="/images/card6.svg "
                                 alt="BPO Challenge Card 5"
                                 className="w-full h-auto"
                             />
@@ -260,8 +260,8 @@ const Section3 = () => {
                 </div>
             </div>
             {/* Mobile view */}
-            <div className="w-full h-full overflow-hidden">
-                <div className="h-full w-full py-4 px-4 lg:hidden max-sm:block overflow-hidden">
+            <div className="w-full h-full overflow-hidden lg:hidden md:hidden max-sm:block">
+                <div className="h-full w-full py-4 px-4  overflow-hidden">
                     <div className="flex flex-col justify-center gap-6">
                         <div className="w-full flex flex-col justify-center mb-8">
                             <h2 className="text-center text-3xl">BPO OUTSOURCING?</h2>
@@ -288,7 +288,7 @@ const Section3 = () => {
                         >
                             <div className="card w-80">
                                 <img
-                                   src="/images/card2.svg "
+                                    src="/images/card2.svg "
                                     alt="BPO Challenge Card 2"
                                     className="w-full h-auto"
                                 />
@@ -312,7 +312,7 @@ const Section3 = () => {
                         >
                             <div className="card w-80">
                                 <img
-                                   src="/images/card4.svg "
+                                    src="/images/card4.svg "
                                     alt="BPO Challenge Card 4"
                                     className="w-full h-auto"
                                 />
@@ -324,7 +324,7 @@ const Section3 = () => {
                         >
                             <div className="card w-80">
                                 <img
-                                   src="/images/card5.svg "
+                                    src="/images/card5.svg "
                                     alt="BPO Challenge Card 5"
                                     className="w-full h-auto"
                                 />
