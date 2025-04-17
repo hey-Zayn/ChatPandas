@@ -3,6 +3,7 @@ import "./globals.css";
 import MenuBar from "@/components/MenuBar";
 import Footer from "@/components/Footer";
 import NewNavbar from "@/components/NewNavbar";
+import MegaMenu from "@/components/MegaMenu";
 
 
 const geistSans = Geist({
@@ -26,6 +27,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+      {/* <MegaMenu/> */}
       <NewNavbar/>
       {/* <MenuBar/> */}
         {children}

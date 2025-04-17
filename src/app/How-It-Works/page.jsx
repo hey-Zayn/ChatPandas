@@ -1,3 +1,4 @@
+import ScrollSpySection from "@/components/ScrollSpySection";
 import React from "react";
 
 const page = () => {
@@ -106,7 +107,7 @@ const page = () => {
         </div>
       </section>
 
-      <section className="w-full h-full">
+      {/* <section className="w-full h-full">
         <div className="w-full h-full flex max-sm:flex-col gap-2 px-10 py-8">
           <div className="w-[20%]  max-sm:w-full  ">
             <div className="sticky top-2 space-y-2 ">
@@ -207,7 +208,8 @@ const page = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
+      <ScrollSpySection/>
     </div>
   );
 };

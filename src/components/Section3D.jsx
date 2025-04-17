@@ -35,8 +35,15 @@ const Section3D = () => {
           const animate = (t = 0) => {
             requestAnimationFrame(animate);
             // Add more complex animation logic here
+              // ------------rotaton animation 
             const rotationSpeed = 0.001;
             modelRef.current.rotation.y = t * rotationSpeed;
+           
+           
+            // ---------------Testing animation
+            // const rotationSpeed = 0.001;
+            // modelRef.current.rotation.x -= delta * (rotationSpeed * t)  / 5 ;
+            
             // const scaleFactor = 2 + Math.sin(t * 0.001) * 1;
             // modelRef.current.scale.set(scaleFactor, scaleFactor, scaleFactor);
           };

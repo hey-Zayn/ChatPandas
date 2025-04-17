@@ -10,10 +10,9 @@ import {
 import BusinessOperations from "@/components/Business-operations";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { NotepadText } from "lucide-react";
+
 
 import { useGSAP } from "@gsap/react";
-import StaggerText from "@/components/StaggerText";
 
 const page = () => {
   const sectionRef = useRef(null);
@@ -41,9 +40,57 @@ const page = () => {
     { scope: sectionRef }
   );
 
+  useEffect(() => {
+    // Register ScrollTrigger plugin
+    gsap.registerPlugin(ScrollTrigger);
 
+    // Create animation timeline
 
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 80%",
+        end: "bottom 20%",
+        toggleActions: "play none none reverse",
+      },
+    });
 
+    // Add animations to timeline
+    tl.from(headingRef.current, {
+      y: 50,
+      opacity: 0,
+      duration: 0.8,
+      ease: "power3.out",
+    })
+      .from(
+        textRef.current,
+        {
+          y: 30,
+          opacity: 0,
+          duration: 0.8,
+          ease: "power3.out",
+        },
+        "-=0.4"
+      )
+      .from(
+        ctaRef.current,
+        {
+          y: 20,
+          opacity: 0,
+          duration: 0.8,
+          ease: "power3.out",
+        },
+        "-=0.4"
+      );
+
+    // Cleanup function
+    return () => {
+      if (tl.scrollTrigger) {
+        tl.scrollTrigger.kill();
+      }
+      tl.kill();
+    };
+  }, []);
 
   const SEOTpyes = [
     {
@@ -78,18 +125,22 @@ const page = () => {
       dis: "SEO, or Search Engine Optimization, is the process of optimizing your website to rank higher on search engine results pages (SERPs). It is crucial for increasing your online visibility, driving organic traffic to your site, and ultimately boosting sales and revenue.",
     },
     {
-      title: "What is SEO and why is it important for my business?",
-      dis: "SEO, or Search Engine Optimization, is the process of optimizing your website to rank higher on search engine results pages (SERPs). It is crucial for increasing your online visibility, driving organic traffic to your site, and ultimately boosting sales and revenue.",
+      title: "How long does it take to see results from SEO?",
+      dis: "SEO is a long-term strategy. Typically, you can start seeing noticeable improvements in your search rankings within 3 to 6 months, but it can take 6 to 12 months to achieve significant results, depending on your industry and competition.",
     },
+   
     {
-      title: "What is SEO and why is it important for my business?",
-      dis: "SEO, or Search Engine Optimization, is the process of optimizing your website to rank higher on search engine results pages (SERPs). It is crucial for increasing your online visibility, driving organic traffic to your site, and ultimately boosting sales and revenue.",
+      title: "What are the key components of your SEO strategy?",
+      dis: "Our SEO strategy includes a comprehensive site audit, keyword research, on-page optimization, off-page SEO, content creation and optimization, link building, and continuous performance tracking and optimization.",
     },
+    
+    
     {
-      title: "What is SEO and why is it important for my business?",
-      dis: "SEO, or Search Engine Optimization, is the process of optimizing your website to rank higher on search engine results pages (SERPs). It is crucial for increasing your online visibility, driving organic traffic to your site, and ultimately boosting sales and revenue.",
+      title: "How do you measure the success of an SEO campaign?",
+      dis: "We use advanced analytics and tracking tools to monitor key metrics such as organic traffic, keyword rankings, conversion rates, and ROI. Regular reports and insights are provided to keep you informed of the progress and impact of your SEO campaign.",
     },
   ];
+
   const packages = [
     {
       name: "Basic Package",
@@ -165,6 +216,7 @@ const page = () => {
   return (
     <>
       <div ref={sectionRef} className="w-full h-full bg-[#191919]">
+        {/* --------------------------------  { Hero }  ------------------------------------------ */}
         <div className="w-full h-full">
           <div
             id="seo-hero"
@@ -180,7 +232,9 @@ const page = () => {
           </div>
         </div>
 
-        <section id="section2-img-left" className="w-full text-white body-font">
+        {/* --------------------------------  { Section 2 }  ------------------------------------------ */}
+
+        <section className="w-full text-white body-font">
           <div className="container mx-auto flex gap-10 max-sm:gap-10 px-5 max-sm:px-2  py-24 md:flex-row flex-col items-center">
             <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
               <video
@@ -199,7 +253,7 @@ const page = () => {
                 With Targeted Revenue Growth
               </h1>
               <p className="mb-8 leading-relaxed">
-              In the fast-paced digital marketplace, visibility is everything.
+                In the fast-paced digital marketplace, visibility is everything.
                 Corecentrix Business Solutions stands at the forefront of SEO
                 excellence, empowering businesses across the USA to dominate
                 search engine rankings and achieve unparalleled revenue growth.
@@ -207,8 +261,6 @@ const page = () => {
                 page—they're about driving measurable results that translate
                 into tangible profits for your business.
               </p>
-                
-              
               <div className="flex justify-center">
                 <button className="inline-flex text-white border border-white px-6 py-3 rounded-lg text-lg hover:bg-white hover:text-black transition-colors duration-300">
                   Connect Now
@@ -218,26 +270,24 @@ const page = () => {
           </div>
         </section>
 
+        {/* --------------------------------  { Section 3 }  ------------------------------------------ */}
+
         <section className="w-full text-white body-font">
           <div className="container mx-auto flex  max-sm:flex-col-reverse gap-10 max-sm:gap-10  px-5 max-sm:px-2 py-15 md:flex-row flex-col items-center">
             <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center max-sm:text-left max-sm:px-8">
               <h1 className=" max-sm:text-2xl text-3xl mb-4 font-bold text-white">
-                Get to the Top Page of Search Engines:
+                Your Business Statistics Turn
                 {/* <br className="hidden lg:inline-block" /> */}
-                With targeted Revenue growth
+                Your Decisions to Profit
               </h1>
               <p className="mb-8 leading-relaxed">
-                In the fast-paced digital marketplace, visibility is everything.
-                Corecentrix Business Solutions stands at the forefront of SEO
-                excellence, empowering businesses across the USA to dominate
-                search engine rankings and achieve unparalleled revenue growth.
-                Our expert SEO strategies are not just about climbing to the top
-                page—they’re about driving measurable results that translate
-                into tangible profits for your business.
+                Harness the power of data to drive your business forward. At Corecentrix Business Solutions, we transform your business statistics into actionable insights that fuel profitable decisions. By leveraging advanced analytics, we uncover trends, identify opportunities, and provide a clear roadmap to success.
+
+                Whether it’s optimizing your marketing strategies, enhancing customer engagement, or streamlining operations, our data-driven approach ensures that every decision you make is backed by solid evidence and poised to maximize profitability. Let your business statistics be the catalyst for growth, turning informed decisions into substantial profits.
               </p>
               <div className="flex justify-center">
                 <button className="inline-flex text-white border border-white px-6 py-3 rounded-lg text-lg hover:bg-white hover:text-black transition-colors duration-300">
-                  Connect Now
+                  Learn More
                 </button>
               </div>
             </div>
@@ -264,7 +314,7 @@ const page = () => {
             <div className="w-full h-full flex items-center justify-center">
               <div className="w-full flex flex-wrap  justify-center items-center gap-5 z-10">
                 {SEOTpyes?.map((card, index) => (
-                  <div key={index} className="text-left text-white border border-white rounded-xl px-8 py-8 lg:w-[30%] md:w-[40%] max-sm:w-[90%] transition-all duration-500 ease-in-out hover:bg-[#510ADD] hover:rotate-3 hover:scale-105">
+                  <div key={index} className="text-left text-white border border-white rounded-xl px-8 py-8 lg:w-[30%] md:w-[40%] max-sm:w-[90%] transition-all duration-500 ease-in-out hover:bg-[#510ADD] hover:rotate-3 hover:scale-105 cursor-pointer">
                     <h1 className="text-3xl font-bold mb-3">{card.title}</h1>
                     <p className="text-base font-medium">{card.dis}</p>
                   </div>
@@ -281,7 +331,7 @@ const page = () => {
           <div className="container mx-auto flex gap-10 max-sm:gap-10 px-5 max-sm:px-2  py-24 max-sm:py-10 md:flex-row flex-col items-center">
             <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
               <video
-                src="https://cdn.prod.website-files.com/660b9ff56cc1437adb553c40%2F66a3956e49d8a96e28ec7e12_111-transcode.mp4"
+                src="https://cdn.prod.website-files.com/660b9ff56cc1437adb553c40%2F677e58377b367216f5957cc5_Chat%20Pandas%209-transcode.mp4"
                 className="object-cover object-center rounded w-full h-full"
                 muted
                 autoPlay
@@ -291,77 +341,41 @@ const page = () => {
             </div>
             <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left mb-16 max-sm:mb-2 md:mb-0 items-center text-center max-sm:text-left max-sm:px-8 ">
               <h1 className="max-sm:text-2xl text-3xl mb-4 font-bold text-white">
-                Your Business Statistics Turn
-                <br className="hidden lg:inline-block" />
-                Your Decisions to Profit
+                Our SEO Services Features & Packages
+
               </h1>
               <div>
                 <p className="mb-1 leading-relaxed">
-                  Harness the power of data to drive your business forward. At
-                  Corecentrix Business Solutions, we transform your business
-                  statistics into actionable insights that fuel profitable
-                  decisions. By leveraging advanced analytics, we uncover
-                  trends, identify opportunities, and provide a clear roadmap to
-                  success.
+                  At Corecentrix Business Solutions, we provide a full suite of SEO services designed to improve your online visibility, drive targeted traffic, and boost your business’s bottom line. Our offerings are tailored to meet the unique needs of each business, whether you’re a small local business or a large enterprise. Here’s a detailed list of the SEO services we provide:
                 </p>
-                <p className="mb-8 leading-relaxed">
-                  Whether it’s optimizing your marketing strategies, enhancing
-                  customer engagement, or streamlining operations, our
-                  data-driven approach ensures that every decision you make is
-                  backed by solid evidence and poised to maximize profitability.
-                  Let your business statistics be the catalyst for growth,
-                  turning informed decisions into substantial profits.
-                </p>
+
               </div>
-              <div className="flex max-sm:flex-col justify-between items-center gap-2 max-sm:gap-4">
-                <div className="w-full">
-                  <h1 className="text-3xl font-bold">+10%</h1>
-                  <h1 className="text-lg font-bold ">Boost in SEO Traffic</h1>
-                  <p className="text-sm ">
-                    for a single page with ai-driven keyword enrichment
-                  </p>
-                </div>
-                <div className="w-full">
-                  <h1 className="text-3xl font-bold">+10%</h1>
-                  <h1 className="text-lg font-bold">Boost in SEO Traffic</h1>
-                  <p className="text-sm ">
-                    for a single page with ai-driven keyword enrichment
-                  </p>
-                </div>
-                <div className="w-full">
-                  <h1 className="text-3xl font-bold">+10%</h1>
-                  <h1 className="text-lg font-bold">Boost in SEO Traffic</h1>
-                  <p className="text-sm ">
-                    for a single page with ai-driven keyword enrichment
-                  </p>
-                </div>
-              </div>
+              <button className="inline-flex text-white border border-white px-6 py-3 rounded-lg text-lg hover:bg-white hover:text-black transition-colors duration-300">
+                Book a Demo
+              </button>
             </div>
           </div>
         </section>
 
+
+
         <section className="py-12 px-4 sm:px-6 lg:px-8 bg-[#191919]">
           <div className="max-w-7xl mx-auto">
-            <h1 className="text-3xl font-bold text-center mb-12 text-white">
-              SEO Offering
-            </h1>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {packages.map((pkg, index) => (
                 <div
                   key={index}
-                  className={`rounded-lg overflow-hidden shadow-lg ${
-                    pkg.featured
-                      ? "border  border-[#4F1DD7] transform md:-translate-y-4"
-                      : "border border-[#D9345E]"
-                  } bg-[#191919]`}
+                  className={`rounded-lg overflow-hidden shadow-lg ${pkg.featured
+                    ? "border  border-[#4F1DD7] transform md:-translate-y-4"
+                    : "border border-[#D9345E]"
+                    } bg-[#191919]`}
                 >
                   <div
-                    className={`p-6 ${
-                      pkg.featured
-                        ? "bg-[#4F1DD7] text-white"
-                        : " bg-[#D9345E] text-white"
-                    }`}
+                    className={`p-6 ${pkg.featured
+                      ? "bg-[#4F1DD7] text-white"
+                      : " bg-[#D9345E] text-white"
+                      }`}
                   >
                     <h2 className="text-xl font-bold text-center">
                       {pkg.name}
@@ -393,10 +407,10 @@ const page = () => {
         </section>
 
         <section className="w-full h-screen  px-4 py-4 text-white">
-        <h1 className="text-white font-bold text-center text-4xl mt-8 ">FAQs: Your Questions Answered</h1>
+          <h1 className="text-white font-bold text-center text-4xl mt-8 ">FAQs: Your Questions Answered</h1>
           <div className="container mx-auto flex gap-10 max-sm:gap-10 px-5 max-sm:px-2  py-24 md:flex-row flex-col items-center">
-          <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
-         
+            <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
+
               <video
                 src="https://cdn.prod.website-files.com/660b9ff56cc1437adb553c40%2F66a3956e49d8a96e28ec7e12_111-transcode.mp4"
                 className="object-cover object-center rounded w-full h-full"
@@ -406,9 +420,9 @@ const page = () => {
                 playsInline
               />
             </div>
-          
+
             <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center max-sm:text-left max-sm:px-8">
-           
+
               {FAQS?.map((card, index) => (
                 <Accordion
                   key={index}
@@ -416,8 +430,8 @@ const page = () => {
                   collapsible
                   className="w-full space-y-5"
                 >
-                  <AccordionItem value={`item-${index}` } className={``}>
-                    <AccordionTrigger className=" text-white md:text-2xl lg:text-2xl cursor-pointer hover:text-[#D9345E] hover:no-underline">
+                  <AccordionItem value={`item-${index}`} className={``}>
+                    <AccordionTrigger className=" text-white md:text-2xl lg:text-2xl hover:no-underline hover:text-pink-800 cursor-pointer">
                       {card.title}
                     </AccordionTrigger>
                     <AccordionContent className="text-base text-white md:text-lg">
@@ -431,9 +445,6 @@ const page = () => {
         </section>
 
         <BusinessOperations />
-
-              
-
       </div>
     </>
   );
