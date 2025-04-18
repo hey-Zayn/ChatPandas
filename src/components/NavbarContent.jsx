@@ -11,20 +11,23 @@ const NavbarContent = ({ ulRef }) => {
   });
 
   const toggleSection = (section) => {
-    setOpenSections((prev) => ({
-      ...prev,
-      [section]: !prev[section]
-    }));
+    setOpenSections((prev) => {
+      const newState = {};
+
+      for (const key in prev) {
+        newState[key] = key === section ? !prev[key] : false;
+      }
+
+      return newState;
+    });
   };
 
   const DURATION = 0.25;
   const STAGGER = 0.025;
 
   const FlipLink = ({ children, to }) => {
-    if (!children || typeof children !== 'string') return null;
-
     return (
-      <Link href={to} passHref legacyBehavior>
+      <Link href={to}>
         <motion.div
           initial="initial"
           whileHover="hovered"
@@ -60,41 +63,42 @@ const NavbarContent = ({ ulRef }) => {
             )}
           </div>
           <div className="absolute inset-0">
-            {children.split("").map((l, i) =>
-              l === " " ? (
-                <span key={i} className="inline-block">
-                  &nbsp;
-                </span>
-              ) : (
-                <motion.span
-                  variants={{
-                    initial: { y: "100%" },
-                    hovered: { y: 0 },
-                  }}
-                  transition={{
-                    duration: DURATION,
-                    ease: "easeInOut",
-                    delay: STAGGER * i,
-                  }}
-                  className="inline-block"
-                  key={i}
-                >
-                  {l}
-                </motion.span>
-              )
-            )}
-          </div>
+  {children.split("").map((l, i) =>
+    l === " " ? (
+      <span key={i} className="inline-block">
+        &nbsp;
+      </span>
+    ) : (
+      <motion.span
+        variants={{
+          initial: { y: "100%" },
+          hovered: { y: 0 },
+        }}
+        transition={{
+          duration: DURATION,
+          ease: "easeInOut",
+          delay: STAGGER * i,
+        }}
+        className="inline-block"
+        key={i}
+      >
+        {l}
+      </motion.span>
+    )
+  )}
+</div>
+
         </motion.div>
       </Link>
     );
   };
 
   return (
-    <ul ref={ulRef} className="z-50 uppercase space-y-2 mt-12 grid gap-4 w-full">
+    <ul ref={ulRef} className="z-50 uppercase space-y-2 mt-12 grid gap-2 w-full">
       <li>
         <button
           onClick={() => toggleSection("seo")}
-          className="hover:no-underline text-left w-full flex justify-between items-center text-xl font-semibold text-black hover:text-[#E73C5F] transition-colors duration-300"
+          className="hover:no-underline text-left w-full flex justify-between items-center text-xl font-semibold text-black hover:text-gray-500"
         >
           SEO & Lead Generation
           <span>{openSections.seo ? "−" : "+"}</span>
@@ -117,10 +121,10 @@ const NavbarContent = ({ ulRef }) => {
               </FlipLink>
             </li>
             <li>
-              <FlipLink to="/seo-for-leads">SEO for Leads</FlipLink>
+              <FlipLink to="/SEO-for-Leads">SEO for Leads</FlipLink>
             </li>
             <li>
-              <FlipLink to="/seo-for-amazon">SEO for Amazon</FlipLink>
+              <FlipLink to="/SEO-for-Amazon">SEO for Amazon</FlipLink>
             </li>
           </ul>
         )}
@@ -129,7 +133,7 @@ const NavbarContent = ({ ulRef }) => {
       <li>
         <button
           onClick={() => toggleSection("marketing")}
-          className="hover:no-underline text-left w-full flex justify-between items-center text-xl font-semibold text-black hover:text-[#E73C5F] transition-colors duration-300"
+          className="hover:no-underline text-left w-full flex justify-between items-center text-xl font-semibold text-black hover:text-gray-500"
         >
           Paid Marketing Media & CRO
           <span>{openSections.marketing ? "−" : "+"}</span>
@@ -140,7 +144,7 @@ const NavbarContent = ({ ulRef }) => {
               <FlipLink to="/paid-media-advertisement">PPC & Ads</FlipLink>
             </li>
             <li>
-              <FlipLink to="/social-media-marketing">
+              <FlipLink to="/Social-Media-Marketing">
                 Social Media Campaigning
               </FlipLink>
             </li>
@@ -148,7 +152,7 @@ const NavbarContent = ({ ulRef }) => {
               <FlipLink to="/email-marketing">Email Marketing</FlipLink>
             </li>
             <li>
-              <FlipLink to="/amazon-marketing">Amazon Marketplace</FlipLink>
+              <FlipLink to="/SEO-for-Amazon">Amazon Marketplace</FlipLink>
             </li>
           </ul>
         )}
@@ -157,7 +161,8 @@ const NavbarContent = ({ ulRef }) => {
       <li>
         <button
           onClick={() => toggleSection("development")}
-          className="hover:no-underline text-left w-full flex justify-between items-center text-xl font-semibold text-black hover:text-[#E73C5F] transition-colors duration-300">
+          className="hover:no-underline text-left w-full flex justify-between items-center text-xl font-semibold text-black hover:text-gray-500"
+        >
           IT & Development Technology
           <span>{openSections.development ? "−" : "+"}</span>
         </button>
@@ -178,7 +183,7 @@ const NavbarContent = ({ ulRef }) => {
               <FlipLink to="/ui-ux">Interactive UI/UX</FlipLink>
             </li>
             <li>
-              <FlipLink to="/video-production">Video Production</FlipLink>
+              <FlipLink to="/Video-production">Video Production</FlipLink>
             </li>
             <li>
               <FlipLink to="/app-development">App Development</FlipLink>
@@ -187,20 +192,19 @@ const NavbarContent = ({ ulRef }) => {
               <FlipLink to="/crm">CRM Generation</FlipLink>
             </li>
             <li>
-              <FlipLink to="/software-development">CMS Solution</FlipLink>
+              <FlipLink to="/Software-Development">CMS Solution</FlipLink>
             </li>
           </ul>
         )}
-      </li>
-
-      <li>
-        <FlipLink to="/How-It-Works">How-It-Works</FlipLink>
-      </li>
-      <li>
-        <FlipLink to="/Who-We-Are">Who-We-Are</FlipLink>
-      </li>
-      <li>
-        <FlipLink to="/Contact">Book a demo</FlipLink>
+        <li className="pt-6">
+              <FlipLink to="/Who-We-Are">Who-We-Are</FlipLink>
+            </li>
+            <li className="py-6">
+              <FlipLink to="/How-It-Works">How-It-Works</FlipLink>
+            </li>
+            <li className="md:hidden">
+              <FlipLink to="/contact">Contact</FlipLink>
+            </li>
       </li>
     </ul>
   );
