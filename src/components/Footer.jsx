@@ -72,14 +72,7 @@ const Footer = () => {
         playsInline
         className="w-full h-full object-cover"
       />
-      {/* <video
-        src="/videos/footer.mp4"
-        className="absolute w-full h-full object-cover"
-        autoPlay
-        muted
-        loop
-        playsInline
-      /> */}
+     
     </div>
     <footer className=" w-full flex  max-sm:flex-col max-sm:hidden  justify-between items-center px-10 py-4">
       <div className="text-white">

@@ -36,7 +36,7 @@ const Section7 = () => {
           trigger: section7Ref.current,
           start: "top 40%",
           end: "bottom 30%",
-          scrub: 3,
+          scrub: 5,
           markers: false,
           toggleActions: "play none none reverse",
           animation: masterTl,
@@ -49,7 +49,7 @@ const Section7 = () => {
           {
             opacity: 0,
             x: 50,
-            duration: 4,
+            duration: 5,
           },
           0
         );
@@ -76,13 +76,13 @@ const Section7 = () => {
               marginLeft: 200,
               y: -300,
               x: baseX - index * 100,
-              duration: 4,
+              duration: 5,
             },
-            index * 0.5 + 1
+            index * 0.8 + 1
           ); // Staggered start times
         });
     
-        masterTl.to({}, { duration: 3 }, cardRefs.length * 0.5 + 3);
+        masterTl.to({}, { duration: 4 }, cardRefs.length * 0.8 + 3);
     
         cardRefs.forEach((cardRef, index) => {
           if (!cardRef.current) return;
@@ -96,9 +96,9 @@ const Section7 = () => {
               marginLeft: 200,
               y: 300,
               x: -baseX + index * 100,
-              duration: 4,
+              duration: 5,
             },
-            cardRefs.length * 0.5 + 6 + index * 1
+            cardRefs.length * 0.8 + 6 + index * 1.2
           ); // Staggered start times for exit
         });
     
@@ -245,7 +245,7 @@ const Section7 = () => {
 
       {/* Mobile view */}
       <div className="w-full h-full overflow-hidden lg:hidden md:hidden max-sm:block">
-        <div className="h-full w-full py-4 px-4  overflow-hidden ">
+        <div className="h-full w-full py 4 px-4  overflow-hidden ">
           <div className="flex flex-col justify-center gap-6">
             <div className="w-full flex flex-col justify-center mb-8">
               <h2 className="text-center text-3xl">BPO OUTSOURCING?</h2>

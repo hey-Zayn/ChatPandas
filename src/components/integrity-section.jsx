@@ -36,7 +36,7 @@ export default function IntegritySection() {
         {
           opacity: 1,
           x: 0,
-          duration: 0.8,
+          duration: 0.5,
           delay: 0.3 + index * 0.2,
           ease: "power2.out",
           scrollTrigger: {
@@ -82,7 +82,7 @@ export default function IntegritySection() {
       <div className="container mx-auto px-4 md:px-8">
         <h2
           ref={titleRef}
-          className="text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-16 tracking-wider text-white"
+          className="text-3xl md:text-5xl lg:text-6xl font-bold text-center mb-16 tracking-wider text-white"
         >
           INTEGRITY FIRST
         </h2>
