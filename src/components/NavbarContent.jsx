@@ -106,7 +106,7 @@ const NavbarContent = ({ ulRef }) => {
         {openSections.seo && (
           <ul className="flex flex-col py-4 gap-6 pl-4 max-sm:pl-0 mt-2 text-wrap">
             <li>
-              <FlipLink href="/Search-Engine-Optimization">
+              <FlipLink to="/Search-Engine-Optimization">
                 Search Engine Optimization
               </FlipLink>
             </li>
