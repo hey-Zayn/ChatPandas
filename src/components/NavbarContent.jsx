@@ -106,17 +106,17 @@ const NavbarContent = ({ ulRef }) => {
         {openSections.seo && (
           <ul className="flex flex-col py-4 gap-6 pl-4 max-sm:pl-0 mt-2 text-wrap">
             <li>
-              <FlipLink to="/search-engine-optimization">
+              <FlipLink href="/Search-Engine-Optimization">
                 Search Engine Optimization
               </FlipLink>
             </li>
             <li>
-              <FlipLink to="/local-search-optimization">
+              <FlipLink to="/Local-Search-Optimization">
                 Local Search Optimization
               </FlipLink>
             </li>
             <li>
-              <FlipLink to="/landing-page-optimization">
+              <FlipLink to="/Landing-Page-Optimization">
                 Landing Page Optimization
               </FlipLink>
             </li>
@@ -152,7 +152,7 @@ const NavbarContent = ({ ulRef }) => {
               <FlipLink to="/email-marketing">Email Marketing</FlipLink>
             </li>
             <li>
-              <FlipLink to="/amazon-advertisement">Amazon Marketplace</FlipLink>
+              <FlipLink to="/amazon-marketing">Amazon Marketplace</FlipLink>
             </li>
           </ul>
         )}
