@@ -266,7 +266,7 @@ const page = () => {
         {/* --------------------------------  { Section 3 }  ------------------------------------------ */}
 
         <section className="w-full text-white body-font">
-          <div className="container mx-auto flex  max-sm:flex-col-reverse gap-10 max-sm:gap-10  px-5 max-sm:px-2 py-15 max-sm:py-10   md:flex-row flex-col items-center">
+          <div className="container mx-auto flex  max-sm:flex-col-reverse gap-10 max-sm:gap-10  px-5 max-sm:px-2 py-15 sm:py-5   md:flex-row flex-col items-center">
             <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center max-sm:text-left max-sm:px-8">
               <h1 className=" max-sm:text-2xl text-3xl mb-4 font-bold text-white">
                 Be the top choice in your area

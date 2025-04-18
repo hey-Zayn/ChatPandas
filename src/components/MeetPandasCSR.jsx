@@ -27,17 +27,17 @@ const MeetPandasCSR = () => {
     <>
       <div className=" w-full h-full relative flex flex-col  items-center bg-gradient-to-b from-[#191919] via-[#520ADE] to-[#520ADE] overflow-hidden py-20">
         <span className="size-200 absolute top-80 -right-90  rounded-full bg-[radial-gradient(circle_at_center,#a8288f_20%,transparent_70%)] blur-[90px]"></span>
-        {/* <span className="size-200 absolute top-60 -right-90 rounded-full bg-[radial-gradient(circle_at_center,#a8288f_20%,transparent_70%)] blur-[90px]"></span> */}
+        
         <div className="w-full h-full space-y-20">
-          <h1 className="text-white text-center font-bold text-5xl">
+          <h1 className="text-white text-center font-bold text-5xl max-sm:text-3xl">
             Sustainability & CSR
           </h1>
           <div className="w-full h-full">
-            <div className="w-full flex flex-wrap justify-center gap-3">
+            <div className="w-full flex flex-wrap justify-center gap-3 px-4">
               {CRS?.map((card, index) => (
                 <div
                   key={index}
-                  className="w-[30%] p-6 border border-white rounded-2xl space-y-4 transition-all duration-500 ease-in-out hover:bg-[#510ADD] hover:rotate-3 hover:scale-105 z-[1] hover:z-10"
+                  className="w-[30%] max-sm:w-full p-6 border border-white rounded-2xl space-y-4 transition-all duration-500 ease-in-out hover:bg-[#510ADD] hover:rotate-3 hover:scale-105 z-[1] hover:z-10"
                 >
                   <h2 className="text-3xl text-white text-center font-bold">
                     {card.title}
