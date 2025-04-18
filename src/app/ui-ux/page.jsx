@@ -142,21 +142,21 @@ const page = () => {
                 </div>
 
 
-          
+
 
                 {/* --------------------------------  { Section 2 }  ------------------------------------------ */}
 
                 <section className="w-full text-white body-font">
                     <div className="container mx-auto flex gap-10 max-sm:gap-10 px-5 max-sm:px-2  py-24 max-sm:py-10 md:flex-row flex-col items-center">
                         <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
-                            <img src="https://corecentrixbusinesssolutions.com/wp-content/uploads/2024/10/1.png"/>
+                            <img src="https://corecentrixbusinesssolutions.com/wp-content/uploads/2024/10/1.png" />
                         </div>
                         <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center max-sm:text-left max-sm:px-8">
                             <h1 className="max-sm:text-2xl text-3xl mb-4 font-bold text-white">
-                            Interactive UI/UX
+                                Interactive UI/UX
                             </h1>
                             <p className="mb-8 leading-relaxed">
-                            Excellent UX/UI design fascinates users and aids in the accomplishment of your business objectives.
+                                Excellent UX/UI design fascinates users and aids in the accomplishment of your business objectives.
                             </p>
                             <div className="flex justify-center ">
                                 <Link href={`/Contact`}>  <button className="inline-flex text-white border border-white px-6 py-3 rounded-lg text-lg hover:bg-white hover:text-black transition-colors duration-300">
@@ -173,10 +173,10 @@ const page = () => {
                     <div className="container mx-auto flex  max-sm:flex-col-reverse gap-10 max-sm:gap-10  px-5 max-sm:px-2 py-15 max-sm:py-10   md:flex-row flex-col items-center">
                         <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center max-sm:text-left max-sm:px-8">
                             <h1 className=" max-sm:text-2xl text-3xl mb-4 font-bold text-white">
-                            Successfully Launch Products Digitally
+                                Successfully Launch Products Digitally
                             </h1>
                             <p className="mb-8 leading-relaxed">
-                            We’ll work with you to develop a solution that is specifically catered to the demandsof your users and generates revenue. Research, product evaluation, ideation, user experience design, and user testing are all examples of UX design services. You may successfully launch new digital products onto the market by validating concepts, streamlining procedures, and using the appropriate tools and procedures.
+                                We’ll work with you to develop a solution that is specifically catered to the demandsof your users and generates revenue. Research, product evaluation, ideation, user experience design, and user testing are all examples of UX design services. You may successfully launch new digital products onto the market by validating concepts, streamlining procedures, and using the appropriate tools and procedures.
                             </p>
                             <div className="flex justify-center">
                                 <Link href={`/Contact`}>  <button className="inline-flex text-white border border-white px-6 py-3 rounded-lg text-lg hover:bg-white hover:text-black transition-colors duration-300">
@@ -186,7 +186,7 @@ const page = () => {
                             </div>
                         </div>
                         <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
-                           <img src='https://corecentrixbusinesssolutions.com/wp-content/uploads/2024/10/2.png'/>
+                            <img src='https://corecentrixbusinesssolutions.com/wp-content/uploads/2024/10/2.png' />
                         </div>
                     </div>
                 </section>
@@ -228,12 +228,12 @@ const page = () => {
                         </div>
                         <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left mb-16 max-sm:mb-2 md:mb-0 items-center text-center max-sm:text-left max-sm:px-8 ">
                             <h1 className="max-sm:text-2xl text-3xl mb-4 font-bold text-white">
-                            UX AND UI: THE IDEAL COLLABORATION
+                                UX AND UI: THE IDEAL COLLABORATION
 
                             </h1>
                             <div>
                                 <p className="mb-1 leading-relaxed">
-                                While designing product, our experts focuses on two interdependent components: the user interface and the user experience (UX) (UI). UX is structured in a way that represent the features and content of a product. Extensive research, data processing, and understanding of the end-user group’s motor function and cognitive capabilities performed by our expert designers to create good UX design. An app’s displays are merely one aspect of the user interface. Our designers accurately decide the color scheme, contrast, font, and final component dimensions while taking layout, foundation, adaptability, and company’s brand identification into consideration to generate ultimate UI design.
+                                    While designing product, our experts focuses on two interdependent components: the user interface and the user experience (UX) (UI). UX is structured in a way that represent the features and content of a product. Extensive research, data processing, and understanding of the end-user group’s motor function and cognitive capabilities performed by our expert designers to create good UX design. An app’s displays are merely one aspect of the user interface. Our designers accurately decide the color scheme, contrast, font, and final component dimensions while taking layout, foundation, adaptability, and company’s brand identification into consideration to generate ultimate UI design.
 
 
                                 </p>
