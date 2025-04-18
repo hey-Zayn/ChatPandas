@@ -121,10 +121,10 @@ const NavbarContent = ({ ulRef }) => {
               </FlipLink>
             </li>
             <li>
-              <FlipLink to="/SEO-for-Leads">SEO for Leads</FlipLink>
+              <FlipLink to="/seo-for-leads">SEO for Leads</FlipLink>
             </li>
             <li>
-              <FlipLink to="/SEO-for-Amazon">SEO for Amazon</FlipLink>
+              <FlipLink to="/seo-for-amazon">SEO for Amazon</FlipLink>
             </li>
           </ul>
         )}
@@ -202,9 +202,7 @@ const NavbarContent = ({ ulRef }) => {
             <li className="py-6">
               <FlipLink to="/How-It-Works">How-It-Works</FlipLink>
             </li>
-            <li className="md:hidden">
-              <FlipLink to="/contact">Contact</FlipLink>
-            </li>
+           
       </li>
     </ul>
   );
