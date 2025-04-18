@@ -68,17 +68,17 @@ const Hero = () => {
         <div className="w-full  px-20  py-4 max-sm:py-2 max-sm:px-6 flex justify-end max-sm:justify-start  gap-0">
           <div className=" flex flex-col ">
             <div className="overflow-hidden">
-              <h3 ref={heroHeadingRef} className="text-white text-left uppercase text-3xl max-sm:text-[22px]  leading-none">
+              <h3  className="text-white text-left uppercase text-3xl max-sm:text-[22px]  leading-none">
                 Redefining CX
               </h3>
             </div>
             <div className="overflow-hidden">
-              <h3 ref={heroHeading2Ref} className="text-white  uppercase text-3xl  max-sm:text-[22px]  leading-none">
+              <h3  className="text-white  uppercase text-3xl  max-sm:text-[22px]  leading-none">
                 standards through our
               </h3>
             </div>
             <div className="overflow-hidden">
-              <h3 ref={heroHeading3Ref} className="text-white uppercase font-extrabold text-3xl  max-sm:text-[22px]  leading-none">
+              <h3  className="text-white uppercase font-extrabold text-3xl  max-sm:text-[22px]  leading-none">
                 Top-Tier BPO compANY
               </h3>
             </div>
