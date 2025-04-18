@@ -27,18 +27,14 @@ const Index = () => {
       <Hero />
       <Section2 />
       <Section3 />
-      <Section3D/>
-      {/* <Section4/> */}
+ 
       <Section6 />
-      {/* <Section6Test /> */}
+
       <Section7 />
 
       <Section8 />
       <Section9_Form />
       <PandaScroll />
-      {/* <Card /> */}
-      {/* <Last_Section/> */}
-      {/* <Footer /> */}
     </>
   )
 }

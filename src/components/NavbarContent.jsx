@@ -11,23 +11,20 @@ const NavbarContent = ({ ulRef }) => {
   });
 
   const toggleSection = (section) => {
-    setOpenSections((prev) => {
-      const newState = {};
-
-      for (const key in prev) {
-        newState[key] = key === section ? !prev[key] : false;
-      }
-
-      return newState;
-    });
+    setOpenSections((prev) => ({
+      ...prev,
+      [section]: !prev[section]
+    }));
   };
 
   const DURATION = 0.25;
   const STAGGER = 0.025;
 
   const FlipLink = ({ children, to }) => {
+    if (!children || typeof children !== 'string') return null;
+
     return (
-      <Link href={to}>
+      <Link href={to} passHref legacyBehavior>
         <motion.div
           initial="initial"
           whileHover="hovered"
@@ -87,7 +84,6 @@ const NavbarContent = ({ ulRef }) => {
               )
             )}
           </div>
-
         </motion.div>
       </Link>
     );
@@ -206,7 +202,6 @@ const NavbarContent = ({ ulRef }) => {
       <li>
         <FlipLink to="/Contact">Book a demo</FlipLink>
       </li>
-      
     </ul>
   );
 };
