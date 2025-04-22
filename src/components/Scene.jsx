@@ -14,11 +14,13 @@ import { useEffect } from "react";
 const Scene = ({ progress = 0, modelRef }) => {
   const cameraRef = useRef(null);
 
-  useFrame(() => {
-    // console.log(cameraRef.current.position);
-    cameraRef.current.lookAt(0, 0, 0);
-  });
 
+  useFrame(() => {
+    if (cameraRef.current) {
+      cameraRef.current.lookAt(0, 0, 0);
+    }
+  });
+  
   useEffect(() => {
     const updateCamPos = () => {
       const positions = [

@@ -61,7 +61,7 @@ const page = () => {
           Unmatch Technical <span className="font-bold">Experties</span>
         </h1>
       </section>
-
+    {/* Litel chaning */}
       <section className="w-full text-white body-font">
         <div className="container mx-auto flex  max-sm:flex-col-reverse gap-10 max-sm:gap-10  px-5 max-sm:px-2 py-15 md:flex-row flex-col items-center">
           <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center max-sm:text-left max-sm:px-8">
