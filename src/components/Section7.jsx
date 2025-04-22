@@ -34,8 +34,10 @@ const Section7 = () => {
     
         const masterST = ScrollTrigger.create({
           trigger: section7Ref.current,
-          start: "top 40%",
-          end: "bottom 30%",
+          // start: "top 40%",
+          // end: "bottom 30%",
+          start: "top 5%",
+          end: "bottom 80%",
           scrub: 5,
           markers: false,
           toggleActions: "play none none reverse",
@@ -165,17 +167,17 @@ const Section7 = () => {
         ref={section7Ref}
         className="w-full lg:h-[120vh] md:h-[70vh] py-20 max-sm:hidden overflow-hidden"
       >
-        <div className="w-full sticky top-20">
+        <div className="w-full ">
           <h1
             ref={textRef}
             id="section7-text"
-            className="text-6xl text-center uppercase font-bold"
+            className=" text-6xl text-center uppercase font-bold"
           >
             Certifications
           </h1>
         </div>
 
-        <div className="sticky w-full  top-10 px-20 mt-20  ">
+        <div className=" w-full  px-20 mt-20  ">
           <div className="  flex justify-start items-center  mt-30  ">
             <div ref={card1Ref} id="section7card1" className="card w-90 z-[1]">
               <img

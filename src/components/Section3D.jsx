@@ -19,6 +19,7 @@ const Section3D = () => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: mainRef.current,
+          
           start: "top top",
           end: "bottom bottom",
           scrub: 1,
