@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import NewNavbar from "@/components/NewNavbar";
 import MegaMenu from "@/components/MegaMenu";
 import AqibNav from "@/components/AqibNav";
+import Header from "@/components/Header";
 
 
 const geistSans = Geist({
@@ -31,7 +32,9 @@ export default function RootLayout({ children }) {
       {/* <MegaMenu/> */}
       {/* <NewNavbar/> */}
       {/* <MenuBar/> */}
-      <AqibNav/>
+      {/* <AqibNav/> */}
+      <Header/>
+     
         {children}
         <Footer/>
       </body>
