@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Button } from "./ui/button";
+
 import { useGSAP } from "@gsap/react";
 
 export default function BusinessOperations() {

@@ -8,6 +8,8 @@ const NavbarContent = ({ ulRef }) => {
     seo: true,
     marketing: false,
     development: false,
+    BusinessServicing: false,
+    WhoWeAre: false,
   });
 
   const toggleSection = (section) => {
@@ -163,6 +165,96 @@ const NavbarContent = ({ ulRef }) => {
 
       <li>
         <button
+          onClick={() => toggleSection("BusinessServicing")}
+          className="hover:no-underline text-left w-full flex justify-between items-center text-xl font-semibold text-black hover:text-gray-500"
+        >
+          Business Management
+          <span>{openSections.BusinessServicing ? "−" : "+"}</span>
+        </button>
+        {openSections.BusinessServicing && (
+          <ul className="flex flex-col py-4 gap-6 pl-1 max-sm:pl-0 mt-2 text-wrap">
+            <h3 className="text-xl text-black font-bold">BPO Services</h3>
+            <li>
+              <FlipLink to="/call-centers">Call Centers</FlipLink>
+            </li>
+            <li>
+              <FlipLink to="/customer-service">Customer Service</FlipLink>
+            </li>
+            <li>
+              <FlipLink to="/back-office">Back Office</FlipLink>
+            </li>
+            <li>
+              <FlipLink to="/consulting">Consulting</FlipLink>
+            </li>
+            <li>
+              <FlipLink to="/Inbound-development">Inbound Development</FlipLink>
+            </li>
+            
+            <h3 className="text-xl text-black font-bold">Human Resources</h3>
+            <li>
+              <FlipLink to="/call-centers">Call Centers</FlipLink>
+            </li>
+            <li>
+              <FlipLink to="/customer-service">Customer Service</FlipLink>
+            </li>
+            <li>
+              <FlipLink to="/back-office">Back Office</FlipLink>
+            </li>
+            <li>
+              <FlipLink to="/consulting">Consulting</FlipLink>
+            </li>
+            <li>
+              <FlipLink to="/Inbound-development">Inbound Development</FlipLink>
+            </li>
+            <h3 className="text-xl text-black font-bold">Consultation</h3>
+            <li>
+              <FlipLink to="/call-centers">Call Centers</FlipLink>
+            </li>
+            <li>
+              <FlipLink to="/customer-service">Customer Service</FlipLink>
+            </li>
+            <li>
+              <FlipLink to="/back-office">Back Office</FlipLink>
+            </li>
+            <li>
+              <FlipLink to="/consulting">Consulting</FlipLink>
+            </li>
+            <li>
+              <FlipLink to="/Inbound-development">Inbound Development</FlipLink>
+            </li>
+          </ul>
+        )}
+      </li>
+      <li>
+        <button
+          onClick={() => toggleSection("WhoWeAre")}
+          className="hover:no-underline text-left w-full flex justify-between items-center text-xl font-semibold text-black hover:text-gray-500"
+        >
+          Who We Are
+          <span>{openSections.WhoWeAre ? "−" : "+"}</span>
+        </button>
+        {openSections.WhoWeAre && (
+          <ul className="flex flex-col py-4 gap-6 pl-4 max-sm:pl-0 mt-2 text-wrap">
+            <li>
+              <FlipLink to="/paid-media-advertisement">PPC & Ads</FlipLink>
+            </li>
+            <li>
+              <FlipLink to="/Social-Media-Marketing">
+                Social Media Campaigning
+              </FlipLink>
+            </li>
+            <li>
+              <FlipLink to="/email-marketing">Email Marketing</FlipLink>
+            </li>
+            <li>
+              <FlipLink to="/SEO-for-Amazon">Amazon Marketplace</FlipLink>
+            </li>
+          </ul>
+        )}
+      </li>
+
+      <li>
+        <button
           onClick={() => toggleSection("development")}
           className="hover:no-underline text-left w-full flex justify-between items-center text-xl font-semibold text-black hover:text-gray-500"
         >
@@ -201,20 +293,12 @@ const NavbarContent = ({ ulRef }) => {
             </li>
           </ul>
         )}
+
         <li className="pt-6">
           <FlipLink to="/Who-We-Are">Who-We-Are</FlipLink>
         </li>
         <li className="py-6">
           <FlipLink to="/How-It-Works">How-It-Works</FlipLink>
-        </li>
-        <li className="md:hidden">
-          <FlipLink to="/contact">Contact</FlipLink>
-        </li>
-        <li className="py-6">
-          <FlipLink to="/How-It-Works">How-It-Works</FlipLink>
-        </li>
-        <li className="md:hidden">
-          <FlipLink to="/contact">Contact</FlipLink>
         </li>
       </li>
     </ul>
