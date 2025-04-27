@@ -1,11 +1,10 @@
+
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import MenuBar from "@/components/MenuBar";
 import Footer from "@/components/Footer";
-import NewNavbar from "@/components/NewNavbar";
-import MegaMenu from "@/components/MegaMenu";
-import AqibNav from "@/components/AqibNav";
 import Header from "@/components/Header";
+
+
 
 
 const geistSans = Geist({
@@ -29,14 +28,11 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-      {/* <MegaMenu/> */}
-      {/* <NewNavbar/> */}
-      {/* <MenuBar/> */}
-      {/* <AqibNav/> */}
+   
       <Header/>
      
         {children}
-        <Footer/>
+        <Footer />
       </body>
     </html>
   );

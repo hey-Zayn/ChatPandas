@@ -123,7 +123,7 @@ const Section6 = () => {
                 <div className="w-full">
                   <h6 className="p-6 pb-1">01</h6>
                   <h1 className="pt-0 w-full p-6 max-sm:pr-0 max-sm:pb-3 text-3xl sm:text-3xl 2xl:text-5xl md:text-3xl lg:text-3xl font-medium">
-                    VOICE SUPPORT
+                  SEO & Lead Generation
                   </h1>
                 </div>
                 <div className="w-[60%]">
@@ -137,8 +137,7 @@ const Section6 = () => {
                 </div>
               </div>
               <p className="p-6 pt-5 max-sm:pt-0 pb-3 text-justify text-sm sm:text-base md:text-lg lg:text-1xl xl:text-1xl 2xl:text-4xl">
-                Help your clients understand their problems and provide
-                effective solutions. problems and provide effective solutions.
+              Get to the Top Page of Search Engines: With targeted Revenue growth.
               </p>
             </div>
             {/* Card 2 */}
@@ -146,9 +145,9 @@ const Section6 = () => {
             2xl:w-[95%] z-[1]">
               <div className="flex justify-between">
                 <div className="w-full">
-                  <h6 className="p-6 pb-1">01</h6>
+                  <h6 className="p-6 pb-1">02</h6>
                   <h1 className="pt-0 w-full p-6 max-sm:pr-0 max-sm:pb-3 text-3xl sm:text-3xl 2xl:text-5xl md:text-3xl lg:text-3xl font-medium">
-                  CHAT SUPPORT
+                  Paid Marketing Media & CRO
                   </h1>
                 </div>
                 <div className="w-[60%]">
@@ -173,9 +172,9 @@ const Section6 = () => {
             2xl:w-[95%] z-[1]">
               <div className="flex justify-between">
                 <div className="w-full">
-                  <h6 className="p-6 pb-1">01</h6>
+                  <h6 className="p-6 pb-1">03</h6>
                   <h1 className="pt-0 w-full p-6 max-sm:pr-0 max-sm:pb-3 text-3xl sm:text-3xl 2xl:text-5xl md:text-3xl lg:text-3xl font-medium">
-                  EMAIL & TICKETING
+                  IT & Development Technology
                   </h1>
                 </div>
                 <div className="w-[60%]">
@@ -201,9 +200,9 @@ const Section6 = () => {
             2xl:w-[95%] z-[1]">
               <div className="flex justify-between">
                 <div className="w-full">
-                  <h6 className="p-6 pb-1">01</h6>
+                  <h6 className="p-6 pb-1">04</h6>
                   <h1 className="pt-0 w-full p-6 max-sm:pr-0 max-sm:pb-3 text-3xl sm:text-3xl 2xl:text-5xl md:text-3xl lg:text-3xl font-medium">
-                  TECHNICAL SUPPORT
+                  Business Servicing
                   </h1>
                 </div>
                 <div className="w-[60%]">
@@ -230,9 +229,9 @@ const Section6 = () => {
             2xl:w-[95%] z-[1]">
               <div className="flex justify-between">
                 <div className="w-full">
-                  <h6 className="p-6 pb-1">01</h6>
+                  <h6 className="p-6 pb-1">05</h6>
                   <h1 className="pt-0 w-full p-6 max-sm:pr-0 max-sm:pb-3 text-3xl sm:text-3xl 2xl:text-5xl md:text-3xl lg:text-3xl font-medium">
-                  LEAD GENERATION
+                 AI Development
                   </h1>
                 </div>
                 <div className="w-[60%]">
