@@ -39,7 +39,7 @@ export default function MobMenu({ Menus }) {
             const isClicked = clicked === i;
             const hasSubMenu = subMenu?.length;
             return (
-              <li key={name} className="">
+              <li key={name} className="" >
                 <span
                   className="flex  p-4 hover:bg-white/5 rounded-md cursor-pointer relative"
                   onClick={() => setClicked(isClicked ? null : i)}
@@ -58,10 +58,10 @@ export default function MobMenu({ Menus }) {
                     variants={subMenuDrawer}
                     className="ml-5"
                   >
-                    {subMenu.map(({ name, icon, link }) => {
+                    {subMenu.map(({ name, icon, link}) => {
                       const IconComponent = icon;
                       return (
-                        <Link href={link}>
+                        <Link href={link} >
                         <li
                           key={name}
                           className="p-2 flex  hover:bg-white/5 rounded-md gap-x-4 cursor-pointer"

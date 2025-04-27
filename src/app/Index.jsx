@@ -1,27 +1,15 @@
 import React from 'react'
-import Footer from '@/components/Footer'
+
 import Hero from '@/components/Hero'
-// import Navbar from '@/components/Navbar'
 import PandaScroll from '@/components/PangaScroll'
 import Section2 from '@/components/Section2'
 import Section3 from '@/components/Section3'
-// import Section4 from '@/components/Section4'
-// import Section6Test from '@/components/Section6Test'
 import Section7 from '@/components/Section7'
 import Section8 from '@/components/Section8'
 import Section9_Form from '@/components/Section9_Form'
-import Section4 from '@/components/Section4'
-import Section3D from '@/components/Section3D'
-import Section6Test from '@/components/Section6Test'
 import Section6 from '@/components/Section6'
 import ClientsSlider from '@/components/ClientsSlider'
 import Section3Dnew from '@/components/Section3Dnew'
-
-
-
-
-
-
 
 const Index = () => {
 
@@ -31,15 +19,10 @@ const Index = () => {
       <Hero />
       <Section2 />
       <Section3 />
-      {/* <Section3D/> */}
-      <Section3Dnew/>
+      <Section3Dnew />
       <Section6 />
-    {/* <Section4/> */}
-    <ClientsSlider/>
-
+      <ClientsSlider />
       <Section7 />
-    
-
       <Section8 />
       <Section9_Form />
       <PandaScroll />

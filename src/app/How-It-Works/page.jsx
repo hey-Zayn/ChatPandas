@@ -1,7 +1,54 @@
 import ScrollSpySection from "@/components/ScrollSpySection";
 import React from "react";
+import {
+  Code2, Boxes, FileType, FileBadge, Database, Flame,  
+  Laptop, Globe, MonitorSmartphone, Coffee, Hexagon, Binary, Smartphone,
+  PenTool, Layout, ShoppingBag, Clock, ShirtIcon, CreditCard, FileText
+} from "lucide-react";
+import BusinessOperations from "@/components/Business-operations";
 
 const page = () => {
+  const categories = [
+    {
+      title: "Development",
+      items: [
+        { name: "React", icon: <Code2 size={20} /> },
+        { name: "Vue", icon: <Boxes size={20} /> },
+        { name: "Angular", icon: <Hexagon size={20} /> },
+        { name: "JavaScript", icon: <FileType size={20} /> },
+        { name: "TypeScript", icon: <FileBadge size={20} /> },
+        { name: "Node.js", icon: <Binary size={20} /> },
+        { name: "MongoDB", icon: <Database size={20} /> },
+        { name: "Firebase", icon: <Flame size={20} /> },
+      ]
+    },
+    {
+      title: "Mobile Dev",
+      items: [
+        { name: "Hybrid/Native app", icon: <MonitorSmartphone size={20} /> },
+        { name: "Java", icon: <Coffee size={20} /> },
+        { name: "Kotlin", icon: <Smartphone size={20} /> },
+        { name: "Swift", icon: <Laptop size={20} /> },
+        { name: "React Native", icon: <Code2 size={20} /> },
+        { name: "Android", icon: <Smartphone size={20} /> },
+        { name: "Flutter", icon: <Boxes size={20} /> },
+        { name: "Web app", icon: <Globe size={20} /> },
+      ]
+    },
+    {
+      title: "Designing",
+      items: [
+        { name: "UI/UX", icon: <Layout size={20} /> },
+        { name: "Prototype", icon: <PenTool size={20} /> },
+        { name: "Logo", icon: <Hexagon size={20} /> },
+        { name: "Letterhead", icon: <FileText size={20} /> },
+        { name: "T-Shirt/Uniform", icon: <ShirtIcon size={20} /> },
+        { name: "Business Card", icon: <CreditCard size={20} /> },
+        { name: "Mug/Clock/File", icon: <Clock size={20} /> },
+        { name: "Shopping bag", icon: <ShoppingBag size={20} /> },
+      ]
+    }
+  ];
   return (
     <div className="w-full h-full bg-[#191919]">
       <div className="w-full h-full">
@@ -107,8 +154,36 @@ const page = () => {
         </div>
       </section>
 
-      
       <ScrollSpySection/>
+
+
+
+      <section className=" text-white py-16">
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl font-bold text-center mb-12">Technologies We Use</h2>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {categories.map((category, index) => (
+            <div key={index} className="flex flex-col items-center">
+              <h3 className="text-2xl font-semibold mb-6">{category.title}</h3>
+              <div className="space-y-4 w-full">
+                {category.items.map((item, itemIndex) => (
+                  <div key={itemIndex} className="flex items-center justify-center  space-x-3 pl-4 p-4 rounded-xl bg-gradient-to-r from-[#191919] via-[#520ADE] to-[#191919]">
+                    <span className="bg-pink-800 text-white  p-1 rounded-full">
+                      {item.icon}
+                    </span>
+                    <span className="">{item.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <BusinessOperations />
+      
     </div>
   );
 };

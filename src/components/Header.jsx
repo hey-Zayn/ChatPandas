@@ -62,6 +62,8 @@ import {
   Award,
   UserCircle2,
   HelpCircle,
+  Goal,
+  WorkflowIcon,
 } from "lucide-react";
 
 import MobMenu from "./MobMenu";
@@ -70,7 +72,7 @@ const Header = () => {
   const Menus = [
     {
       id: 1,
-      name: "SEO & Lead Generation",
+      name: "SEO ",
       subMenuHeading: [
         "Organic Search",
         "E-commerce",
@@ -173,7 +175,7 @@ const Header = () => {
     },
     {
       id: 2,
-      name: "Paid Marketing Media & CRO",
+      name: "Paid Marketing",
       subMenuHeading: [
         "Digital Advertisement",
         "Marketing Outreach",
@@ -245,7 +247,7 @@ const Header = () => {
     },
     {
       id: 3,
-      name: " IT & Development Technology",
+      name: " IT & Development",
       subMenuHeading: [
         "Website Solution",
         "Design & Development",
@@ -359,7 +361,7 @@ const Header = () => {
     },
     {
       id: 4,
-      name: "Business Servicing & Management",
+      name: "Business Servicing",
       subMenuHeading: [
         "BPO Services",
         "Human Resources",
@@ -475,6 +477,12 @@ const Header = () => {
           link: '/Who-We-Are' 
         },
         { 
+          name: "Meet OUR LEAD", 
+          desc: "Our CEO", 
+          icon: Goal,  
+          link: '/meet-out-leader' 
+        },
+        { 
           name: "How-It-Works", 
           desc: "Our process", 
           icon: Cog,  
@@ -487,10 +495,10 @@ const Header = () => {
           link: '/packages' 
         },
         { 
-          name: "Accreditations", 
-          desc: "Our credentials", 
-          icon: ShieldCheck,  
-          link: '/accreditations' 
+          name: "Our Work", 
+          desc: "Our Proects", 
+          icon: WorkflowIcon,  
+          link: '/our-work' 
         },
         { 
           name: "Company Values", 
@@ -544,7 +552,7 @@ const Header = () => {
   return (
     <div>
       <div className="w-full top-0 left-0 absolute flex justify-between items-center px-4 py-4 sm:px-8 sm:py-6 md:px-12 md:py-8 text-white z-50">
-        <div className="max-sm:w-full flex items-center max-sm:justify-between gap-4">
+        <div className="max-sm:w-full flex gap-6  items-center max-sm:justify-between">
           <Link href="/">
             <img
               src="/images/660e8ed8eb1804501de1d733_Group 1.svg"
@@ -552,7 +560,11 @@ const Header = () => {
               className="w-[120px] sm:w-[150px] md:w-[180px]"
             />
           </Link>
-          <ul className=" flex gap-1 max-sm:hidden text-sm">
+        
+        </div>
+
+        <div>
+        <ul className=" flex gap-1 max-sm:hidden text-sm">
             {Menus.map((menu) => (
               <DesktopMenu menu={menu} key={menu.name} />
             ))}
@@ -563,8 +575,6 @@ const Header = () => {
             </div>
           </div>
         </div>
-
-        <div></div>
 
         <div>
           <button className="px-4 py-2 sm:px-6 sm:py-3 text-sm sm:text-lg font-semibold text-white bg-[#E73C5F] border-none rounded-md hidden sm:block">

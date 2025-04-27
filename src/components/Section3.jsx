@@ -22,13 +22,10 @@ const Section3 = () => {
     const TextRef = useRef(null);
     const Text2Ref = useRef(null);
 
-    // Store all ScrollTrigger instances created by this component
     const scrollTriggersRef = useRef([]);
 
     useGSAP(() => {
         gsap.registerPlugin(ScrollTrigger);
-
-        // Clear only this component's ScrollTrigger instances
         scrollTriggersRef.current.forEach((st) => st.kill());
         scrollTriggersRef.current = [];
 
@@ -53,7 +50,6 @@ const Section3 = () => {
             ease: "power2.out"
         })
 
-        // Function to create and store ScrollTrigger instances
         const createCardAnimation = (cardRef, rotation) => {
             if (!cardRef.current) return null;
 
@@ -69,7 +65,6 @@ const Section3 = () => {
                 start: "top 60%",
                 // end: "top 20%",
                 scrub: 2,
-                // markers:true,
                 toggleActions: "play none none reverse",
                 animation: tl.fromTo(
                     cardRef.current,
@@ -89,12 +84,9 @@ const Section3 = () => {
                     }
                 ),
             });
-
-            // Store the ScrollTrigger instance
             scrollTriggersRef.current.push(st);
             return st;
         };
-        // Create animations for each card with alternating rotations
         createCardAnimation(card1Ref, -15);
         createCardAnimation(card2Ref, 15);
         createCardAnimation(card3Ref, -15);
@@ -116,8 +108,6 @@ const Section3 = () => {
             const st = ScrollTrigger.create({
                 trigger: mobileCardRef.current,
                 start: "top 60%",
-                //   end: "bottom 20%",
-                // markers: true,
                 toggleActions: "play none none reverse",
                 animation: tl.fromTo(
                     mobileCardRef.current,
@@ -144,9 +134,7 @@ const Section3 = () => {
             return st;
         };
 
-        // Mobile - Animation with staggered timing
         createMobileAnimation(mobileCard1Ref, false);
-        // Even numbered cards come from left
         createMobileAnimation(mobileCard2Ref, true);
         createMobileAnimation(mobileCard3Ref, false);
         createMobileAnimation(mobileCard4Ref, true);
@@ -181,7 +169,7 @@ const Section3 = () => {
                     >
                         <div className="card w-80">
                             <img
-                                src="/images/card1.svg "
+                                src="/images/WP1.avif"
                                 alt="BPO Challenge Card 1"
                                 className="w-full h-auto"
                             />
@@ -195,8 +183,8 @@ const Section3 = () => {
                     >
                         <div className="card w-80">
                             <img
-                                src="/images/card2.svg "
-                                alt="BPO Challenge Card 2"
+                                src="/images/WP2.avif"
+                                alt="Portfolio Projects"
                                 className="w-full h-auto"
                             />
                         </div>
@@ -209,8 +197,8 @@ const Section3 = () => {
                     >
                         <div className="card w-80">
                             <img
-                                src="/images/card3.svg "
-                                alt="BPO Challenge Card 3"
+                                src="/images/WP3.avif"
+                                alt="Portfolio Projects"
                                 className="w-full h-auto"
                             />
                         </div>
@@ -223,8 +211,8 @@ const Section3 = () => {
                     >
                         <div className="card w-80">
                             <img
-                                src="/images/card4.svg "
-                                alt="BPO Challenge Card 4"
+                                src="/images/WP4.avif"
+                                alt="Portfolio Projects"
                                 className="w-full h-auto"
                             />
                         </div>
@@ -237,8 +225,8 @@ const Section3 = () => {
                     >
                         <div className="card w-80">
                             <img
-                                src="/images/card6.svg "
-                                alt="BPO Challenge Card 5"
+                                src="/images/WP5.avif"
+                                alt="Portfolio Projects"
                                 className="w-full h-auto"
                             />
                         </div>
@@ -251,8 +239,8 @@ const Section3 = () => {
                     >
                         <div className="card w-80">
                             <img
-                                src="/images/card1.svg "
-                                alt="BPO Challenge Card 6"
+                                src="/images/WP6.avif"
+                                alt="Portfolio Projects"
                                 className="w-full h-auto"
                             />
                         </div>
@@ -276,8 +264,8 @@ const Section3 = () => {
                         >
                             <div className="card w-80">
                                 <img
-                                    src="/images/card1.svg "
-                                    alt="BPO Challenge Card 1"
+                                    src="/images/WP1.avif"
+                                    alt="Portfolio Projects"
                                     className="w-full h-auto"
                                 />
                             </div>
@@ -288,8 +276,8 @@ const Section3 = () => {
                         >
                             <div className="card w-80">
                                 <img
-                                    src="/images/card2.svg "
-                                    alt="BPO Challenge Card 2"
+                                    src="/images/WP2.avif"
+                                    alt="Portfolio Projects"
                                     className="w-full h-auto"
                                 />
                             </div>
@@ -300,8 +288,8 @@ const Section3 = () => {
                         >
                             <div className="card w-80">
                                 <img
-                                    src="/images/card3.svg "
-                                    alt="BPO Challenge Card 3"
+                                    src="/images/WP3.avif"
+                                    alt="Portfolio Projects"
                                     className="w-full h-auto"
                                 />
                             </div>
@@ -312,8 +300,8 @@ const Section3 = () => {
                         >
                             <div className="card w-80">
                                 <img
-                                    src="/images/card4.svg "
-                                    alt="BPO Challenge Card 4"
+                                    src="/images/WP4.avif"
+                                    alt="Portfolio Projects"
                                     className="w-full h-auto"
                                 />
                             </div>
@@ -324,8 +312,8 @@ const Section3 = () => {
                         >
                             <div className="card w-80">
                                 <img
-                                    src="/images/card5.svg "
-                                    alt="BPO Challenge Card 5"
+                                    src="/images/WP5.avif"
+                                    alt="Portfolio Projects"
                                     className="w-full h-auto"
                                 />
                             </div>
@@ -336,8 +324,8 @@ const Section3 = () => {
                         >
                             <div className="card w-80">
                                 <img
-                                    src="/images/card6.svg "
-                                    alt="BPO Challenge Card 6"
+                                    src="/images/WP6.avif"
+                                    alt="Portfolio Projects"
                                     className="w-full h-auto"
                                 />
                             </div>

@@ -19,15 +19,12 @@ const Footer = () => {
             scrub:5,
           }
         });
-    
-        // Animate hands in simultaneously
         footertl.fromTo(["#LeftHand", "#RightHand"], {
           x: (i) => i === 0 ? "-100%" : "100%",
           opacity: 1
         }, {
           x: "0%", 
           opacity: 1,
-          // duration: 1,
           ease: "power2.inOut"
         })
         .to([LeftHandRef.current, RightHandRef.current], {
@@ -38,14 +35,10 @@ const Footer = () => {
         .to([LeftHandRef.current, RightHandRef.current], {
           x: (i) => i === 0 ? "-100%" : "100%",
           opacity: 1,
-          // duration: 1,
           ease: "power2.inOut"
         });
-    })
+    });
     
-    //     Footer Hand Animation   ----------------
-    //     [Left Hand] starts off-screen left → slides in → pauses → slides back out left
-    //     [Right Hand] starts off-screen right → slides in → pauses → slides back out right   
   return (
     <div id="footer" ref={footerRef}  className="footer relative w-full h-screen max-sm:h-full bg-[#181818] pt-20 max-sm:pt-10 overflow-hidden ">
     <div className="w-full flex items-center pl-30">

@@ -7,7 +7,7 @@ import Scene from "./Scene";
 
 // Extracted reusable component for sections
 const ContentSection = ({ align = "center", topPosition = "50%" }) => (
-  <div className={`absolute top-[${topPosition}] w-full z-10 px-10 ${
+  <div className={`absolute top-[${topPosition}] w-full z-10 px-10 pt-30 ${
     align === "left" ? "text-left" : align === "right" ? "text-right" : "text-center"
   }`}>
     <h1 className="text-8xl text-white font-bold max-sm:text-3xl">

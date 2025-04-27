@@ -46,14 +46,15 @@ export default function DesktopMenu({ menu }) {
       <span className="flex  gap-1 hover:bg-white/5 cursor-pointer px-3 py-1 rounded-xl">
         {menu.name}
         {hasSubMenu && (
-          <ChevronDown className="mt-[0.6px] group-hover/link:rotate-180 duration-200" />
+          <ChevronDown size={20}  className=" mt-[0.6px] group-hover/link:rotate-180 duration-200" />
+         
         )}
       </span>
       {hasSubMenu && (
         <motion.div
-          className={`sub-menu absolute top-full px-10  mt-0 bg-[#242424] p-6 rounded-lg shadow-lg w-max z-50`}
+          className={`sub-menu absolute top-full px-10  mt-0 bg-black/95 p-6 rounded-lg shadow-lg w-max z-50`}
           style={{
-            marginLeft: index === 0 ? '0px' : `-${index * 170}px`,
+            marginLeft: index === 0 ? '0px' : `-${index * 120}px`,
             transition: 'margin-left 0.3s ease',
           }}
           
@@ -75,7 +76,7 @@ export default function DesktopMenu({ menu }) {
                 <Link  key={i} href={submenu.link || "#"}>
                 <div className="relative cursor-pointer" key={i}>
                   {menu.gridCols > 1 && menu?.subMenuHeading?.[i] && (
-                    <p className=" mb-3 text-gray-500 text-2xl">
+                    <p className=" mb-5 text-white font-semibold text-lg ">
                       {menu?.subMenuHeading?.[i]}
                     </p>
                   )}
