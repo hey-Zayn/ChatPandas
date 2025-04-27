@@ -101,7 +101,7 @@ const Header = () => {
           name: "SEO for Leads",
           desc: "Generate quality leads",
           icon: Zap,
-          link: "/seo-for-leads",
+          link: "/SEO-For-Leads",
         },
         {
           name: "Enterprise Level Reach",
@@ -155,7 +155,7 @@ const Header = () => {
           name: "SEO for Amazon",
           desc: "Dominate Amazon rankings",
           icon: Building2,
-          link: "/seo-for-amazon",
+          link: "/SEO-For-Amazon",
         },
         {
           name: "SEO for Walmart",
@@ -228,7 +228,7 @@ const Header = () => {
           link:'/media-buying-advertisement',
         },
         { name: "Yelp Advertisement", desc: "Promote on Yelp", icon: Star,  link:'/yelp-advertisement', },
-        { name: "Amazon Marketplace", desc: "Sell on Amazon", icon: Building2,  link:'/Amazon Marketplace', },
+        { name: "Amazon Marketplace", desc: "Sell on Amazon", icon: Building2,  link:'/amazon-marketing', },
         { name: "Walmart Marketplace", desc: "Expand on Walmart", icon: Store,  link:'/walmart-marketplace', },
         {
           name: "Facebook Marketplace",
@@ -306,7 +306,7 @@ const Header = () => {
           name: "Video Branding Services",
           desc: "Promotional videos",
           icon: Youtube,
-          link: '/video-branding-services',
+          link: '/video-production',
         },
         {
           name: "Interactive UI/UX",
