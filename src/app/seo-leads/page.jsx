@@ -1,5 +1,4 @@
 "use client";
-import WhyChooseus from "@/components/WhyChooseus";
 import React, { useEffect, useRef } from "react";
 import {
   Accordion,

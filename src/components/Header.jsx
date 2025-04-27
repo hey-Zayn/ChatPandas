@@ -101,7 +101,7 @@ const Header = () => {
           name: "SEO for Leads",
           desc: "Generate quality leads",
           icon: Zap,
-          link: "/SEO-For-Leads",
+          link: "/seo-leads",
         },
         {
           name: "Enterprise Level Reach",
@@ -155,7 +155,7 @@ const Header = () => {
           name: "SEO for Amazon",
           desc: "Dominate Amazon rankings",
           icon: Building2,
-          link: "/SEO-For-Amazon",
+          link: "/seo-amazon",
         },
         {
           name: "SEO for Walmart",
