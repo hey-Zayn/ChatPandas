@@ -553,13 +553,13 @@ const Header = () => {
     <div>
       <div className="w-full top-0 left-0 absolute flex justify-between items-center px-4 py-4 sm:px-8 sm:py-6 md:px-12 md:py-8 text-white z-50">
         <div className="max-sm:w-full flex gap-6  items-center max-sm:justify-between">
-          <Link href="/">
+          <a href="/">
             <img
               src="/images/660e8ed8eb1804501de1d733_Group 1.svg"
               alt="Logo"
               className="w-[120px] sm:w-[150px] md:w-[180px]"
             />
-          </Link>
+          </a>
         
         </div>
 

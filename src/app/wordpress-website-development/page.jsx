@@ -14,6 +14,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import { useGSAP } from "@gsap/react";
 import Link from "next/link";
+import ServiceForm from "@/components/ServiceForm";
 
 const page = () => {
   const sectionRef = useRef(null);
@@ -441,7 +442,7 @@ const page = () => {
             </div>
           </div>
         </section>
-
+        <ServiceForm/>
         <BusinessOperations />
       </div>
     </>

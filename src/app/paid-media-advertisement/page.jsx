@@ -14,6 +14,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import { useGSAP } from "@gsap/react";
 import Link from "next/link";
+import ServiceForm from "@/components/ServiceForm";
 
 const page = () => {
   const sectionRef = useRef(null);
@@ -436,7 +437,7 @@ By leveraging data-driven insights and advanced ad placement techniques, we enha
             </div>
           </div>
         </section>
-
+        <ServiceForm/>
         <BusinessOperations />
       </div>
     </>
