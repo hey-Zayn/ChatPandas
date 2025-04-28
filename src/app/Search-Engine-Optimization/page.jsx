@@ -13,6 +13,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 
 import { useGSAP } from "@gsap/react";
+import ServiceForm from "@/components/ServiceForm";
 
 const page = () => {
   const sectionRef = useRef(null);
@@ -405,7 +406,7 @@ const page = () => {
             </div>
           </div>
         </section>
-
+             
         <section className="w-full h-screen  px-4 py-4 text-white">
           <h1 className="text-white font-bold text-center text-4xl mt-8 ">FAQs: Your Questions Answered</h1>
           <div className="container mx-auto flex gap-10 max-sm:gap-10 px-5 max-sm:px-2  py-24 md:flex-row flex-col items-center">
@@ -443,6 +444,8 @@ const page = () => {
             </div>
           </div>
         </section>
+
+        <ServiceForm/>
 
         <BusinessOperations />
       </div>
