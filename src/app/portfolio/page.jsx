@@ -11,6 +11,11 @@ import ServiceForm from "@/components/ServiceForm";
 import HeroCarousel from "@/components/HeroCarousel";
 import ProjectFilterComponent from "@/components/ProjectFilterComponent";
 import ServiceComparison from "@/components/ServiceComparison";
+import PortfolioHero from "@/components/PortolioHero";
+import PortfolioSection2 from "@/components/PortfolioSection2";
+import DesignerIntro from "@/components/DesignerIntro";
+import HaloHeroSection from "@/components/HaloHeroSection";
+import PortfolioServicesSection from "@/components/PortfolioServicesSection";
 
 const page = () => {
   const sectionRef = useRef(null);
@@ -24,8 +29,6 @@ const page = () => {
         trigger: sectionRef.current,
         start: "top 80%",
         end: "bottom 20%",
-        // toggleActions: "play none none reverse",
-        // scrub: true
       },
     });
     herotl.from(herotextRef.current, {
@@ -42,12 +45,23 @@ const page = () => {
     })
   }, []);
 
-
-
-
   return (
     <>
       <div ref={sectionRef} className="w-full h-full bg-[#191919]">
+        <PortfolioHero/>
+        <DesignerIntro/>
+        <PortfolioServicesSection/>
+        <section className="w-full h-full bg-black">
+          <div>
+            <ProjectFilterComponent/>
+          </div>
+        </section>
+        <PortfolioSection2/>
+        <HaloHeroSection/>
+
+
+
+
 
         <div className="w-full h-full">
           <div className="w-full h-full relative flex flex-col justify-center items-center bg-gradient-to-b from-[#520ADE] via-[#520ADE] to-[#191919] overflow-hidden" >
@@ -64,15 +78,8 @@ const page = () => {
           </div>
         </div>
 
-
-        <section className="w-full h-full">
-          <div>
-            <ProjectFilterComponent/>
-          </div>
-        </section>
-        <ServiceComparison/> 
+       
         
-
         <ServiceForm />
         <BusinessOperations />
       </div>
