@@ -7,13 +7,12 @@ import Image from 'next/image';
 
 const ProjectsSection = () => {
   const router = useRouter();
-  const [activeFilter, setActiveFilter] = useState('featured');
+  const [activeFilter, setActiveFilter] = useState('web');
   const [isMounted, setIsMounted] = useState(false);
   const projectRefs = useRef([]);
   const filtersRef = useRef(null);
 
   const categories = [
-    { id: 'featured', label: 'Featured' },
     { id: 'web', label: 'Web' },
     { id: 'mobile', label: 'Mobile' },
     { id: 'wordpress', label: 'WordPress' },
@@ -24,7 +23,6 @@ const ProjectsSection = () => {
   ];
 
   const projects = [
-
     {
       id: 1,
       title: 'Business Boost',
@@ -249,13 +247,9 @@ const ProjectsSection = () => {
       description: 'A gardening and plant care platform',
       link: '/green-thumb'
     },
-
-
   ];
 
-  const filteredProjects = activeFilter === 'featured' 
-    ? projects 
-    : projects.filter(project => project.categories.includes(activeFilter));
+  const filteredProjects = projects.filter(project => project.categories.includes(activeFilter));
 
   useEffect(() => {
     setIsMounted(true);
@@ -308,10 +302,11 @@ const ProjectsSection = () => {
   }
 
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto ">
       <div ref={filtersRef} className="flex justify-center gap-3 mb-12">
         <div className="w-full  flex flex-nowrap justify-center overflow-x-auto gap-3 pb-2">
-          {categories.map(category => (
+         <div className='border border-gray-400 px-6 py-4 rounded-full space-x-4 bg-[#191919]'>
+         {categories.map(category => (
             <button
               key={category.id}
               onClick={() => handleFilter(category.id)}
@@ -324,6 +319,7 @@ const ProjectsSection = () => {
               {category.label} 
             </button>
           ))}
+         </div>
         </div>
       </div>
 

@@ -495,10 +495,11 @@ const Header = () => {
           link: '/packages' 
         },
         { 
-          name: "Our Work", 
-          desc: "Our Proects", 
+          name: "Portfolio", 
+          desc: "Our work", 
           icon: WorkflowIcon,  
-          link: '/our-work' 
+          link: '/portfolio' 
+          // link: '/our-work' 
         },
         { 
           name: "Company Values", 
@@ -571,7 +572,7 @@ const Header = () => {
           </ul>
           <div className="flex-center gap-x-5">
             <div className="lg:hidden">
-              <MobMenu Menus={Menus} />
+              <MobMenu Menus={Menus}  />
             </div>
           </div>
         </div>
