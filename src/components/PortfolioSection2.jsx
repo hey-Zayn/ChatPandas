@@ -75,6 +75,7 @@ const PortfolioSection2 = () => {
       ref={sectionRef}
       className="relative w-full h-screen bg-black flex flex-col justify-center items-center"
     >
+    
       <h2
         ref={textRef}
         className="wrapper text-white/50 text-4xl md:text-6xl text-center font-bold px-4 md:px-20"
