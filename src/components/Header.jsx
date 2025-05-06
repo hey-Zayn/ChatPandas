@@ -552,7 +552,7 @@ const Header = () => {
 
   return (
     <div>
-      <div className="w-full top-0 left-0 absolute flex justify-between items-center px-4 py-4 sm:px-8 sm:py-6 md:px-12 md:py-8 text-white z-50">
+      <div className="w-full top-0 left-0 absolute max-sm:fixed  flex justify-between items-center px-4 py-4 sm:px-8 sm:py-6 md:px-12 md:py-8 text-white z-50 max-sm:bg-black">
         <div className="max-sm:w-full flex gap-6  items-center max-sm:justify-between">
           <a href="/">
             <img
@@ -565,13 +565,13 @@ const Header = () => {
         </div>
 
         <div>
-        <ul className=" flex gap-1 max-sm:hidden text-sm">
+        <ul className=" flex gap-1 max-sm:hidden max-md:hidden  text-sm">
             {Menus.map((menu) => (
               <DesktopMenu menu={menu} key={menu.name} />
             ))}
           </ul>
           <div className="flex-center gap-x-5">
-            <div className="lg:hidden">
+            <div className="hidden  max-md:hidden max-sm:block ">
               <MobMenu Menus={Menus}  />
             </div>
           </div>

@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import gsap from 'gsap';
 import Link from 'next/link';
@@ -12,7 +12,8 @@ const ProjectsSection = () => {
   const projectRefs = useRef([]);
   const filtersRef = useRef(null);
 
-  const categories = [
+  // Memoize static data to prevent unnecessary re-renders
+  const categories = useMemo(() => [
     { id: 'web', label: 'Web' },
     { id: 'mobile', label: 'Mobile' },
     { id: 'wordpress', label: 'WordPress' },
@@ -20,9 +21,9 @@ const ProjectsSection = () => {
     { id: 'mean', label: 'Mean' },
     { id: 'cms', label: 'CMS' },
     { id: 'uiux', label: 'UIUX' },
-  ];
+  ], []);
 
-  const projects = [
+  const projects = useMemo(() => [
     {
       id: 1,
       title: 'Business Boost',
@@ -247,82 +248,115 @@ const ProjectsSection = () => {
       description: 'A gardening and plant care platform',
       link: '/green-thumb'
     },
-  ];
+  ], []);
 
-  const filteredProjects = projects.filter(project => project.categories.includes(activeFilter));
+  // Memoize filtered projects to prevent recalculation on every render
+  const filteredProjects = useMemo(() => 
+    projects.filter(project => project.categories.includes(activeFilter)),
+  [projects, activeFilter]);
 
   useEffect(() => {
     setIsMounted(true);
+    
+    // Clean up function
+    return () => {
+      projectRefs.current = [];
+    };
+  }, []);
+
+  // Optimize animations with useCallback
+  const animateFilters = useCallback(() => {
+    if (!filtersRef.current) return;
+    
+    gsap.from(filtersRef.current.children, {
+      opacity: 0,
+      y: 10,
+      stagger: 0.05, // Reduced stagger time
+      duration: 0.4  // Slightly faster animation
+    });
+  }, []);
+
+  const animateProjects = useCallback((isInitial = false) => {
+    if (!projectRefs.current.length) return;
+    
+    gsap.from(projectRefs.current, {
+      opacity: 0,
+      y: 20,
+      stagger: 0.08, // Reduced stagger time
+      duration: 0.5,
+      delay: isInitial ? 0.1 : 0 // Reduced delay
+    });
   }, []);
 
   useEffect(() => {
     if (!isMounted) return;
     
-    gsap.from(filtersRef.current.children, {
-      opacity: 0,
-      y: 10,
-      stagger: 0.1,
-      duration: 0.5
-    });
+    animateFilters();
+    animateProjects(true);
+  }, [isMounted, animateFilters, animateProjects]);
 
-    gsap.from(projectRefs.current, {
-      opacity: 0,
-      y: 20,
-      stagger: 0.15,
-      duration: 0.6,
-      delay: 0.2
-    });
-  }, [isMounted]);
-
-  const handleFilter = (categoryId) => {
+  const handleFilter = useCallback((categoryId) => {
     if (categoryId === activeFilter || !isMounted) return;
     
-    gsap.to(projectRefs.current, {
+    // Use a single timeline for better performance
+    const tl = gsap.timeline();
+    tl.to(projectRefs.current, {
       opacity: 0,
       y: 20,
-      duration: 0.3,
+      duration: 0.25, // Faster fade out
       onComplete: () => {
         setActiveFilter(categoryId);
         router.push(`?category=${categoryId}`, { scroll: false });
         
-        setTimeout(() => {
-          gsap.to(projectRefs.current, {
-            opacity: 1,
-            y: 0,
-            duration: 0.5,
-            stagger: 0.1
-          });
-        }, 50);
+        // Use requestAnimationFrame for better performance
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            gsap.to(projectRefs.current, {
+              opacity: 1,
+              y: 0,
+              duration: 0.4,
+              stagger: 0.05 // Reduced stagger time
+            });
+          }, 30); // Reduced timeout
+        });
       }
     });
-  };
+  }, [activeFilter, isMounted, router]);
 
   if (!isMounted) {
-    return <div>Loading...</div>;
+    return <div className="min-h-[200px] flex items-center justify-center">Loading...</div>;
   }
 
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto ">
+    <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       <div ref={filtersRef} className="flex justify-center gap-3 mb-12">
-        <div className="w-full  flex flex-nowrap justify-center overflow-x-auto gap-3 pb-2">
-         <div className='border border-gray-400 px-6 py-4 rounded-full space-x-4 bg-[#191919]'>
-         {categories.map(category => (
+        <div className="w-full flex flex-wrap md:flex-nowrap justify-center overflow-x-auto gap-2 sm:gap-3 pb-2 px-2 sm:px-0">
+          {categories.map(category => (
             <button
               key={category.id}
               onClick={() => handleFilter(category.id)}
-              className={`flex-shrink-0 px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg ${
+              className={`flex-shrink-0 px-2 sm:px-3 md:px-4 lg:px-5 py-1 sm:py-1.5 md:py-2 rounded-full text-xs sm:text-sm md:text-base font-medium transition-all duration-300 hover:scale-105 backdrop-blur-md border border-white/10 ${
                 activeFilter === category.id
-                  ? 'bg-gradient-to-r from-[#5209DE] to-[#8A2BE2] text-white shadow-md hover:shadow-xl'
-                  : 'bg-white/10 text-gray-300 hover:bg-white/20 hover:text-white'
+                  ? 'bg-gradient-to-r from-[#5209DE] to-[#8A2BE2] text-white shadow-[0_4px_20px_rgba(82,9,222,0.5)] hover:shadow-[0_6px_24px_rgba(82,9,222,0.6)]'
+                  : 'bg-white/5 text-gray-300 hover:bg-white/15 hover:text-white hover:shadow-[0_4px_12px_rgba(255,255,255,0.1)]'
               }`}
+              style={{
+                backdropFilter: 'blur(8px)',
+                minWidth: 'fit-content',
+                margin: '0.25rem'
+              }}
             >
-              {category.label} 
+              <span className="relative z-10 flex items-center gap-1">
+                {category.label}
+                {activeFilter === category.id && (
+                  <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                )}
+              </span>
             </button>
           ))}
-         </div>
         </div>
       </div>
-
+      
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {filteredProjects.map((project, index) => (
           <div
@@ -336,6 +370,8 @@ const ProjectsSection = () => {
                   src={project.image}
                   alt={project.title}
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  loading={index < 6 ? "eager" : "lazy"}
                   style={{ objectFit: 'cover' }}
                   className="hover:scale-105 transition-transform duration-500"
                 />
@@ -349,7 +385,7 @@ const ProjectsSection = () => {
                     return (
                       <span 
                         key={`${project.id}-${catId}`}
-                        className="px-3 py-1 text-gray-200 text-xs rounded-full   border border-gray-200"
+                        className="px-3 py-1 text-gray-200 text-xs rounded-full border border-gray-200"
                       >
                         {category?.label}
                       </span>
