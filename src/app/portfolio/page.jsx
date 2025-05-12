@@ -20,6 +20,7 @@ import PortfolioServicesSection from "@/components/PortfolioServicesSection";
 
 import InteractiveTimeline from "@/components/InteractiveTimeline";
 import PP2 from "@/components/PP2";
+import PPCP from "@/components/PPCP";
 
 
 
@@ -34,6 +35,7 @@ const page = () => {
         <PP2/>
         <PortfolioServicesSection/>
         {/* <DesignerIntro/> */}
+        <PPCP/>
        
         <InteractiveTimeline/>
         <section className="w-full h-full bg-black">

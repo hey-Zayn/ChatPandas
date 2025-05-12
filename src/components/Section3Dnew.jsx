@@ -1,48 +1,91 @@
 "use client";
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import { Canvas } from "@react-three/fiber";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Scene from "./Scene";
 
-// Extracted reusable component for sections
-const ContentSection = ({ align = "center", topPosition = "50%" }) => (
-  <div className={`absolute top-[${topPosition}] w-full z-10 px-10 pt-30 ${
-    align === "left" ? "text-left" : align === "right" ? "text-right" : "text-center"
-  }`}>
-    <h1 className="text-8xl text-white font-bold max-sm:text-3xl">
-      Bridging <br className="max-sm:hidden" />
-      Cultural Gaps
-    </h1>
-    <h3 className="text-white text-2xl max-sm:text-xl">
-      As the top BPO agency, we bridge cultural <br className="max-sm:hidden" /> 
-      gaps, making every interaction feel native.
-    </h3>
-  </div>
-);
+// Constants for better maintainability
+const CONTENT = {
+  title: "Bridging Cultural Gaps",
+  description: "As the top BPO agency, we bridge cultural gaps, making every interaction feel native."
+};
+
+// Optimized reusable component with memoization
+const ContentSection = React.memo(({ align = "center", topPosition = "50%" }) => {
+  const alignmentClasses = useMemo(() => ({
+    left: "text-left",
+    right: "text-right",
+    center: "text-center"
+  }), []);
+
+  // Pre-split content for better performance
+  const [titleFirst, titleRest] = useMemo(() => [
+    CONTENT.title.split(' ')[0],
+    CONTENT.title.split(' ').slice(1).join(' ')
+  ], []);
+
+  const [descFirst, descRest] = useMemo(() => [
+    CONTENT.description.split(' ').slice(0, 7).join(' '),
+    CONTENT.description.split(' ').slice(7).join(' ')
+  ], []);
+
+  return (
+    <div className={`absolute top-[${topPosition}] w-full z-10 px-10 pt-30 ${alignmentClasses[align]}`}>
+      <h1 className="text-8xl text-white font-bold max-sm:text-3xl">
+        {titleFirst} <br className="max-sm:hidden" />
+        {titleRest}
+      </h1>
+      <h3 className="text-white text-2xl max-sm:text-xl">
+        {descFirst} <br className="max-sm:hidden" /> 
+        {descRest}
+      </h3>
+    </div>
+  );
+});
 
 const Section3Dnew = () => {
   const mainRef = useRef(null);
   const sceneRef = useRef(null);
   const modelRef = useRef(null);
-  const [progress, setProgress] = useState(0);
-  const [animationId, setAnimationId] = useState(null);
+  const progressRef = useRef(0);
+  const [isMounted, setIsMounted] = useState(false);
+  const animationId = useRef(null);
   
   // Register plugins just once when component mounts
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-    
+    setIsMounted(true);
     return () => {
-      // Clean up animation frame on unmount
-      if (animationId) cancelAnimationFrame(animationId);
+      if (animationId.current) cancelAnimationFrame(animationId.current);
+      ScrollTrigger.getAll().forEach(st => st.kill());
     };
-  }, [animationId]);
-  
-  // Setup scroll animations
-  useEffect(() => {
-    if (!mainRef.current || !sceneRef.current) return;
+  }, []);
+
+  // Optimized model rotation animation using delta time
+  const startModelAnimation = useCallback(() => {
+    let lastTime = performance.now();
     
-    // Create animation timeline
+    const animate = (time) => {
+      const delta = time - lastTime;
+      lastTime = time;
+      
+      if (modelRef.current) {
+        modelRef.current.rotation.y += 0.0005 * delta;
+      }
+      animationId.current = requestAnimationFrame(animate);
+    };
+    
+    animationId.current = requestAnimationFrame(animate);
+  }, []);
+
+  // Optimized scroll animations with debounced updates
+  useEffect(() => {
+    if (!mainRef.current || !sceneRef.current || !isMounted) return;
+
+    let lastUpdate = 0;
+    const updateInterval = 16; // ~60fps
+
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: mainRef.current,
@@ -50,41 +93,15 @@ const Section3Dnew = () => {
         end: "bottom bottom",
         scrub: 1,
         onUpdate: (self) => {
-          // Only update when progress changes significantly to reduce state updates
-          const newProgress = Math.min(self.progress, 1);
-          if (Math.abs(newProgress - progress) > 0.01) {
-            setProgress(newProgress);
+          const now = performance.now();
+          if (now - lastUpdate > updateInterval) {
+            progressRef.current = Math.min(self.progress, 1);
+            lastUpdate = now;
           }
         },
       },
     });
-    
-    // Setup model rotation animation that runs at a consistent frame rate
-    const startModelAnimation = () => {
-      let lastTime = 0;
-      
-      const animate = (time = 0) => {
-        const id = requestAnimationFrame(animate);
-        setAnimationId(id);
-        
-        // Only update rotation if model exists and enough time has passed (throttling)
-        if (modelRef.current) {
-          // Calculate time delta for smoother animation regardless of frame rate
-          const delta = time - lastTime;
-          if (delta > 16) { // Aim for ~60fps (16.6ms per frame)
-            const rotationSpeed = 0.0005;
-            modelRef.current.rotation.y += rotationSpeed * delta;
-            lastTime = time;
-          }
-        }
-      };
-      
-      const id = requestAnimationFrame(animate);
-      setAnimationId(id);
-      return id;
-    };
-    
-    // Add position animations
+
     tl.to(sceneRef.current, {
       ease: "none",
       x: '25vw',
@@ -103,72 +120,58 @@ const Section3Dnew = () => {
     });
     
     return () => {
-      tl.kill(); // Clean up GSAP animations
-      if (animationId) cancelAnimationFrame(animationId);
+      tl.kill();
+      ScrollTrigger.getAll().forEach(st => st.kill());
     };
-  }, []);
-  
-  // Memoize sections for desktop to prevent unnecessary re-renders
-  const desktopSections = useMemo(() => (
-    <>
-      <section className="relative w-full h-screen">
-        <ContentSection />
-        <div ref={sceneRef} className="w-full h-full">
-          <Canvas
-            style={{ width: '100%', height: '100%' }}
-            frameloop="demand" // Only render when needed
-            performance={{ min: 0.5 }} // Enable performance optimizations
-          >
-            <Scene progress={progress} modelRef={modelRef} />
-          </Canvas>
-        </div>
-      </section>
-      
-      <section className="relative flex justify-center items-center h-screen">
-        <ContentSection align="left" topPosition="40%" />
-      </section>
+  }, [startModelAnimation, isMounted]);
 
-      <section className="relative flex justify-center items-center h-screen">
-        <ContentSection align="right" topPosition="40%" />
-      </section>
-      
-      <section className="w-full relative flex justify-center items-center h-[110vh]">
-        <ContentSection topPosition="30%" />
-      </section>
-    </>
-  ), [progress]);
-  
-  // Mobile sections - only render when needed
-  const mobileSections = useMemo(() => (
-    <>
-      <section className="relative w-full h-[60vh]">
-        <ContentSection />
-      </section>
-      
-      <section className="relative flex justify-center items-center h-[60vh]">
-        <ContentSection align="left" topPosition="40%" />
-      </section>
+  // Memoized sections to prevent unnecessary re-renders
+  const sections = useMemo(() => [
+    {
+      id: 1,
+      content: <ContentSection />,
+      className: "relative w-full h-screen",
+      canvas: true
+    },
+    {
+      id: 2,
+      content: <ContentSection align="left" topPosition="40%" />,
+      className: "relative flex justify-center items-center h-screen"
+    },
+    {
+      id: 3,
+      content: <ContentSection align="right" topPosition="40%" />,
+      className: "relative flex justify-center items-center h-screen"
+    },
+    {
+      id: 4,
+      content: <ContentSection topPosition="30%" />,
+      className: "w-full relative flex justify-center items-center h-[110vh]"
+    }
+  ], []);
 
-      <section className="relative flex justify-center items-center h-[60vh]">
-        <ContentSection align="right" topPosition="40%" />
-      </section>
-      
-      <section className="w-full relative flex justify-center items-center h-[60vh]">
-        <ContentSection topPosition="30%" />
-      </section>
-    </>
-  ), []);
+  if (!isMounted) return null;
 
   return (
-    <>
-      <div ref={mainRef} className="w-full h-full overflow-hidden bg-[#30087D] max-sm:hidden lg:block">
-        {desktopSections}
-      </div>
-      
-      <div className="w-full h-full overflow-hidden bg-[#30087D] sm:block md:hidden max-lg:hidden">
-        {mobileSections}
-      </div>
-    </>
+    <div ref={mainRef} className="w-full h-full overflow-hidden bg-[#30087D]">
+      {sections.map(section => (
+        <section key={section.id} className={section.className}>
+          {section.content}
+          {section.canvas && (
+            <div ref={sceneRef} className="w-full h-full relative">
+              <Canvas
+                style={{ width: '100%', height: '100%' }}
+                frameloop="demand"
+                performance={{ min: 0.5 }}
+                dpr={Math.min(window.devicePixelRatio, 2)}
+              >
+                <Scene progress={progressRef.current} modelRef={modelRef} />
+              </Canvas>
+            </div>
+          )}
+        </section>
+      ))}
+    </div>
   );
 };
 

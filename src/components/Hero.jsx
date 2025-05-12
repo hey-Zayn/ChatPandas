@@ -4,102 +4,88 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+// Register plugins once at module level
+gsap.registerPlugin(ScrollTrigger);
+
 const Hero = () => {
   const heroRef = useRef(null);
-  const headingRefs = useRef({
-    heading1: null,
-    heading2: null,
-    heading3: null,
-    subHeading1: null,
-    subHeading2: null,
-    subHeading3: null
-  });
-
-  // Memoize animation setup to prevent unnecessary recalculations
+  const headingRefs = useRef({});
+  
+  // Memoized animation setup with reduced complexity
   const setupAnimations = useCallback(() => {
-    gsap.registerPlugin(ScrollTrigger);
-    
-    // Create a single timeline for better performance
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: heroRef.current,
-        start: "top 80%",
-        end: "bottom bottom",
-        toggleActions: "play none none none",
-        once: true // Only trigger once for better performance
-      }
-    });
-
-    // Batch animations for better performance
     const elements = [
-      headingRefs.current.heading1,
-      headingRefs.current.heading2,
-      headingRefs.current.heading3,
-      headingRefs.current.subHeading1,
-      headingRefs.current.subHeading2,
-      headingRefs.current.subHeading3
-    ].filter(Boolean); // Filter out any null refs
+      'heading1', 'heading2', 'heading3',
+      'subHeading1', 'subHeading2', 'subHeading3'
+    ].map(key => headingRefs.current[key]).filter(Boolean);
 
-    // Animate all elements with stagger for better performance
-    tl.from(elements, {
+    if (!elements.length) return;
+
+    gsap.from(elements, {
       y: -100,
       opacity: 0,
       duration: 0.4,
       stagger: 0.1,
       ease: "power2.out",
-      clearProps: "transform" // Clean up transforms after animation for better performance
+      scrollTrigger: {
+        trigger: heroRef.current,
+        start: "top 80%",
+        end: "bottom bottom",
+        toggleActions: "play none none none",
+        once: true
+      },
+      clearProps: "transform"
     });
   }, []);
 
-  // Use GSAP with dependency on setupAnimations
-  useGSAP(() => {
-    setupAnimations();
-  }, [setupAnimations]);
+  // Optimized GSAP hook usage
+  useGSAP(setupAnimations, { scope: heroRef });
+
+  // Memoized ref setter function
+  const setHeadingRef = useCallback((key) => (el) => {
+    headingRefs.current[key] = el;
+  }, []);
 
   return (
     <div ref={heroRef} className='w-full h-screen relative pt-10'>
       <div className="w-full h-screen flex flex-col justify-between relative z-10 py-20">
         <div className="w-full px-20 py-4 max-sm:py-2 max-sm:px-6 flex justify-end max-sm:justify-start gap-0">
           <div className="flex flex-col">
-            <div className="overflow-hidden">
-              <h3 ref={el => headingRefs.current.heading1 = el} className="text-white text-left uppercase text-3xl max-sm:text-[22px] leading-none">
-                Redefining CX
-              </h3>
-            </div>
-            <div className="overflow-hidden">
-              <h3 ref={el => headingRefs.current.heading2 = el} className="text-white uppercase text-3xl max-sm:text-[22px] leading-none">
-                standards through our
-              </h3>
-            </div>
-            <div className="overflow-hidden">
-              <h3 ref={el => headingRefs.current.heading3 = el} className="text-white uppercase font-extrabold text-3xl max-sm:text-[22px] leading-none">
-                Top-Tier BPO compANY
-              </h3>
-            </div>
+            {['heading1', 'heading2', 'heading3'].map((key, i) => (
+              <div key={i} className="overflow-hidden">
+                <h3 
+                  ref={setHeadingRef(key)}
+                  className="text-white text-left uppercase text-3xl max-sm:text-[22px] leading-none"
+                >
+                  {[
+                    'Redefining CX',
+                    'standards through our',
+                    'Top-Tier BPO compANY'
+                  ][i]}
+                </h3>
+              </div>
+            ))}
           </div>
         </div>
 
         <div className="w-full px-40 max-sm:px-10 py-4 flex justify-start gap-0 max-sm:mt-50">
           <div className="flex flex-col">
-            <div className="overflow-hidden">
-              <h3 ref={el => headingRefs.current.subHeading1 = el} className="text-white uppercase text-6xl max-md:text-4xl max-sm:text-3xl font-bold leading-none text-right ml-20 max-sm:ml-10">
-                Building
-              </h3>
-            </div>
-            <div className="overflow-hidden">
-              <h3 ref={el => headingRefs.current.subHeading2 = el} className="text-white uppercase text-6xl max-md:text-4xl max-sm:text-3xl font-bold leading-none">
-                Meaningful
-              </h3>
-            </div>
-            <div className="overflow-hidden">
-              <h3 ref={el => headingRefs.current.subHeading3 = el} className="text-white uppercase font-bold max-md:text-4xl max-sm:text-3xl text-6xl leading-none text-right ml-20 max-sm:ml-10">
-                Connections
-              </h3>
-            </div>
+            {['subHeading1', 'subHeading2', 'subHeading3'].map((key, i) => (
+              <div key={i} className="overflow-hidden">
+                <h3 
+                  ref={setHeadingRef(key)}
+                  className={`text-white uppercase font-bold text-6xl max-md:text-4xl max-sm:text-3xl leading-none ${
+                    i % 2 === 0 ? 'text-right ml-20 max-sm:ml-10' : ''
+                  }`}
+                >
+                  {['Building', 'Meaningful', 'Connections'][i]}
+                </h3>
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
+      {/* Optimized video element */}
       <video
         src="/videos/my.mp4"
         className="absolute top-0 w-full h-full object-cover z-0"
@@ -109,9 +95,13 @@ const Hero = () => {
         playsInline
         preload="auto"
         fetchPriority="high"
+        aria-label="Background video"
+        // Add these for better performance
+        disablePictureInPicture
+        disableRemotePlayback
       />
     </div>
   )
 }
 
-export default Hero
+export default React.memo(Hero);

@@ -565,7 +565,7 @@ const Header = () => {
         </div>
 
         <div>
-        <ul className=" flex gap-1 max-sm:hidden max-md:hidden  text-sm">
+        <ul className=" flex gap-1 max-sm:hidden max-md:hidden text-sm">
             {Menus.map((menu) => (
               <DesktopMenu menu={menu} key={menu.name} />
             ))}
