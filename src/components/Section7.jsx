@@ -1,331 +1,238 @@
+
 "use client";
-import React, { useRef } from 'react'
+import React, { useRef, useCallback, useEffect, useMemo } from 'react';
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const Section7 = () => {
+  // Refs
   const section7Ref = useRef(null);
   const textRef = useRef(null);
-  const card1Ref = useRef(null);
-  const card2Ref = useRef(null);
-  const card3Ref = useRef(null);
-  const card4Ref = useRef(null);
-  const card5Ref = useRef(null);
-  const card6Ref = useRef(null);
-  const mobileCard1S7Ref = useRef(null);
-  const mobileCard2S7Ref = useRef(null);
-  const mobileCard3S7Ref = useRef(null);
-  const mobileCard4S7Ref = useRef(null);
-  const mobileCard5S7Ref = useRef(null);
-  const mobileCard6S7Ref = useRef(null);
-
+  const cardRefs = useRef([]);
+  const mobileCardRefs = useRef([]);
   const scrollTriggersRef = useRef([]);
+
+  // Memoized constants
+  const rotations = useMemo(() => [-15, 15, -15, 15, -15, 15], []);
+  const cardCount = 6;
+
+  // Optimized mobile animation creation
+  const createMobileAnimationS7 = useCallback((mobileCardRef, isEven, index) => {
+    if (!mobileCardRef) return null;
+
+    const tl = gsap.timeline({
+      defaults: {
+        duration: 0.6,
+        ease: "power2.out",
+      },
+    });
+
+    const st = ScrollTrigger.create({
+      trigger: mobileCardRef,
+      start: "top 90%",
+      toggleActions: "play none none none",
+      once: true,
+      animation: tl.fromTo(
+        mobileCardRef,
+        {
+          x: isEven ? -80 : 80,
+          y: 30,
+          opacity: 0,
+          scale: 0.9,
+          rotation: isEven ? -15 : 15, // Added rotation for mobile
+        },
+        {
+          x: 0,
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          rotation: 0, // Added rotation reset for mobile
+          delay: index * 0.05,
+        }
+      ),
+      fastScrollEnd: true,
+    });
+
+    scrollTriggersRef.current.push(st);
+    return st;
+  }, []);
+
+  // Optimized ref initialization
+  const initRefs = useCallback((el, index, refArray) => {
+    if (el && !refArray.current[index]) {
+      refArray.current[index] = el;
+    }
+  }, []);
+
+  // Main animation setup
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
 
+    // Clear existing ScrollTriggers
     scrollTriggersRef.current.forEach((st) => st.kill());
     scrollTriggersRef.current = [];
 
-    const screenWidth = window.innerWidth;
-    const baseX = screenWidth > 1600 ? 1500 : screenWidth > 1200 ? 1200 : 1000;
+    if (window.innerWidth >= 768) {
+      // Desktop animations
+      const screenWidth = window.innerWidth;
+      const baseX = Math.min(screenWidth * 0.75, 1200);
 
-    const masterTl = gsap.timeline();
-
-    const masterST = ScrollTrigger.create({
-      trigger: section7Ref.current,
-      // start: "top 40%",
-      // end: "bottom 30%",
-      start: "top 5%",
-      end: "bottom 80%",
-      scrub: 5,
-      markers: false,
-      toggleActions: "play none none reverse",
-      animation: masterTl,
-    });
-
-    scrollTriggersRef.current.push(masterST);
-
-    masterTl.from(
-      textRef.current,
-      {
-        opacity: 0,
-        x: 50,
-        duration: 5,
-      },
-      0
-    );
-
-    const cardRefs = [
-      card1Ref,
-      card2Ref,
-      card3Ref,
-      card4Ref,
-      card5Ref,
-      card6Ref,
-    ];
-    const rotations = [-25, 25, -25, 25, -25, 25]; // Alternating rotations
-
-    cardRefs.forEach((cardRef, index) => {
-      if (!cardRef.current) return;
-
-      masterTl.from(
-        cardRef.current,
-        {
-          rotationX: -20,
-          rotationY: -10,
-          rotationZ: rotations[index],
-          marginLeft: 200,
-          y: -300,
-          x: baseX - index * 100,
-          duration: 5,
-        },
-        index * 0.8 + 1
-      ); // Staggered start times
-    });
-
-    masterTl.to({}, { duration: 4 }, cardRefs.length * 0.8 + 3);
-
-    cardRefs.forEach((cardRef, index) => {
-      if (!cardRef.current) return;
-
-      masterTl.to(
-        cardRef.current,
-        {
-          rotationX: -20,
-          rotationY: -10,
-          rotationZ: rotations[index],
-          marginLeft: 200,
-          y: 300,
-          x: -baseX + index * 100,
-          duration: 5,
-        },
-        cardRefs.length * 0.8 + 6 + index * 1.2
-      ); // Staggered start times for exit
-    });
-
-    // Mobile animations
-    const createMobileAnimationS7 = (mobileCardRef, isEven) => {
-      if (!mobileCardRef.current) return null;
-
-      const tl = gsap.timeline({
+      const masterTl = gsap.timeline({
         defaults: {
-          duration: 1,
-          ease: "power3.out",
+          duration: 2,
+          ease: "power1.inOut",
         },
       });
 
-      const st = ScrollTrigger.create({
-        trigger: mobileCardRef.current,
-        start: "top 80% ",
-        end: "bottom bottom",
-        // markers: true,
-        toggleActions: "play none none reverse",
-        animation: tl.fromTo(
-          mobileCardRef.current,
-          {
-            x: isEven ? -200 : 200,
-            y: 100,
-            opacity: 0,
-            scale: 0.5,
-            rotation: isEven ? -30 : 30,
-          },
-          {
-            x: 0,
-            y: 0,
-            opacity: 1,
-            scale: 1,
-            rotation: 0,
-            duration: 1.5,
-            ease: "elastic.out(1, 0.3)",
-          }
-        ),
+      const masterST = ScrollTrigger.create({
+        trigger: section7Ref.current,
+        start: "top top",
+        end: "+=200%",
+        scrub: 0.8,
+        animation: masterTl,
+        pin: true,
+        pinSpacing: true,
+        anticipatePin: 1,
+        fastScrollEnd: true,
+        preventOverlaps: true,
+        refreshPriority: 1,
       });
 
-      scrollTriggersRef.current.push(st);
-      return st;
-    };
+      scrollTriggersRef.current.push(masterST);
 
-    // Mobile - Animation with staggered timing
-    createMobileAnimationS7(mobileCard1S7Ref, false);
-    // Even numbered cards come from left
-    createMobileAnimationS7(mobileCard2S7Ref, true);
-    createMobileAnimationS7(mobileCard3S7Ref, false);
-    createMobileAnimationS7(mobileCard4S7Ref, true);
-    createMobileAnimationS7(mobileCard5S7Ref, false);
-    createMobileAnimationS7(mobileCard6S7Ref, true);
+      // Text animation
+      masterTl.from(
+        textRef.current,
+        {
+          opacity: 0,
+          y: 20,
+          duration: 3,
+        },
+        0
+      );
 
-    // Clean up on component unmount
+      // Card animations
+      cardRefs.current.forEach((cardRef, index) => {
+        if (!cardRef) return;
+
+        masterTl.addLabel(`card${index}Enter`, 2 + index * 3);
+
+        masterTl.from(
+          cardRef,
+          {
+            rotationZ: rotations[index],
+            rotationY: rotations[index], // Added Y rotation
+            rotationX: rotations[index], // Added X rotation
+            x: baseX,
+            y: -150,
+            opacity: 0,
+          },
+          `card${index}Enter`
+        );
+      });
+
+      // Exit animations
+      cardRefs.current.forEach((cardRef, index) => {
+        if (!cardRef) return;
+
+        masterTl.addLabel(`card${index}Exit`, 2 + cardCount * 3 + 8 + index * 3);
+
+        masterTl.to(
+          cardRef,
+          {
+            rotationZ: rotations[index] * -1,
+            rotationY: rotations[index] * -1, // Added Y rotation
+            rotationX: rotations[index] * -1, // Added X rotation
+            x: -baseX,
+            y: 150,
+            opacity: 0,
+          },
+          `card${index}Exit`
+        );
+      });
+    } else {
+      // Mobile animations
+      mobileCardRefs.current.forEach((ref, index) => {
+        if (ref) {
+          createMobileAnimationS7(ref, index % 2 === 0, index);
+        }
+      });
+    }
+
+    // Cleanup
     return () => {
       scrollTriggersRef.current.forEach((st) => st.kill());
       scrollTriggersRef.current = [];
     };
+  }, [createMobileAnimationS7, rotations, cardCount]);
+
+  // Image preloading
+  useEffect(() => {
+    [1, 2, 3, 4, 5, 6].forEach(num => {
+      const img = new Image();
+      img.src = `/images/WP${num}.avif`;
+    });
   }, []);
+
   return (
     <>
       <div
         ref={section7Ref}
-        className="w-full lg:h-[120vh] md:h-[70vh] py-20 max-sm:hidden overflow-hidden"
+        className="w-full lg:h-[120vh] md:h-[70vh] py-20 max-sm:hidden overflow-hidden bg-white"
       >
-        <div className="w-full ">
+        <div className="w-full">
           <h1
             ref={textRef}
-            id="section7-text"
-            className=" text-6xl text-center uppercase font-bold"
+            className="text-6xl md:text-5xl sm:text-4xl xs:text-3xl text-center uppercase font-bold text-black px-4"
           >
-            Certifications
+            Our Services & Certifications
           </h1>
         </div>
 
-        <div className=" w-full  px-20 mt-20  ">
-          <div className="  flex justify-start items-center  mt-30  ">
-            <div ref={card1Ref} id="section7card1" className="card w-90 z-[1]">
-              <img
-                src="/images/WP1.avif"
-                alt="BPO Challenge Card 1"
-                className="w-full h-auto"
-              />
-            </div>
-            <div
-              ref={card2Ref}
-              id="section7card2"
-              className="card w-90 z-[2] -ml-20 transform rotate-x-0 rotate-y-0 -rotate-z-10"
-            >
-              <img
-                 src="/images/WP2.avif"
-                alt="BPO Challenge Card 1"
-                className="w-full h-auto"
-              />
-            </div>
-            <div
-              ref={card3Ref}
-              id="section7card3"
-              className="card w-90 z-[3] -ml-20 transform rotate-x-0 rotate-y-0 rotate-z-10"
-            >
-              <img
-                src="/images/WP3.avif"
-                alt="BPO Challenge Card 1"
-                className="w-full h-auto"
-              />
-            </div>
-            <div
-              ref={card4Ref}
-              id="section7card4"
-              className="card w-90 z-[4] -ml-20"
-            >
-              <img
-                src="/images/WP4.avif"
-                alt="BPO Challenge Card 1"
-                className="w-full h-auto"
-              />
-            </div>
-            <div
-              ref={card5Ref}
-              id="section7card5"
-              className="card w-90 z-[5] -ml-20 transform rotate-x-0 rotate-y-0 rotate-z-10"
-            >
-              <img
-                 src="/images/WP5.avif"
-                alt="BPO Challenge Card 1"
-                className="w-full h-auto"
-              />
-            </div>
-            <div
-              ref={card6Ref}
-              id="section7card6"
-              className="card w-90 z-[6] -ml-20 transform-3d"
-            >
-              <img
-                src="/images/WP6.avif"
-                alt="BPO Challenge Card 1"
-                className="w-full h-auto"
-              />
-            </div>
+        <div className="w-full px-20 mt-20">
+          <div className="flex justify-start items-center mt-30">
+            {Array.from({ length: cardCount }).map((_, index) => (
+              <div
+                key={index}
+                ref={(el) => initRefs(el, index, cardRefs)}
+                className={`card w-90 z-[${index + 1}] ${index > 0 ? '-ml-20' : ''}`}
+              >
+                <img
+                  src={`/images/WP${index + 1}.avif`}
+                  alt={`BPO Challenge Card ${index + 1}`}
+                  className="w-full h-auto"
+                  loading="lazy"
+                />
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
       {/* Mobile view */}
-      <div className="w-full h-full overflow-hidden lg:hidden md:hidden max-sm:block">
-        <div className="h-full w-full py 4 px-4  overflow-hidden ">
+      <div className="w-full h-full overflow-hidden lg:hidden md:hidden max-sm:block bg-white">
+        <div className="h-full w-full py-8 px-10 overflow-hidden">
           <div className="flex flex-col justify-center gap-6">
             <div className="w-full flex flex-col justify-center mb-8">
-              <h2 className="text-center text-3xl">BPO OUTSOURCING?</h2>
-              <h2 className="text-center text-3xl font-bold uppercase">
-                Let's tackle your <br /> challenges
-              </h2>
+              <h2 className="text-center text-3xl font-bold text-black">SERVICES & CERTIFICATIONS</h2>
             </div>
-            <div
-              ref={mobileCard1S7Ref}
-              id="mobileCard1section3"
-              className="w-full flex justify-center items-center"
-            >
-              <div className="card w-80">
-                <img
-                  src="/images/WP1.avif"
-                alt="BPO Challenge Card 1"
-                  className="w-full h-auto"
-                />
-              </div>
-            </div>
-            <div
-              ref={mobileCard2S7Ref}
-              className="w-full flex justify-center items-center"
-            >
-              <div className="card w-80">
-                <img
-                 src="/images/WP1.avif"
-                alt="BPO Challenge Card 1"
-                  className="w-full h-auto"
-                />
-              </div>
-            </div>
-            <div
-              ref={mobileCard3S7Ref}
-              className="w-full flex justify-center items-center"
-            >
-              <div className="card w-80">
-                <img
-                   src="/images/WP1.avif"
-                alt="BPO Challenge Card 1"
-                  className="w-full h-auto"
-                />
-              </div>
-            </div>
-            <div
-              ref={mobileCard4S7Ref}
-              className="w-full flex justify-center items-center"
-            >
-              <div className="card w-80">
-                <img
-                   src="/images/WP1.avif"
-                alt="BPO Challenge Card 1"
-                  className="w-full h-auto"
-                />
-              </div>
-            </div>
-            <div
-              ref={mobileCard5S7Ref}
-              className="w-full flex justify-center items-center"
-            >
-              <div className="card w-80">
-                <img
-                   src="/images/WP1.avif"
-                alt="BPO Challenge Card 1"
-                  className="w-full h-auto"
-                />
-              </div>
-            </div>
-            <div
-              ref={mobileCard6S7Ref}
-              className="w-full flex justify-center items-center"
-            >
-              <div className="card w-80">
-                <img
-                   src="/images/WP1.avif"
-                alt="BPO Challenge Card 1"
-                  className="w-full h-auto"
-                />
+            <div className="w-full">
+              <div className="flex flex-col justify-center items-center gap-6">
+                {Array.from({ length: cardCount }).map((_, index) => (
+                  <div
+                    key={index}
+                    ref={(el) => initRefs(el, index, mobileCardRefs)}
+                    className="card w-90"
+                  >
+                    <img
+                      src={`/images/WP${index + 1}.avif`}
+                      alt={`BPO Challenge Card ${index + 1}`}
+                      className="w-full h-auto"
+                      loading="lazy"
+                    />
+                  </div>
+                ))}
               </div>
             </div>
           </div>

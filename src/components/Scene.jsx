@@ -1,14 +1,19 @@
 "use client";
-import React, { useRef, useEffect, useMemo } from "react";
+import React, { useRef, useEffect, useMemo, useCallback } from "react";
 import { useFrame } from "@react-three/fiber";
-import {
-  Environment,
-  PerspectiveCamera,
-} from "@react-three/drei";
+import { Environment, PerspectiveCamera } from "@react-three/drei";
 import { Model } from "./Model";
+
+// Pre-calculate camera position segments
+const CAMERA_SEGMENTS = [
+  { start: 0, end: 0.33, from: 0, to: 1 },
+  { start: 0.33, end: 0.66, from: 1, to: 2 },
+  { start: 0.66, end: 1, from: 2, to: 3 }
+];
 
 const Scene = ({ progress = 0, modelRef }) => {
   const cameraRef = useRef(null);
+  const lastProgress = useRef(progress);
 
   // Memoize camera positions to avoid recreating array on each render
   const cameraPositions = useMemo(() => [
@@ -18,44 +23,46 @@ const Scene = ({ progress = 0, modelRef }) => {
     [3.1, -2.7, 8.8],
   ], []);
 
-  // Use useFrame with a dependency to prevent unnecessary calculations
+  // Optimized camera position calculation
+  const calculateCameraPosition = useCallback((progress) => {
+    const segment = CAMERA_SEGMENTS.find(s => progress >= s.start && progress <= s.end);
+    if (!segment) return cameraPositions[0];
+
+    const percentage = (progress - segment.start) / (segment.end - segment.start);
+    const [startX, startY, startZ] = cameraPositions[segment.from];
+    const [endX, endY, endZ] = cameraPositions[segment.to];
+
+    return [
+      startX + (endX - startX) * percentage,
+      startY + (endY - startY) * percentage,
+      startZ + (endZ - startZ) * percentage
+    ];
+  }, [cameraPositions]);
+
+  // Initialize camera position immediately on mount
+  useEffect(() => {
+    if (cameraRef.current) {
+      const [x, y, z] = calculateCameraPosition(progress);
+      cameraRef.current.position.set(x, y, z);
+      cameraRef.current.lookAt(0, 0, 0);
+    }
+  }, [calculateCameraPosition, progress]);
+
+  // Use useFrame to continuously update camera lookAt
   useFrame(() => {
     if (cameraRef.current) {
       cameraRef.current.lookAt(0, 0, 0);
     }
   });
-  
+
   // Update camera position based on progress
   useEffect(() => {
-    if (!cameraRef.current) return;
+    if (!cameraRef.current || progress === lastProgress.current) return;
     
-    let x, y, z;
-    
-    if (progress <= 0.33) {
-      const percentage = progress / 0.33;
-      const [startX, startY, startZ] = cameraPositions[0];
-      const [endX, endY, endZ] = cameraPositions[1];
-      x = startX + (endX - startX) * percentage;
-      y = startY + (endY - startY) * percentage;
-      z = startZ + (endZ - startZ) * percentage;
-    } else if (progress <= 0.66) {
-      const percentage = (progress - 0.33) / 0.33;
-      const [startX, startY, startZ] = cameraPositions[1];
-      const [endX, endY, endZ] = cameraPositions[2];
-      x = startX + (endX - startX) * percentage;
-      y = startY + (endY - startY) * percentage;
-      z = startZ + (endZ - startZ) * percentage;
-    } else {
-      const percentage = (progress - 0.66) / 0.34;
-      const [startX, startY, startZ] = cameraPositions[2];
-      const [endX, endY, endZ] = cameraPositions[3];
-      x = startX + (endX - startX) * percentage;
-      y = startY + (endY - startY) * percentage;
-      z = startZ + (endZ - startZ) * percentage;
-    }
-    
+    const [x, y, z] = calculateCameraPosition(progress);
     cameraRef.current.position.set(x, y, z);
-  }, [progress, cameraPositions]);
+    lastProgress.current = progress;
+  }, [progress, calculateCameraPosition]);
 
   return (
     <>
@@ -63,12 +70,15 @@ const Scene = ({ progress = 0, modelRef }) => {
         ref={cameraRef}
         fov={45}
         near={0.1}
-        far={1000} // Reduced from 10000 for better performance
+        far={1000}
         makeDefault
         position={cameraPositions[0]}
       />
       <Environment preset="city" />
-      <Model ref={modelRef} />
+      <Model 
+        ref={modelRef} 
+        rotation={[0, 0, 0]}
+      />
     </>
   );
 };
