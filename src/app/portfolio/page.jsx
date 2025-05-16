@@ -35,7 +35,7 @@ const page = () => {
         <PP2/>
         <PortfolioServicesSection/>
         {/* <DesignerIntro/> */}
-        <PPCP/>
+        {/* <PPCP/> */}
        
         <InteractiveTimeline/>
         <section className="w-full h-full bg-black">

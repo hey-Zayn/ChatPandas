@@ -1,51 +1,70 @@
 'use client'
 
-import Hero from '@/components/Hero'
-import PandaScroll from '@/components/PangaScroll'
-import Section2 from '@/components/Section2'
-import Section3 from '@/components/Section3'
-import Section7 from '@/components/Section7'
-import Section8 from '@/components/Section8'
-import Section9_Form from '@/components/Section9_Form'
-import Section6 from '@/components/Section6'
-import ClientsSlider from '@/components/ClientsSlider'
-import Section3Dnew from '@/components/Section3Dnew'
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, lazy, Suspense } from 'react';
 
 // Define breakpoints as constants for maintainability
 const BREAKPOINTS = [640, 1024];
+
+// Lazy load all components
+const Hero = lazy(() => import('@/components/Hero'));
+const PandaScroll = lazy(() => import('@/components/PangaScroll'));
+const Section2 = lazy(() => import('@/components/Section2'));
+const Section3 = lazy(() => import('@/components/Section3'));
+const Section7 = lazy(() => import('@/components/Section7'));
+const Section8 = lazy(() => import('@/components/Section8'));
+const Section9_Form = lazy(() => import('@/components/Section9_Form'));
+const Section6 = lazy(() => import('@/components/Section6'));
+const ClientsSlider = lazy(() => import('@/components/ClientsSlider'));
+const Section3Dnew = lazy(() => import('@/components/Section3Dnew'));
+
+// Create a simple loading component
+const LoadingPlaceholder = () => <div className="min-h-[50vh] bg-gray-100 animate-pulse"></div>;
 
 function useScreenSizeReload() {
   const debounce = useCallback((func, wait) => {
     let timeout;
     return (...args) => {
+      const context = this;
       clearTimeout(timeout);
-      timeout = setTimeout(() => func(...args), wait);
+      timeout = setTimeout(() => func.apply(context, args), wait);
     };
   }, []);
 
   useEffect(() => {
+    // Only run this on client side
+    if (typeof window === 'undefined') return;
+
     let previousWidth = window.innerWidth;
+    let rafId = null;
 
     const handleResize = () => {
-      const currentWidth = window.innerWidth;
+      // Use requestAnimationFrame for smoother performance
+      if (rafId) return;
       
-      // Check if crossed any breakpoint
-      const crossedBreakpoint = BREAKPOINTS.some(bp => 
-        (previousWidth < bp && currentWidth >= bp) ||
-        (previousWidth >= bp && currentWidth < bp)
-      );
+      rafId = requestAnimationFrame(() => {
+        const currentWidth = window.innerWidth;
+        
+        // Check if crossed any breakpoint
+        const crossedBreakpoint = BREAKPOINTS.some(bp => 
+          (previousWidth < bp && currentWidth >= bp) ||
+          (previousWidth >= bp && currentWidth < bp)
+        );
 
-      if (crossedBreakpoint) {
-        window.location.reload();
-      }
-      previousWidth = currentWidth;
+        if (crossedBreakpoint) {
+          window.location.reload();
+        }
+        previousWidth = currentWidth;
+        rafId = null;
+      });
     };
 
     const debouncedResize = debounce(handleResize, 100);
     window.addEventListener('resize', debouncedResize);
     
-    return () => window.removeEventListener('resize', debouncedResize);
+    return () => {
+      window.removeEventListener('resize', debouncedResize);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, [debounce]);
 }
 
@@ -54,16 +73,37 @@ export default function Home() {
   
   return (
     <>
-      <Hero />
-      <Section2 />
-      <Section3 />
-      <Section3Dnew />
-      <Section6 />
-      <ClientsSlider />
-      <Section7 />
-      <Section8 />
-      <Section9_Form />
-      <PandaScroll />
+      <Suspense fallback={<LoadingPlaceholder />}>
+        <Hero />
+      </Suspense>
+      <Suspense fallback={<LoadingPlaceholder />}>
+        <Section2 />
+      </Suspense>
+      <Suspense fallback={<LoadingPlaceholder />}>
+        <Section3 />
+      </Suspense>
+      {/* <Suspense fallback={<LoadingPlaceholder />}>
+        <Section3Dnew />
+      </Suspense> */}
+      {/* <Suspense fallback={<LoadingPlaceholder />}>
+        <Section6 />
+      </Suspense> */}
+      <Suspense fallback={<LoadingPlaceholder />}>
+        <ClientsSlider />
+      </Suspense>
+      <Suspense fallback={<LoadingPlaceholder />}>
+        <Section7 />
+      </Suspense>
+    
+      <Suspense fallback={<LoadingPlaceholder />}>
+        <Section8 />
+      </Suspense>
+      <Suspense fallback={<LoadingPlaceholder />}>
+        <Section9_Form />
+      </Suspense>
+      <Suspense fallback={<LoadingPlaceholder />}>
+        <PandaScroll />
+      </Suspense>
     </>
   );
 }

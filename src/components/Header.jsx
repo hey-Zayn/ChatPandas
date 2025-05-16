@@ -1,252 +1,35 @@
 "use client";
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import Link from "next/link";
-import DesktopMenu from "./DesktopMenu";
+import dynamic from 'next/dynamic';
 
-import {
-  Users,
-  MapPin,
-  BarChart2,
-  LayoutTemplate,
-  Zap,
-  Globe2,
-  BadgeCheck,
-  ShoppingCart,
-  PackageCheck,
-  Handshake,
-  Truck,
-  Star,
-  Search,
-  Store,
-  List,
-  Building2,
-  ShoppingBag,
-  Target,
-  Share2,
-  RefreshCw,
-  Mic,
-  Tv,
-  Mail,
-  Youtube,
-  DollarSign,
-  Facebook,
-  Code2,
-  Palette,
-  Accessibility,
-  PenSquare,
-  Layers,
-  DraftingCompass,
-  FileText,
-  Video,
-  Smartphone,
-  Contact2,
-  Cpu,
-  Cloud,
-  FolderGit2,
-  Phone,
-  Headset,
-  ClipboardList,
-  Briefcase,
-  PhoneIncoming,
-  ShieldCheck,
-  UserCog,
-  UserPlus,
-  Lightbulb,
-  RefreshCcwDot,
-  GraduationCap,
-  Network,
-  ChartNoAxesCombined,
-  Cog,
-  Package,
-  Heart,
-  Award,
-  UserCircle2,
-  HelpCircle,
-  Goal,
-  WorkflowIcon,
-} from "lucide-react";
+// Lazy-load the menu components
+const DesktopMenu = dynamic(() => import("./DesktopMenu"), {
+  loading: () => <div className="w-20 h-6 bg-gray-200 rounded animate-pulse" />
+});
 
-import MobMenu from "./MobMenu";
+const MobMenu = dynamic(() => import("./MobMenu"), {
+  loading: () => <div className="w-10 h-6 bg-gray-200 rounded animate-pulse" />,
+  ssr: false
+});
+
+// Lazy-load icons (only the ones used in the initial render)
+import { Users, Handshake, Briefcase, Heart, HelpCircle, BarChart2, MapPin, LayoutTemplate, Zap, Globe2, BadgeCheck, ShoppingCart, PackageCheck, Truck, Star, Search, Building2, Store, List, Target, Share2, RefreshCw, Mic, Tv, Mail, Youtube, DollarSign, Facebook, Code2, Palette, Accessibility, PenSquare, Layers, DraftingCompass, FileText, Video, Smartphone, Contact2, Cpu, Cloud, FolderGit2, Phone, Headset, ClipboardList, PhoneIncoming, ShieldCheck, UserCog, UserPlus, Lightbulb, RefreshCcwDot, ChartNoAxesCombined, GraduationCap, Network, Goal, Cog, Package, WorkflowIcon, Award, UserCircle2, ShoppingBag } from "lucide-react";
+
+// Create a map for lazy-loaded icons
+const iconComponents = {
+  Users: Users,
+  Handshake: Handshake,
+  Briefcase: Briefcase,
+  Heart: Heart,
+  HelpCircle: HelpCircle,
+  // Add other icons that might be needed for initial render
+};
 
 const Header = () => {
   const Menus = [
     {
       id: 1,
-      name: "SEO ",
-      subMenuHeading: [
-        "Organic Search",
-        "E-commerce",
-        "Third-Party Placements",
-      ],
-      subMenu: [  
-        {
-          name: "Search Engine Optimization",
-          desc: "Boost online visibility",
-          icon: BarChart2,
-          link: "/Search-Engine-Optimization",
-        },
-        {
-          name: "Local Search Optimization",
-          desc: "Dominate local searches",
-          icon: MapPin,
-          link: "/Local-Search-Optimization",
-        },
-        {
-          name: "Landing Page Optimization",
-          desc: "Maximize conversion rates",
-          icon: LayoutTemplate,
-          link: "/Landing-Page-Optimization",
-        },
-        {
-          name: "SEO for Leads",
-          desc: "Generate quality leads",
-          icon: Zap,
-          link: "/seo-leads",
-        },
-        {
-          name: "Enterprise Level Reach",
-          desc: "Scale business growth",
-          icon: Globe2,
-          link: "/enterprise-level-reach",
-        },
-        {
-          name: "Brand Optimization",
-          desc: "Strengthen brand presence",
-          icon: BadgeCheck,
-          link: "/brand-optimization",
-        },
-        {
-          name: "Shop & Order Outreach",
-          desc: "Expand customer base",
-          icon: ShoppingCart,
-          link: "/shop-order-outreach",
-        },
-        {
-          name: "Local Order Management",
-          desc: "Streamline local orders",
-          icon: PackageCheck,
-          link: "/local-order-management",
-        },
-        {
-          name: "B2B E-commerce enabling",
-          desc: "Enable B2B commerce",
-          icon: Handshake,
-          link: "/b2b-e-commerce-enabling",
-        },
-        {
-          name: "E-commerce Drop-shipping",
-          desc: "Simplify order fulfillment",
-          icon: Truck,
-          link: "/drop-shipping",
-        },
-        {
-          name: "Yelp Optimization",
-          desc: "Enhance Yelp presence",
-          icon: Star,
-          link: "/yelp-optimization",
-        },
-        {
-          name: "Bing & Yahoo Optimization",
-          desc: "Expand search reach",
-          icon: Search,
-          link: "/bing-yahoo-optimization",
-        },
-        {
-          name: "SEO for Amazon",
-          desc: "Dominate Amazon rankings",
-          icon: Building2,
-          link: "/seo-amazon",
-        },
-        {
-          name: "SEO for Walmart",
-          desc: "Boost Walmart visibility",
-          icon: Store,
-          link: "/seo-for-walmart",
-        },
-        {
-          name: "Listings & Directories",
-          desc: "Manage online listings",
-          icon: List,
-          link: "/listings-directories",
-        },
-      ],
-
-      gridCols: 3,
-    },
-    {
-      id: 2,
-      name: "Paid Marketing",
-      subMenuHeading: [
-        "Digital Advertisement",
-        "Marketing Outreach",
-        "Commerce Platforms",
-      ],
-      subMenu: [
-        { name: "PPC & Ads", desc: "Targeted ad campaigns", icon: ShoppingBag, link: "/paid-media-advertisement", },
-        {
-          name: "Facebook Lead Generation",
-          desc: "Capture Facebook leads",
-          icon: Target,
-          link: "/facebook-lead-generation",
-        },
-        {
-          name: "B2B Advertisement",
-          desc: "Business-to-business ads",
-          icon: Users,
-          link: "/B2B-advertisement",
-        },
-        {
-          name: "Social Media Campaigning",
-          desc: "Boost social engagement",
-          icon: Share2,
-          link:'/paid-media-advertisement',
-        },
-        {
-          name: "360 Lead Nurture",
-          desc: "Nurture leads effectively",
-          icon: RefreshCw,
-          link:'/360-lead-nurture',
-        },
-        {
-          name: "Influencer Marketing",
-          desc: "Leverage influencer reach",
-          icon: Mic,
-          link:'/influencer-marketing',
-        },
-        { name: "TV Advertisement", desc: "Broadcast TV ads", icon: Tv,  link:'/tv-advertisement', },
-        { name: "Email Marketing", desc: "Engage via email", icon: Mail ,  link:'/email-marketing',},
-        {
-          name: "Youtube Advertisement",
-          desc: "Monetize YouTube ads",
-          icon: Youtube,
-          link:'/youtube-advertisement',
-        },
-        {
-          name: "Media Buying & Advertisement",
-          desc: "Optimize ad spend",
-          icon: DollarSign,
-          link:'/media-buying-advertisement',
-        },
-        { name: "Yelp Advertisement", desc: "Promote on Yelp", icon: Star,  link:'/yelp-advertisement', },
-        { name: "Amazon Marketplace", desc: "Sell on Amazon", icon: Building2,  link:'/amazon-marketing', },
-        { name: "Walmart Marketplace", desc: "Expand on Walmart", icon: Store,  link:'/walmart-marketplace', },
-        {
-          name: "Facebook Marketplace",
-          desc: "Sell on Facebook",
-          icon: Facebook,
-          link:'/facebook-marketplace',
-        },
-        {
-          name: "Commerce Credibility",
-          desc: "Build trust fast",
-          icon: BadgeCheck,
-          link:'/commerce-credibility',
-        },
-      ],
-      gridCols: 3,
-    },
-    {
-      id: 3,
       name: " IT & Development",
       subMenuHeading: [
         "Website Solution",
@@ -359,6 +142,182 @@ const Header = () => {
       ],
       gridCols: 3,
     },
+    {
+      id: 2,
+      name: "SEO ",
+      subMenuHeading: [
+        "Organic Search",
+        "E-commerce",
+        "Third-Party Placements",
+      ],
+      subMenu: [  
+        {
+          name: "Search Engine Optimization",
+          desc: "Boost online visibility",
+          icon: BarChart2,
+          link: "/Search-Engine-Optimization",
+        },
+        {
+          name: "Local Search Optimization",
+          desc: "Dominate local searches",
+          icon: MapPin,
+          link: "/Local-Search-Optimization",
+        },
+        {
+          name: "Landing Page Optimization",
+          desc: "Maximize conversion rates",
+          icon: LayoutTemplate,
+          link: "/Landing-Page-Optimization",
+        },
+        {
+          name: "SEO for Leads",
+          desc: "Generate quality leads",
+          icon: Zap,
+          link: "/seo-leads",
+        },
+        {
+          name: "Enterprise Level Reach",
+          desc: "Scale business growth",
+          icon: Globe2,
+          link: "/enterprise-level-reach",
+        },
+        {
+          name: "Brand Optimization",
+          desc: "Strengthen brand presence",
+          icon: BadgeCheck,
+          link: "/brand-optimization",
+        },
+        {
+          name: "Shop & Order Outreach",
+          desc: "Expand customer base",
+          icon: ShoppingCart,
+          link: "/shop-order-outreach",
+        },
+        {
+          name: "Local Order Management",
+          desc: "Streamline local orders",
+          icon: PackageCheck,
+          link: "/local-order-management",
+        },
+        {
+          name: "B2B E-commerce enabling",
+          desc: "Enable B2B commerce",
+          icon: Handshake,
+          link: "/b2b-e-commerce-enabling",
+        },
+        {
+          name: "E-commerce Drop-shipping",
+          desc: "Simplify order fulfillment",
+          icon: Truck,
+          link: "/drop-shipping",
+        },
+        {
+          name: "Yelp Optimization",
+          desc: "Enhance Yelp presence",
+          icon: Star,
+          link: "/yelp-optimization",
+        },
+        {
+          name: "Bing & Yahoo Optimization",
+          desc: "Expand search reach",
+          icon: Search,
+          link: "/bing-yahoo-optimization",
+        },
+        {
+          name: "SEO for Amazon",
+          desc: "Dominate Amazon rankings",
+          icon: Building2,
+          link: "/seo-amazon",
+        },
+        {
+          name: "SEO for Walmart",
+          desc: "Boost Walmart visibility",
+          icon: Store,
+          link: "/seo-for-walmart",
+        },
+        {
+          name: "Listings & Directories",
+          desc: "Manage online listings",
+          icon: List,
+          link: "/listings-directories",
+        },
+      ],
+
+      gridCols: 3,
+    },
+    {
+      id: 3,
+      name: "Paid Marketing",
+      subMenuHeading: [
+        "Digital Advertisement",
+        "Mrketing Outreach",
+        "Commerce Platforms",
+      ],
+      subMenu: [
+        { name: "PPC & Ads", desc: "Targeted ad campaigns", icon: ShoppingBag, link: "/paid-media-advertisement", },
+        {
+          name: "Facebook Lead Generation",
+          desc: "Capture Facebook leads",
+          icon: Target,
+          link: "/facebook-lead-generation",
+        },
+        {
+          name: "B2B Advertisement",
+          desc: "Business-to-business ads",
+          icon: Users,
+          link: "/B2B-advertisement",
+        },
+        {
+          name: "Social Media Campaigning",
+          desc: "Boost social engagement",
+          icon: Share2,
+          link:'/paid-media-advertisement',
+        },
+        {
+          name: "360 Lead Nurture",
+          desc: "Nurture leads effectively",
+          icon: RefreshCw,
+          link:'/360-lead-nurture',
+        },
+        {
+          name: "Influencer Marketing",
+          desc: "Leverage influencer reach",
+          icon: Mic,
+          link:'/influencer-marketing',
+        },
+        { name: "TV Advertisement", desc: "Broadcast TV ads", icon: Tv,  link:'/tv-advertisement', },
+        { name: "Email Marketing", desc: "Engage via email", icon: Mail ,  link:'/email-marketing',},
+        {
+          name: "Youtube Advertisement",
+          desc: "Monetize YouTube ads",
+          icon: Youtube,
+          link:'/youtube-advertisement',
+        },
+        {
+          name: "Media Buying & Advertisement",
+          desc: "Optimize ad spend",
+          icon: DollarSign,
+          link:'/media-buying-advertisement',
+        },
+        { name: "Yelp Advertisement", desc: "Promote on Yelp", icon: Star,  link:'/yelp-advertisement', },
+        { name: "Amazon Marketplace", desc: "Sell on Amazon", icon: Building2,  link:'/amazon-marketing', },
+        { name: "Walmart Marketplace", desc: "Expand on Walmart", icon: Store,  link:'/walmart-marketplace', },
+        {
+          name: "Facebook Marketplace",
+          desc: "Sell on Facebook",
+          icon: Facebook,
+          link:'/facebook-marketplace',
+        },
+        {
+          name: "Commerce Credibility",
+          desc: "Build trust fast",
+          icon: BadgeCheck,
+          link:'/commerce-credibility',
+        },
+      ],
+      gridCols: 3,
+    },
+    
     {
       id: 4,
       name: "Business Servicing",
@@ -549,41 +508,53 @@ const Header = () => {
     },
   ];
 
+  // Function to dynamically load icons when needed
+  const getIconComponent = async (iconName) => {
+    if (iconComponents[iconName]) {
+      return iconComponents[iconName];
+    }
+    
+    const { [iconName]: Icon } = await import("lucide-react");
+    iconComponents[iconName] = Icon;
+    return Icon;
+  };
 
   return (
-    <div>
-      <div className="w-full top-0 left-0 absolute max-sm:fixed  flex justify-between items-center px-4 py-4 sm:px-8 sm:py-6 md:px-12 md:py-8 text-white z-50 max-sm:bg-black">
-        <div className="max-sm:w-full flex gap-6  items-center max-sm:justify-between">
-          <a href="/">
-            <img
-              src="/images/660e8ed8eb1804501de1d733_Group 1.svg"
-              alt="Logo"
-              className="w-[120px] sm:w-[150px] md:w-[180px]"
-            />
-          </a>
-        
-        </div>
-
-        <div>
-        <ul className=" flex gap-1 max-sm:hidden max-md:hidden text-sm">
-            {Menus.map((menu) => (
-              <DesktopMenu menu={menu} key={menu.name} />
-            ))}
-          </ul>
-          <div className="flex-center gap-x-5">
-            <div className="hidden  max-md:hidden max-sm:block ">
-              <MobMenu Menus={Menus}  />
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <button className="px-4 py-2 sm:px-6 sm:py-3 text-sm sm:text-lg font-semibold text-white bg-[#E73C5F] border-none rounded-md hidden sm:block">
-            <Link href={`/Contact`}>Book a Demo</Link>
-          </button>
-        </div>
+    <header className="w-full top-0 left-0 absolute max-sm:fixed flex justify-between items-center px-4 py-4 sm:px-8 sm:py-6 md:px-12 md:py-8 text-white z-50 max-sm:bg-black">
+      <div className="max-sm:w-full flex gap-6 items-center max-sm:justify-between">
+        <Link href="/" passHref>
+          <img
+            src="/images/660e8ed8eb1804501de1d733_Group 1.svg"
+            alt="Logo"
+            className="w-[120px] sm:w-[150px] md:w-[180px]"
+            loading="lazy"
+            width={180}
+            height={60}
+          />
+        </Link>
       </div>
-    </div>
+
+      <nav>
+        <ul className="flex gap-1 max-sm:hidden max-md:hidden text-sm">
+          {Menus.map((menu) => (
+            <Suspense key={menu.id} fallback={<div className="w-20 h-6 bg-gray-200 rounded animate-pulse" />}>
+              <DesktopMenu menu={menu} getIcon={getIconComponent} />
+            </Suspense>
+          ))}
+        </ul>
+        <div className="hidden max-md:hidden max-sm:block">
+          <Suspense fallback={<div className="w-10 h-6 bg-gray-200 rounded animate-pulse" />}>
+            <MobMenu Menus={Menus} getIcon={getIconComponent} />
+          </Suspense>
+        </div>
+      </nav>
+
+      <div>
+        <button className="px-4 py-2 sm:px-6 sm:py-3 text-sm sm:text-lg font-semibold text-white bg-[#E73C5F] border-none rounded-md hidden sm:block hover:bg-[#D62A4D] transition-colors">
+          <Link href="/Contact" passHref>Book a Demo</Link>
+        </button>
+      </div>
+    </header>
   );
 };
 
