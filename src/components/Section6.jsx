@@ -14,6 +14,11 @@ const Section6 = () => {
   // Use refs to store DOM elements
   const containerRef = useRef(null)
   const stickyTitleRef = useRef(null)
+  const animationRefs = useRef({
+    titleAnim: null,
+    cardAnims: [],
+    listeners: []
+  })
 
   // Services data
   const services = [
@@ -51,9 +56,6 @@ const Section6 = () => {
     // Make sure we're in the browser environment
     if (typeof window === "undefined") return
 
-    // Clear any existing ScrollTrigger instances to prevent conflicts
-    ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
-
     // Get DOM elements after they're rendered
     const cards = document.querySelectorAll(".Scard")
     const cardSticky = document.querySelectorAll(".card_sticky")
@@ -66,102 +68,102 @@ const Section6 = () => {
     // Calculate end position correctly
     const calculateEndPosition = () => {
       const lastCardOffset = lastCard.offsetTop
-      // Add a base value plus offset per card
       const stackOffset = cardSticky.length * 50
       return lastCardOffset + stackOffset
     }
 
     const endPos = calculateEndPosition()
 
-    // Create GSAP animation for the sticky title
-    const titleAnim = gsap.to(stickytitle, {
-      scrollTrigger: {
-        trigger: stickytitle,
-        start: window.innerWidth < 640 ? "top top-=80" : "top top+=100",
-        end: endPos,
-        pin: true,
-        pinSpacing: false,
-        scrub: true,
-      },
-      y: (cardSticky.length - 1) * 30,
-      zIndex: cardSticky.length + 1,
-    })
-
-    // Create animations for each card
-    const cardAnims = []
-    Array.from(cardSticky).forEach((card, index) => {
-      const anim = gsap.to(card, {
+    // Create GSAP context for better cleanup
+    const ctx = gsap.context(() => {
+      // Create GSAP animation for the sticky title with unique ID
+      animationRefs.current.titleAnim = gsap.to(stickytitle, {
         scrollTrigger: {
-          trigger: card,
-          start: "top top+=100",
+          trigger: stickytitle,
+          id: 'section6-title',
+          start: window.innerWidth < 640 ? "top top-=80" : "top top+=100",
           end: endPos,
           pin: true,
           pinSpacing: false,
           scrub: true,
+          markers: false
         },
-        y: index === cardSticky.length - 1 ? 0 : index * 30,
-        rotation: index === cardSticky.length - 1 ? 0 : index % 2 === 0 ? -5 : 5,
-        zIndex: index + 1,
+        y: (cardSticky.length - 1) * 30,
+        zIndex: cardSticky.length + 1,
       })
-      cardAnims.push(anim)
-    })
 
-    // Store event listeners for cleanup
-    const listeners = []
-
-    // Add hover effects to cards
-    Array.from(cards).forEach((card, index) => {
-      const img = imgs[index]
-
-      const handleMouseEnter = () => {
-        gsap.to(img, {
-          opacity: 1,
-          scale: 1.2,
-          rotate: index % 2 === 0 ? 10 : -10,
-          y: -20,
-          x: -10,
-          duration: 0.3,
+      // Create animations for each card with unique IDs
+      Array.from(cardSticky).forEach((card, index) => {
+        const anim = gsap.to(card, {
+          scrollTrigger: {
+            trigger: card,
+            id: `section6-card-${index}`,
+            start: "top top+=100",
+            end: endPos,
+            pin: true,
+            pinSpacing: false,
+            scrub: true,
+            markers: false
+          },
+          y: index === cardSticky.length - 1 ? 0 : index * 30,
+          rotation: index === cardSticky.length - 1 ? 0 : index % 2 === 0 ? -5 : 5,
+          zIndex: index + 1,
         })
-        gsap.to(card, {
-          backgroundColor: index % 2 === 0 ? "rgb(24, 4, 181)" : "rgb(222, 31, 98)",
-          borderColor: "black",
-          color: "white",
-          rotate: index % 2 === 0 ? 5 : -5,
-          duration: 0.3,
-        })
-      }
-
-      const handleMouseLeave = () => {
-        gsap.to(img, {
-          scale: 1,
-          opacity: 0,
-          rotate: 0,
-          x: 0,
-          duration: 0.3,
-        })
-        gsap.to(card, {
-          backgroundColor: "rgb(238,228,210)",
-          borderColor: "black",
-          color: "black",
-          rotate: index % 2 === 0 ? 4 : -4,
-          duration: 0.3,
-        })
-      }
-
-      card.addEventListener("mouseenter", handleMouseEnter)
-      card.addEventListener("mouseleave", handleMouseLeave)
-
-      // Store listeners for proper cleanup
-      listeners.push({
-        element: card,
-        enter: handleMouseEnter,
-        leave: handleMouseLeave,
+        animationRefs.current.cardAnims.push(anim)
       })
-    })
+
+      // Add hover effects to cards
+      Array.from(cards).forEach((card, index) => {
+        const img = imgs[index]
+
+        const handleMouseEnter = () => {
+          gsap.to(img, {
+            opacity: 1,
+            scale: 1.2,
+            rotate: index % 2 === 0 ? 10 : -10,
+            y: -20,
+            x: -10,
+            duration: 0.3,
+          })
+          gsap.to(card, {
+            backgroundColor: index % 2 === 0 ? "rgb(24, 4, 181)" : "rgb(222, 31, 98)",
+            borderColor: "black",
+            color: "white",
+            rotate: index % 2 === 0 ? 5 : -5,
+            duration: 0.3,
+          })
+        }
+
+        const handleMouseLeave = () => {
+          gsap.to(img, {
+            scale: 1,
+            opacity: 0,
+            rotate: 0,
+            x: 0,
+            duration: 0.3,
+          })
+          gsap.to(card, {
+            backgroundColor: "rgb(238,228,210)",
+            borderColor: "black",
+            color: "black",
+            rotate: index % 2 === 0 ? 4 : -4,
+            duration: 0.3,
+          })
+        }
+
+        card.addEventListener("mouseenter", handleMouseEnter)
+        card.addEventListener("mouseleave", handleMouseLeave)
+
+        animationRefs.current.listeners.push({
+          element: card,
+          enter: handleMouseEnter,
+          leave: handleMouseLeave,
+        })
+      })
+    }, containerRef) // Scope animations to container
 
     // Handle window resize
     const handleResize = () => {
-      // Refresh ScrollTrigger on resize
       ScrollTrigger.refresh(true)
     }
 
@@ -169,26 +171,17 @@ const Section6 = () => {
 
     // Cleanup function
     return () => {
-      // Kill all ScrollTrigger instances
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
-
-      // Kill specific animations
-      titleAnim.kill()
-      cardAnims.forEach((anim) => anim.kill())
-
-      // Remove window event listener
+      ctx.revert() // Cleanup all GSAP animations
       window.removeEventListener("resize", handleResize)
-
-      // Remove card event listeners using stored references
-      listeners.forEach(({ element, enter, leave }) => {
+      animationRefs.current.listeners.forEach(({ element, enter, leave }) => {
         element.removeEventListener("mouseenter", enter)
         element.removeEventListener("mouseleave", leave)
       })
     }
-  }, []) // Empty dependency array to run only once
+  }, [])
 
   return (
-    <div ref={containerRef} className="pb-[3%] w-full pt-[10%] overflow-hidden bg-[rgb(238,228,210)]">
+    <div ref={containerRef} className="pb-[30%] w-full h-[full  pt-[10%] overflow-hidden bg-white">
       <div className="flex flex-col sm:flex-col md:flex-row xl:flex-row lg:flex-row gap-[2%] max-sm:gap-4">
         <div className="w-[30%] h-20 m-[4%] mr-0">
           <h1
@@ -205,7 +198,7 @@ const Section6 = () => {
           {services.map((service) => (
             <div
               key={service.id}
-              className="Scard flex-grow-1 card_sticky border-solid border-[1px] bg-[rgb(238,228,210)] border-black rounded-lg m-6 w-[100%] h-full sm:w-[95%] md:w-[95%] lg:w-[95%] xl:w-[95%] 2xl:w-[95%] z-[1]"
+              className="Scard flex-grow-1 card_sticky border-solid border-[1px] bg-white border-black rounded-lg m-6 w-[100%] h-full sm:w-[95%] md:w-[95%] lg:w-[95%] xl:w-[95%] 2xl:w-[95%] z-[1]"
             >
               <div className="flex justify-between">
                 <div className="w-full">

@@ -10,8 +10,8 @@ import { useGLTF } from '@react-three/drei';
 export const Model = React.memo((props) => {
   const { nodes } = useGLTF('/logo1.gltf');
   
-  // Memoize the scale array to prevent recreation on every render
-  const scale = useMemo(() => [20, 20, 20], []);
+  // Adjusted scale to better fit the scene
+  const scale = useMemo(() => [10, 10, 10], []);
   
   // Memoize meshes to prevent recreation on every render
   const meshes = useMemo(() => [

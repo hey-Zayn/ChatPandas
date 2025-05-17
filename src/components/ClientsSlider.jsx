@@ -142,7 +142,7 @@ const ClientsSlider = () => {
   };
 
   return (
-    <div className="text-white relative w-full min-h-[600px] h-auto sm:h-[80vh] md:h-[100vh] overflow-hidden bg-[rgb(81,30,223)]">
+    <div className="text-white relative w-full h-screen overflow-hidden bg-[rgb(81,30,223)]">
       <div
         className="relative w-full h-full"
         onMouseEnter={() => setIsPaused(true)}

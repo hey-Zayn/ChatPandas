@@ -1,9 +1,19 @@
-
 "use client";
 import React, { useRef, useCallback, useEffect, useMemo } from 'react';
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import dynamic from 'next/dynamic';
+
+// Lazy load components
+const LazyImage = dynamic(() => import('next/image'), { 
+  ssr: false,
+  loading: () => <div className="w-full h-auto bg-gray-200 animate-pulse" />
+});
+
+// Create a custom Suspense boundary component
+const CustomSuspense = ({ children }) => (
+  <React.Suspense fallback={<div className="w-full h-auto bg-gray-200 animate-pulse" />}>
+    {children}
+  </React.Suspense>
+);
 
 const Section7 = () => {
   // Refs
@@ -18,7 +28,7 @@ const Section7 = () => {
   const cardCount = 6;
 
   // Optimized mobile animation creation
-  const createMobileAnimationS7 = useCallback((mobileCardRef, isEven, index) => {
+  const createMobileAnimationS7 = useCallback((gsap, ScrollTrigger, mobileCardRef, isEven, index) => {
     if (!mobileCardRef) return null;
 
     const tl = gsap.timeline({
@@ -40,14 +50,14 @@ const Section7 = () => {
           y: 30,
           opacity: 0,
           scale: 0.9,
-          rotation: isEven ? -15 : 15, // Added rotation for mobile
+          rotation: isEven ? -15 : 15,
         },
         {
           x: 0,
           y: 0,
           opacity: 1,
           scale: 1,
-          rotation: 0, // Added rotation reset for mobile
+          rotation: 0,
           delay: index * 0.05,
         }
       ),
@@ -66,114 +76,123 @@ const Section7 = () => {
   }, []);
 
   // Main animation setup
-  useGSAP(() => {
-    gsap.registerPlugin(ScrollTrigger);
+  useEffect(() => {
+    let mounted = true;
+    let gsap, ScrollTrigger;
 
-    // Clear existing ScrollTriggers
-    scrollTriggersRef.current.forEach((st) => st.kill());
-    scrollTriggersRef.current = [];
+    const loadAnimations = async () => {
+      try {
+        // Dynamically import GSAP libraries
+        gsap = (await import('gsap')).default;
+        ScrollTrigger = (await import('gsap/ScrollTrigger')).default;
 
-    if (window.innerWidth >= 768) {
-      // Desktop animations
-      const screenWidth = window.innerWidth;
-      const baseX = Math.min(screenWidth * 0.75, 1200);
+        if (!mounted || !section7Ref.current) return;
 
-      const masterTl = gsap.timeline({
-        defaults: {
-          duration: 2,
-          ease: "power1.inOut",
-        },
-      });
+        gsap.registerPlugin(ScrollTrigger);
 
-      const masterST = ScrollTrigger.create({
-        trigger: section7Ref.current,
-        start: "top top",
-        end: "+=200%",
-        scrub: 0.8,
-        animation: masterTl,
-        pin: true,
-        pinSpacing: true,
-        anticipatePin: 1,
-        fastScrollEnd: true,
-        preventOverlaps: true,
-        refreshPriority: 1,
-      });
+        // Clear existing ScrollTriggers
+        scrollTriggersRef.current.forEach((st) => st.kill());
+        scrollTriggersRef.current = [];
 
-      scrollTriggersRef.current.push(masterST);
+        if (window.innerWidth >= 768) {
+          // Desktop animations
+          const screenWidth = window.innerWidth;
+          const baseX = Math.min(screenWidth * 0.75, 1200);
 
-      // Text animation
-      masterTl.from(
-        textRef.current,
-        {
-          opacity: 0,
-          y: 20,
-          duration: 3,
-        },
-        0
-      );
+          const masterTl = gsap.timeline({
+            defaults: {
+              duration: 2,
+              ease: "power1.inOut",
+            },
+          });
 
-      // Card animations
-      cardRefs.current.forEach((cardRef, index) => {
-        if (!cardRef) return;
+          const masterST = ScrollTrigger.create({
+            trigger: section7Ref.current,
+            start: "top top",
+            end: "+=200%",
+            scrub: 0.8,
+            animation: masterTl,
+            pin: true,
+            pinSpacing: true,
+            anticipatePin: 1,
+            fastScrollEnd: true,
+            preventOverlaps: true,
+            refreshPriority: 1,
+          });
 
-        masterTl.addLabel(`card${index}Enter`, 2 + index * 3);
+          scrollTriggersRef.current.push(masterST);
 
-        masterTl.from(
-          cardRef,
-          {
-            rotationZ: rotations[index],
-            rotationY: rotations[index], // Added Y rotation
-            rotationX: rotations[index], // Added X rotation
-            x: baseX,
-            y: -150,
-            opacity: 0,
-          },
-          `card${index}Enter`
-        );
-      });
+          // Text animation
+          masterTl.from(
+            textRef.current,
+            {
+              opacity: 0,
+              y: 20,
+              duration: 3,
+            },
+            0
+          );
 
-      // Exit animations
-      cardRefs.current.forEach((cardRef, index) => {
-        if (!cardRef) return;
+          // Card animations
+          cardRefs.current.forEach((cardRef, index) => {
+            if (!cardRef) return;
 
-        masterTl.addLabel(`card${index}Exit`, 2 + cardCount * 3 + 8 + index * 3);
+            masterTl.addLabel(`card${index}Enter`, 2 + index * 3);
 
-        masterTl.to(
-          cardRef,
-          {
-            rotationZ: rotations[index] * -1,
-            rotationY: rotations[index] * -1, // Added Y rotation
-            rotationX: rotations[index] * -1, // Added X rotation
-            x: -baseX,
-            y: 150,
-            opacity: 0,
-          },
-          `card${index}Exit`
-        );
-      });
-    } else {
-      // Mobile animations
-      mobileCardRefs.current.forEach((ref, index) => {
-        if (ref) {
-          createMobileAnimationS7(ref, index % 2 === 0, index);
+            masterTl.from(
+              cardRef,
+              {
+                rotationZ: rotations[index],
+                rotationY: rotations[index],
+                rotationX: rotations[index],
+                x: baseX,
+                y: -150,
+                opacity: 0,
+              },
+              `card${index}Enter`
+            );
+          });
+
+          // Exit animations
+          cardRefs.current.forEach((cardRef, index) => {
+            if (!cardRef) return;
+
+            masterTl.addLabel(`card${index}Exit`, 2 + cardCount * 3 + 8 + index * 3);
+
+            masterTl.to(
+              cardRef,
+              {
+                rotationZ: rotations[index] * -1,
+                rotationY: rotations[index] * -1,
+                rotationX: rotations[index] * -1,
+                x: -baseX,
+                y: 150,
+                opacity: 0,
+              },
+              `card${index}Exit`
+            );
+          });
+        } else {
+          // Mobile animations
+          mobileCardRefs.current.forEach((ref, index) => {
+            if (ref) {
+              createMobileAnimationS7(gsap, ScrollTrigger, ref, index % 2 === 0, index);
+            }
+          });
         }
-      });
-    }
+      } catch (error) {
+        console.error("Animation loading error:", error);
+      }
+    };
 
-    // Cleanup
+    loadAnimations();
+
     return () => {
+      mounted = false;
       scrollTriggersRef.current.forEach((st) => st.kill());
       scrollTriggersRef.current = [];
     };
   }, [createMobileAnimationS7, rotations, cardCount]);
-
-  // Image preloading
-  useEffect(() => {
-    [1, 2, 3, 4, 5, 6].forEach(num => {
-      const img = new Image();
-      img.src = `/images/WP${num}.avif`;
-    });
-  }, []);
 
   return (
     <>
@@ -198,12 +217,17 @@ const Section7 = () => {
                 ref={(el) => initRefs(el, index, cardRefs)}
                 className={`card w-90 z-[${index + 1}] ${index > 0 ? '-ml-20' : ''}`}
               >
-                <img
-                  src={`/images/WP${index + 1}.avif`}
-                  alt={`BPO Challenge Card ${index + 1}`}
-                  className="w-full h-auto"
-                  loading="lazy"
-                />
+                <CustomSuspense>
+                  <LazyImage
+                    src={`/images/WP${index + 1}.avif`}
+                    alt={`BPO Challenge Card ${index + 1}`}
+                    width={360}
+                    height={240}
+                    className="w-full h-auto"
+                    loading="lazy"
+                    quality={85}
+                  />
+                </CustomSuspense>
               </div>
             ))}
           </div>
@@ -225,12 +249,17 @@ const Section7 = () => {
                     ref={(el) => initRefs(el, index, mobileCardRefs)}
                     className="card w-90"
                   >
-                    <img
-                      src={`/images/WP${index + 1}.avif`}
-                      alt={`BPO Challenge Card ${index + 1}`}
-                      className="w-full h-auto"
-                      loading="lazy"
-                    />
+                    <CustomSuspense>
+                      <LazyImage
+                        src={`/images/WP${index + 1}.avif`}
+                        alt={`BPO Challenge Card ${index + 1}`}
+                        width={360}
+                        height={240}
+                        className="w-full h-auto"
+                        loading="lazy"
+                        quality={85}
+                      />
+                    </CustomSuspense>
                   </div>
                 ))}
               </div>
@@ -242,4 +271,4 @@ const Section7 = () => {
   )
 }
 
-export default Section7
+export default React.memo(Section7);

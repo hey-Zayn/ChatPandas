@@ -78,6 +78,7 @@ const Scene = ({ progress = 0, modelRef }) => {
       <Model 
         ref={modelRef} 
         rotation={[0, 0, 0]}
+        // scale={[60, 60, 60]} // Increased scale from [10,10,10] to [15,15,15] for larger model size
       />
     </>
   );
