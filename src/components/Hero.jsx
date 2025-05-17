@@ -1,5 +1,5 @@
 "use client"
-import React, { useRef, useCallback, useEffect, useState } from "react"
+import React, { useRef, useCallback, useMemo, useEffect, useState } from "react"
 import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
@@ -17,22 +17,31 @@ const Hero = React.memo(() => {
   useEffect(() => {
     setIsMounted(true)
     return () => {
+      // Clean up any lingering ScrollTriggers when component unmounts
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
     }
   }, [])
 
-  const headingContent = [
-    { key: "heading1", text: "Redefining CX" },
-    { key: "heading2", text: "standards through our" },
-    { key: "heading3", text: "Top-Tier BPO compANY" },
-  ]
+  // Memoized heading data
+  const headingContent = useMemo(
+    () => [
+      { key: "heading1", text: "Redefining CX" },
+      { key: "heading2", text: "standards through our" },
+      { key: "heading3", text: "Top-Tier BPO compANY" },
+    ],
+    [],
+  )
 
-  const subHeadingContent = [
-    { key: "subHeading1", text: "Building", align: "right" },
-    { key: "subHeading2", text: "Meaningful", align: "left" },
-    { key: "subHeading3", text: "Connections", align: "right" },
-  ]
+  const subHeadingContent = useMemo(
+    () => [
+      { key: "subHeading1", text: "Building", align: "right" },
+      { key: "subHeading2", text: "Meaningful", align: "left" },
+      { key: "subHeading3", text: "Connections", align: "right" },
+    ],
+    [],
+  )
 
+  // Memoized animation setup
   const setupAnimations = useCallback(() => {
     if (!isMounted || !heroRef.current) return
 
@@ -43,6 +52,7 @@ const Hero = React.memo(() => {
 
     if (!elements.length) return
 
+    // Create a context for GSAP to properly clean up
     const ctx = gsap.context(() => {
       gsap.from(elements, {
         y: -100,
@@ -62,22 +72,26 @@ const Hero = React.memo(() => {
       })
     }, heroRef)
 
-    return () => ctx.revert()
-  }, [isMounted])
+    return () => ctx.revert() // Properly clean up the context
+  }, [headingContent, subHeadingContent, isMounted])
 
   useGSAP(setupAnimations, {
     scope: heroRef,
     dependencies: [isMounted],
-    revertOnUpdate: true,
+    revertOnUpdate: true, // Ensure previous animations are cleaned up
   })
 
-  const setHeadingRef = (key) => (el) => {
-    headingRefs.current[key] = el
-  }
+  const setHeadingRef = useCallback(
+    (key) => (el) => {
+      headingRefs.current[key] = el
+    },
+    [],
+  )
 
   return (
     <div ref={heroRef} className="w-full h-screen relative pt-10">
       <div className="w-full h-screen flex flex-col justify-between relative z-10 py-20">
+        {/* Headings Section */}
         <div className="w-full px-20 py-4 max-sm:py-2 max-sm:px-6 flex justify-end max-sm:justify-start gap-0">
           <div className="flex flex-col">
             {headingContent.map((item) => (
@@ -93,6 +107,7 @@ const Hero = React.memo(() => {
           </div>
         </div>
 
+        {/* Subheadings Section */}
         <div className="w-full px-40 max-sm:px-10 py-4 flex justify-start gap-0 max-sm:mt-50">
           <div className="flex flex-col">
             {subHeadingContent.map((item) => (
@@ -111,6 +126,7 @@ const Hero = React.memo(() => {
         </div>
       </div>
 
+      {/* Client-side only video element */}
       {isMounted && (
         <video
           src="/videos/my.mp4"
@@ -124,6 +140,7 @@ const Hero = React.memo(() => {
           aria-label="Background video"
           disablePictureInPicture
           disableRemotePlayback
+          // poster="/images/video-poster.jpg"
           onLoadStart={(e) => e.target.play().catch(() => {})}
         />
       )}
