@@ -1,6 +1,6 @@
 'use client'
 
-import AboutHome from '@/components/aboutHome';
+import AboutHome from '@/components/AboutHome';
 import { useEffect, useCallback, lazy, Suspense } from 'react';
 
 // Define breakpoints as constants for maintainability
