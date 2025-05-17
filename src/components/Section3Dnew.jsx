@@ -1,24 +1,26 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import React, { useState, useRef, useEffect, useMemo, lazy, Suspense } from 'react';
 import { Canvas } from "@react-three/fiber";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Scene from "./Scene";
+
+// Lazy load heavy components
+const Scene = lazy(() => import("./Scene"));
 
 // Extracted reusable component for sections
-const ContentSection = ({ align = "center", topPosition = "50%" }) => (
+const ContentSection = React.memo(({ align = "center", topPosition = "50%" }) => (
   <div className={`absolute top-[${topPosition}] w-full z-10 px-10 pt-30 ${
     align === "left" ? "text-left" : align === "right" ? "text-right" : "text-center"
   }`}>
-    <h1 className="text-8xl text-white font-bold max-sm:text-3xl">
-      Bridging <br className="max-sm:hidden" />
+    <h1 className="text-8xl text-white font-bold">
+      Bridging <br />
       Cultural Gaps
     </h1>
-    <h3 className="text-white text-2xl max-sm:text-xl">
-      As the top BPO agency, we bridge cultural <br className="max-sm:hidden" /> 
+    <h3 className="text-white text-2xl">
+      As the top BPO agency, we bridge cultural <br /> 
       gaps, making every interaction feel native.
     </h3>
   </div>
-);
+));
 
 const Section3Dnew = () => {
   const mainRef = useRef(null);
@@ -27,99 +29,114 @@ const Section3Dnew = () => {
   const [progress, setProgress] = useState(0);
   const [animationId, setAnimationId] = useState(null);
   
-  // Register plugins just once when component mounts
+  // Lazy load GSAP plugins
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
+    import("gsap/ScrollTrigger").then((module) => {
+      gsap.registerPlugin(module.ScrollTrigger);
+    });
     
     return () => {
-      // Clean up animation frame on unmount
       if (animationId) cancelAnimationFrame(animationId);
     };
   }, [animationId]);
   
-  // Setup scroll animations
+  // Optimized scroll animations with throttling
   useEffect(() => {
     if (!mainRef.current || !sceneRef.current) return;
-    
-    // Create animation timeline
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: mainRef.current,
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 1,
-        onUpdate: (self) => {
-          // Only update when progress changes significantly to reduce state updates
-          const newProgress = Math.min(self.progress, 1);
-          if (Math.abs(newProgress - progress) > 0.01) {
-            setProgress(newProgress);
-          }
-        },
-      },
-    });
-    
-    // Setup model rotation animation that runs at a consistent frame rate
-    const startModelAnimation = () => {
-      let lastTime = 0;
-      
-      const animate = (time = 0) => {
-        const id = requestAnimationFrame(animate);
-        setAnimationId(id);
-        
-        // Only update rotation if model exists and enough time has passed (throttling)
-        if (modelRef.current) {
-          // Calculate time delta for smoother animation regardless of frame rate
-          const delta = time - lastTime;
-          if (delta > 16) { // Aim for ~60fps (16.6ms per frame)
-            const rotationSpeed = 0.0005;
-            modelRef.current.rotation.y += rotationSpeed * delta;
-            lastTime = time;
-          }
+
+    let rafId;
+    let lastCall = 0;
+    const throttle = (func, limit) => {
+      return function() {
+        const now = Date.now();
+        if (now - lastCall >= limit) {
+          lastCall = now;
+          func.apply(this, arguments);
         }
       };
-      
-      const id = requestAnimationFrame(animate);
-      setAnimationId(id);
-      return id;
     };
-    
-    // Add position animations
-    tl.to(sceneRef.current, {
-      ease: "none",
-      x: '25vw',
-      y: "100vh",
-      onStart: startModelAnimation,
-    })
-    .to(sceneRef.current, {
-      ease: "none",
-      x: '-25vw',
-      y: "200vh",
-    })
-    .to(sceneRef.current, {
-      ease: "none",
-      x: '0vw',
-      y: "300vh",
-    });
+
+    const handleScroll = () => {
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: mainRef.current,
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 1,
+            onUpdate: (self) => {
+              const newProgress = Math.min(self.progress, 1);
+              if (Math.abs(newProgress - progress) > 0.01) {
+                setProgress(newProgress);
+              }
+            },
+          },
+        });
+
+        const startModelAnimation = () => {
+          let lastTime = 0;
+          const animate = (time = 0) => {
+            const id = requestAnimationFrame(animate);
+            setAnimationId(id);
+            
+            if (modelRef.current) {
+              const delta = time - lastTime;
+              if (delta > 16) {
+                // modelRef.current.rotation.y += 0.0005 * delta;
+                lastTime = time;
+              }
+            }
+          };
+          const id = requestAnimationFrame(animate);
+          setAnimationId(id);
+        };
+
+        tl.to(sceneRef.current, {
+          ease: "none",
+          x: '25vw',
+          y: "100vh",
+          onStart: startModelAnimation,
+        })
+        .to(sceneRef.current, {
+          ease: "none",
+          x: '-25vw',
+          y: "200vh",
+        })
+        .to(sceneRef.current, {
+          ease: "none",
+          x: '0vw',
+          y: "300vh",
+        });
+
+        rafId = null;
+      });
+    };
+
+    const throttledScroll = throttle(handleScroll, 100);
+    window.addEventListener('scroll', throttledScroll);
     
     return () => {
-      tl.kill(); // Clean up GSAP animations
-      if (animationId) cancelAnimationFrame(animationId);
+      window.removeEventListener('scroll', throttledScroll);
+      if (rafId) cancelAnimationFrame(rafId);
     };
   }, []);
-  
-  // Memoize sections for desktop to prevent unnecessary re-renders
-  const desktopSections = useMemo(() => (
+
+  const sections = useMemo(() => (
     <>
-      <section className="relative w-full h-screen">
+      <section className="relative w-full h-screen"> {/* Increased height for better model visibility */}
         <ContentSection />
         <div ref={sceneRef} className="w-full h-full">
-          <Canvas
-            style={{ width: '100%', height: '100%' }}
-            frameloop="demand" // Only render when needed
-            performance={{ min: 0.5 }} // Enable performance optimizations
-          >
-            <Scene progress={progress} modelRef={modelRef} />
-          </Canvas>
+          <Suspense fallback={<div className="w-full h-full bg-gray-800" />}>
+            <Canvas
+              style={{ width: '100%', height: '100%' }}
+              frameloop="demand"
+              performance={{ min: 0.5 }}
+              camera={{ position: [0, 0, 20], fov: 45 }} 
+            >
+              <Scene progress={progress} modelRef={modelRef} scale={[1, 1, 1]} /> 
+            </Canvas>
+          </Suspense>
         </div>
       </section>
       
@@ -136,38 +153,11 @@ const Section3Dnew = () => {
       </section>
     </>
   ), [progress]);
-  
-  // Mobile sections - only render when needed
-  const mobileSections = useMemo(() => (
-    <>
-      <section className="relative w-full h-[60vh]">
-        <ContentSection />
-      </section>
-      
-      <section className="relative flex justify-center items-center h-[60vh]">
-        <ContentSection align="left" topPosition="40%" />
-      </section>
-
-      <section className="relative flex justify-center items-center h-[60vh]">
-        <ContentSection align="right" topPosition="40%" />
-      </section>
-      
-      <section className="w-full relative flex justify-center items-center h-[60vh]">
-        <ContentSection topPosition="30%" />
-      </section>
-    </>
-  ), []);
 
   return (
-    <>
-      <div ref={mainRef} className="w-full h-full overflow-hidden bg-[#30087D] max-sm:hidden lg:block">
-        {desktopSections}
-      </div>
-      
-      <div className="w-full h-full overflow-hidden bg-[#30087D] sm:block md:hidden max-lg:hidden">
-        {mobileSections}
-      </div>
-    </>
+    <div ref={mainRef} className="w-full h-full overflow-hidden bg-[#30087D]">
+      {sections}
+    </div>
   );
 };
 

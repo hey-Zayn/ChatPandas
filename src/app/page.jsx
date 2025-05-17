@@ -1,5 +1,6 @@
 'use client'
 
+import AboutHome from '@/components/aboutHome';
 import { useEffect, useCallback, lazy, Suspense } from 'react';
 
 // Define breakpoints as constants for maintainability
@@ -82,18 +83,23 @@ export default function Home() {
       <Suspense fallback={<LoadingPlaceholder />}>
         <Section3 />
       </Suspense>
-      {/* <Suspense fallback={<LoadingPlaceholder />}>
-        <Section3Dnew />
-      </Suspense> */}
-      {/* <Suspense fallback={<LoadingPlaceholder />}>
-        <Section6 />
-      </Suspense> */}
       <Suspense fallback={<LoadingPlaceholder />}>
-        <ClientsSlider />
+        <Section3Dnew />
       </Suspense>
+      
       <Suspense fallback={<LoadingPlaceholder />}>
         <Section7 />
       </Suspense>
+     
+      {/* <Suspense fallback={<LoadingPlaceholder />}> */}
+        <ClientsSlider />
+      {/* </Suspense> */}
+      <Suspense fallback={<LoadingPlaceholder />}>
+        <Section6 />
+      </Suspense>
+      {/* <Suspense fallback={<LoadingPlaceholder />}> */}
+        <AboutHome />
+      {/* </Suspense> */}
     
       <Suspense fallback={<LoadingPlaceholder />}>
         <Section8 />
