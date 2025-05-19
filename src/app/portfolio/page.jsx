@@ -33,7 +33,7 @@ const page = () => {
       <div className="w-full h-full bg-[#191919]">
         <PortfolioHero/>
         <PP2/>
-        <PortfolioServicesSection/>
+        {/* <PortfolioServicesSection/> */}
         {/* <DesignerIntro/> */}
         {/* <PPCP/> */}
        
