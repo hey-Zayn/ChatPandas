@@ -87,19 +87,19 @@ export default function Home() {
         <Section3Dnew />
       </Suspense>
       
-      <Suspense fallback={<LoadingPlaceholder />}>
+      {/* <Suspense fallback={<LoadingPlaceholder />}>
         <Section7 />
-      </Suspense>
+      </Suspense> */}
      
-      {/* <Suspense fallback={<LoadingPlaceholder />}> */}
-        <ClientsSlider />
-      {/* </Suspense> */}
       <Suspense fallback={<LoadingPlaceholder />}>
-        <Section6 />
+        <ClientsSlider />
       </Suspense>
-      {/* <Suspense fallback={<LoadingPlaceholder />}> */}
+      {/* <Suspense fallback={<LoadingPlaceholder />}>
+        <Section6 />
+      </Suspense> */}
+      <Suspense fallback={<LoadingPlaceholder />}>
         <AboutHome />
-      {/* </Suspense> */}
+      </Suspense>
     
       <Suspense fallback={<LoadingPlaceholder />}>
         <Section8 />
