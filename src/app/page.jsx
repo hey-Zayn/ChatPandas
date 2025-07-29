@@ -91,9 +91,9 @@ export default function Home() {
          <Section3Dnew /> 
       </Suspense>
     
-      {/* <Suspense fallback={<LoadingPlaceholder />}>
+      <Suspense fallback={<LoadingPlaceholder />}>
         <Section7 />
-      </Suspense> */}
+      </Suspense>
 
      
 
@@ -101,9 +101,9 @@ export default function Home() {
         <ClientsSlider />
       </Suspense>
           {/* Eror */}
-      {/* <Suspense fallback={<LoadingPlaceholder />}>
+      <Suspense fallback={<LoadingPlaceholder />}>
         <Section6 />
-      </Suspense> */}
+      </Suspense>
       <Suspense fallback={<LoadingPlaceholder />}>
         <AboutHome />
       </Suspense>

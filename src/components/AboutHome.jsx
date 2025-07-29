@@ -34,7 +34,7 @@ const AboutHome = () => {
       
       {/* Centered content */}
       <div className="relative z-10 text-center flex flex-col justify-center items-center px-4 max-w-4xl mx-auto">
-        <div className="w-25 h-25 rounded-full p-[2px] bg-gradient-to-r from-[#5209DE] to-[#9719FF] mb-6 relative">
+        {/* <div className="w-25 h-25 rounded-full p-[2px] bg-gradient-to-r from-[#5209DE] to-[#9719FF] mb-6 relative">
           <LazyImage
             src="/images/sirAwais.jpg"
             alt="CEO"
@@ -52,7 +52,7 @@ const AboutHome = () => {
               <div className="absolute inset-0 rounded-full border-4 border-[#5209DE]/30 animate-[radar-wave_2s_1.33s_linear_infinite]"></div>
             </div>
           )}
-        </div>
+        </div> */}
         
         <style jsx>{`
           @keyframes radar-wave {
